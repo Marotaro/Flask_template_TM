@@ -6,8 +6,7 @@
 </head>
 
 <body>
-        <div>{% block title_page %}{% endblock%}</div>
-        <div>{% block content %}{% endblock %}</div>
-
-    <script type="text/javascript" src="{{url_for('static', filename='js/script.js')}}"></script>
+    <h1>Bienvenue</h1>
+    <a href="{{ url_for('auth.register') }}" class="log_button">Register</a>
+    <a href="{{ url_for('auth.login') }}" class="log_button">Log In</a>
 </body>

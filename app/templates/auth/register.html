@@ -1,15 +1,20 @@
-{% extends 'base.html' %}
+{% extends 'connection.html' %}
 
-{% block header %}
-  <h1>{% block title %}S'enregistrer{% endblock %}</h1>
-{% endblock %}
+{% block header %}register{% endblock %}
+<h1>{% block title %}S'enregistrer{% endblock %}</h1>
+
 
 {% block content %}
   <form method="post">
     <label for="username">Username</label>
     <input name="username" id="username" required>
+    <label for="email">Email</label>
+    <input type="email" name="email" id="email" required>
     <label for="password">Password</label>
     <input type="password" name="password" id="password" required>
     <input type="submit" value="Register">
   </form>
+{% endblock %}
+{% block footer %}
+  <a href="{{ url_for('auth.login') }}" class="log_button">Log In</a>
 {% endblock %}

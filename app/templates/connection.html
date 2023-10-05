@@ -1,0 +1,14 @@
+<!doctype html>
+
+<head>
+    <title>{% block header %}{% endblock %} - Template de base Flask</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+    <div>
+        {% block title %}{% endblock %}
+        {% block content %}{% endblock %}
+        {% block footer %}{% endblock %}
+    </div>
+</body>

@@ -4,6 +4,13 @@
   <h1>{% block title %}Bienvenue{% endblock %}</h1>
 {% endblock %}
 
+{% block title_page%}
+    <p>Bienvenue</p>
+{% endblock %}
+
 {% block content%}
-    <p>Ceci est un paragraphe de bienvenue.</p>
+  <li><span>{{ g.user['username'] }}</span>
+  <li><a href="{{ url_for('auth.logout') }}">Log Out</a>
+  <li><a href="{{url_for('user.show_profile')}}">Show profile</a></li>
+  <li><a href="{{url_for('y.create')}}">create</a></li>
 {% endblock %}

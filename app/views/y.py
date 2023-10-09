@@ -2,6 +2,8 @@ from flask import (Blueprint, flash, g, redirect, render_template, request, sess
 from app.db.db import get_db
 from app.utils import *
 from app.function import *
+from app.views.themes import *
+from app.views.permission import *
 
 # Routes /y/...
 y_bp = Blueprint('y', __name__, url_prefix='/y')
@@ -13,8 +15,8 @@ def create():
         # Récupérer les informations de la requet HTTP
         name = request.form['name']
         description = request.form ['bio']
-#        owner = g.user['id_user']
-#        theme_name = request.form['theme']
+        owner = g.user['id_user']
+
         # si icon n'a pas de valeur mettre la valeur par défaut
         if request.form['icon'] == None:
             icon = "default"
@@ -23,21 +25,31 @@ def create():
 
         # récupérer la base de donné
         db = get_db()
-#        
-#        # si theme_name a une valeur
-#        if theme_name:
-#            # chercher si le theme existe déjà
-#            theme=db.execute("Select * FROM Themes WHERE name = ?", (theme_name)).fetchone()
-#            # s'il existe pas le rajouter dans la table theme
-#            if theme == None:
-#                db.execute("INSERT INTO Themes (name) VALUES (?)",(theme_name))
-#                db.commit()
-#            theme_id = 
+
+        
+        theme = correct_theme(request.form['themes'])
+
+        if theme == "error":
+            error = "Incorrect Theme name. Try <#theme_name> or leave it empty"
+            flash(error)
+            return redirect(url_for("y.create"))
+        
         # si name n'est pas nul rajouter une nouvelle ligne à Channel sinon retourner le message d'erreur
         if name:
+            #crée la ligne de la nouvelle channel
             db.execute("INSERT INTO Channel (name, date, description, icon) VALUES (?, ?, ?, ?)", (name, datenow(), description, icon))
             db.commit()
+            #récupere son id
+            id_channel = db.execute("SELECT id_channel FROM Channel ORDER BY id_channel DESC LIMIT 1;").fetchone()[0]
+            #met le propriétaire par defaut
+            on_create_owner(id_channel, owner, db)
+            #créer les nouveaux themes si besoin et les lient avec la channel si theme est non nul
+            if theme:
+                new_theme(theme,db)
+                link_theme_y(id_channel,theme,db)
+
             return render_template('/home/index.html')
+        
         else:
             error = "No Y's name given"
             flash(error)

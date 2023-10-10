@@ -26,7 +26,6 @@ def create():
         # récupérer la base de donné
         db = get_db()
 
-        
         theme = correct_theme(request.form['themes'])
 
         if theme == "error":
@@ -54,10 +53,8 @@ def create():
             error = "No Y's name given"
             flash(error)
             return redirect(url_for("y.create"))
-        
-
-        
-
 
     else:
         return render_template('Y/create.html')
+    
+

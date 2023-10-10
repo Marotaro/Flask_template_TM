@@ -8,7 +8,8 @@ def correct_theme(theme_name):
     if theme_name == "":
         return None
     else:
-        inter = theme_name.strip(" ").lower()
+        inter = theme_name.replace(" ","")
+        inter = inter.lower()
         if len(inter) > 1 and inter[0] == "#":
             return inter.split("#")[1:]
         else:

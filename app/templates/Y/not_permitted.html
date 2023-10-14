@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}Not Permitted{% endblock %}</h1>
+{% endblock %}
+
+{% block title_page%}
+    <p>Vous n'etes pas autorisé sur cette channel</p>
+{% endblock %}
+
+{% block content %} 
+    <a href="{{ url_for('home.home_page') }}">Log Out</a>
+      
+{% endblock %}

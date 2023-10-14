@@ -11,7 +11,7 @@ def correct_theme(theme_name):
         inter = theme_name.replace(" ","")
         inter = inter.lower()
         if len(inter) > 1 and inter[0] == "#":
-            return inter.split("#")[1:]
+            return set(inter.split("#")[1:])
         else:
             return "error"
 

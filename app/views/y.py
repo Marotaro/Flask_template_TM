@@ -8,7 +8,8 @@ from app.views.permission import *
 # Routes /y/...
 y_bp = Blueprint('y', __name__, url_prefix='/y')
 
-@y_bp.route('/create_y', methods=('GET', 'POST'))
+# Routes /y/create
+@y_bp.route('/create', methods=('GET', 'POST'))
 def create():
     if request.method == 'POST':
 
@@ -47,7 +48,7 @@ def create():
                 new_theme(theme,db)
                 link_theme_y(id_channel,theme,db)
 
-            return render_template('/home/index.html')
+            return redirect(url_for("home.home_page"))
         
         else:
             error = "No Y's name given"
@@ -56,5 +57,20 @@ def create():
 
     else:
         return render_template('Y/create.html')
+    
+
+# Route /y/see
+@y_bp.route('/see/<int:id_channel>', methods=('GET','POST'))
+def see(id_channel):
+    #récupérer la base de données
+    db = get_db()
+    
+    if allowed(id_channel, g.user['id_user'], db) == False:
+        return render_template('Y/not_permitted.html')
+    else:
+        channel_info = db.execute('SELECT * FROM Channel WHERE id_channel = ?', (id_channel,)).fetchone()
+        channel_themes = db.execute('SELECT name FROM Related_channel JOIN Themes On id_theme = id_theme_fk WHERE id_channel_fk = ? ', (id_channel,)).fetchall()
+        return render_template('Y/home.html', channel_info=channel_info, channel_themes=channel_themes)
+
     
 

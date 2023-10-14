@@ -15,15 +15,16 @@ def home_page():
     
     db = get_db()
 
-    g.mychannel = []
+    mychannel = []
     # récupérer les channels
     ##celle ou l'utilisateur est l'owner
     id_channels = [row[0] for row in db.execute("SELECT id_channel_fk FROM Permission WHERE id_user_fk = ? AND  type = ?", (g.user['id_user'],"owner")).fetchall()]
     if id_channels:
         for id_channel in id_channels:
-            g.mychannel.append(db.execute("SELECT * FROM Channel WHERE id_channel = ?", (id_channel,)).fetchall())
+            mychannel.append(db.execute("SELECT * FROM Channel WHERE id_channel = ?", (id_channel,)).fetchall())
+    mychannel = [row[0] for row in mychannel]
     # Affichage de la page d'un utilisateur connecté
-    return render_template('home/index.html',id_channels=id_channels)
+    return render_template('home/index.html',mychannel=mychannel)
 
 # Gestionnaire d'erreur 404 pour toutes les routes inconnues
 @home_bp.route('/<path:text>', methods=['GET', 'POST'])

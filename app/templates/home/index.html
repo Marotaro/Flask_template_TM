@@ -11,12 +11,13 @@
 {% block content%}
   <li><span>{{ g.user['username'] }}</span>
   <li><a href="{{ url_for('auth.logout') }}">Log Out</a>
-  <li><a href="{{url_for('user.show_profile')}}">Show profile</a></li>
-  <li><a href="{{url_for('y.create')}}">create</a></li>
+  <li><a href="{{ url_for('user.show_profile')}}">Show profile</a></li>
+  <li><a href="{{ url_for('y.create')}}">create</a></li>
   <h3>Mes Channels</h3>
-  {% if g.mychannel %}
-    {% for channel in g.mychannel %}
-      <li>{{ channel[0]['name'] }}</li>
+  {% if mychannel %}
+    {% for channel in mychannel %}
+      <li> {{ channel['name'] }}</li>
+      <li><a href="{{ url_for('y.see', id_channel = channel['id_channel'])}}">liens</a></li>
     {% endfor %}
   {% else %}
     <p>vous n'avez pas de channel</p>

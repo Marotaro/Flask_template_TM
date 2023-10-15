@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}Create Post{% endblock %}</h1>
+{% endblock %}
+
+{% block title_page%}
+    <p>Create Post</p>
+{% endblock %}
+
+{% block content %}
+    <form method="post">
+        <label for="text">text</label>
+        <input type="text" name="text" id="text" required>
+        <label for="image">Image</label>
+        <input type="file" name="image" id="image" accept="image/png, image/jpeg"> 
+        <input type="submit" value="Create">
+    </form>
+{% endblock %}

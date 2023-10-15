@@ -9,7 +9,7 @@ def on_create_owner(id_channel, owner, db):
 
 def allowed(id_channel, id_user, db):
     type = db.execute('SELECT * FROM Permission WHERE id_channel_fk = ? AND id_user_fk = ?', (id_channel, id_user)).fetchone()
-    if type['type'] is None or type['type'] not in ["owner","admin","member"]:
+    if type is None or type['type'] not in ["owner","admin","member"]:
         return False
     else:
         return True

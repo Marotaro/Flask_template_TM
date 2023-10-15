@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}{{ channel_info['name'] }}{% endblock %}</h1>
+{% endblock %}
+
+{% block title_page%}
+  <p>{{ channel_info['name'] }}</p>
+{% endblock %}
+
+{% block content %} 
+<li><a href="{{ url_for('post.create_post', id_channel = channel_info['id_channel'], respondto = (-1))}}">new_post</a></li>
+  {{ channel_info['name'] }}
+  {% if channel_themes %}
+    {% for theme in channel_themes %}
+      <li> {{ theme[0] }} </li>
+    {% endfor %}
+  {% else %}
+    <li> Ce Y n'a pas de theme</li>
+  {% endif %}
+  {% for post in channel_post%}
+  <p>{{ post['username'] }}</p>
+  <li>{{ post['text'] }}</li>
+  {% endfor %}
+{% endblock %}

@@ -2,13 +2,15 @@
 
 <head>
     <title>{% block header %}{% endblock %} - Y</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/log.css') }}">
 </head>
 
 <body>
-    <div>
+    <div class="logbox">
         {% block title %}{% endblock %}
-        {% block content %}{% endblock %}
+        
+            {% block content %}{% endblock %}
+        
         {% block footer %}{% endblock %}
     </div>
 </body>

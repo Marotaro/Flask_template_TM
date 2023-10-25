@@ -3,39 +3,35 @@
     flex-direction: row;
     justify-content: space-around;
     align-items: center;
-    margin-top: 5%;
-    margin-left: 45px;
-
+    margin-top:12vh;
 }
 
 #title_logo{
-    width: 600.104px;
+    width: min(30vw,85vh);
     flex-shrink: 0;
 }
 
 #vl{
     border-left: 5px solid #424242;
-    height: 750px;
+    height: max(300px, 70vh);
 }
 
 #interaction{
-    margin-right: 400px;
+    margin-right: 7vw;
 }
 
 #home_title{
-    display: flex;
     width: auto;
     height: 117px;
-    flex-direction: column;
-    justify-content: center;
     flex-shrink: 0;
     color: rgb(215, 215, 215);
     font-family: Arial, Helvetica, sans-serif;
-    font-size: 100px;
+    font-size: min(10vw,100px);
     font-style: normal;
     font-weight: 600;
     line-height: normal;
-    margin-bottom: 100px;
+    margin-bottom: min(30px,2vh);
+    margin-top: 0px;
 }
 
 .log_button{
@@ -50,12 +46,12 @@
     color:#060606;
     text-align: center;
     font-family: Arial, Helvetica, sans-serif;
-    font-size: 25px;
+    font-size: min(25px,3vw);
     font-style: normal;
     font-weight: 800;
     line-height: normal;
     text-decoration: none;
-    margin-top: 50px;
+    margin-top: 10%;
     transition: 0.3s;
 }
 

@@ -8,6 +8,7 @@ post_bp = Blueprint('post', __name__, url_prefix='/post')
 
 
 @post_bp.route('/create_post/<id_channel>/<respondto>', methods = ('GET','POST'), endpoint = 'create_post')
+@login_required
 def create_post(id_channel,respondto):
     if request.method == 'POST':
         #récupérer les informations de la request HTTP 

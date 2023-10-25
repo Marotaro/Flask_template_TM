@@ -1,0 +1,92 @@
+body{
+    color: #FFF;
+}
+.title_page{
+    width:75%;
+    margin: -60px auto 10px auto ;
+
+}
+
+.title_page #text{
+    text-align: left;
+    color: #FFF;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 140px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    margin-bottom: -7px;
+}
+
+.title_page #line{
+    width: 100%;
+    color: #424242;
+    background-color: #424242;
+    border: none;
+    height: 3px;
+}
+
+.element{
+    width: 65%;
+    margin: auto;
+}
+
+.element h3{
+    color: #FFF;
+    font-family: sans-serif;
+    font-size: 28px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+.midle_container{
+    display: flex;
+    flex-direction: column;
+    width: 65%;
+    margin-right: auto;
+    margin-left: auto;
+    margin-top: 50px;
+    gap: 50px ;
+}
+.midle_container a{
+    text-decoration: none;
+}
+.channel_bulb {
+    padding: 35px 0px;
+    text-align: center;
+    border-radius: 25px;
+    background-color: #424242;
+    color: #FFF;
+    font-family: sans-serif;
+    font-size: 28px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+#postcontainer{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    margin: auto;
+    width : 100%;
+}
+
+.post{
+    display: flex;
+    flex-direction: column;
+    align-content: flex-start;
+    justify-content: flex-start;
+    width: 45%;
+    background-color: #424242;
+    border-radius: 25px;
+    height: fit-content;
+    padding: 1.5% 1.25%;
+    margin-top: 2.5%;
+}
+
+.userinfo{
+    
+}
+

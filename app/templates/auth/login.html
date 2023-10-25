@@ -9,20 +9,20 @@
   <form method="post">
     <div class="loginfo">
       <div class="inputcontainer">
-        <label for="idantifiant">Email/username</label>
+        <label for="idantifiant">Email/nom d'utilisateur</label>
         <input type="text" name="idantifiant" id="idantifiant" required>
       </div>
       <div class="inputcontainer">
-        <label for="password">Password</label>
+        <label for="password">Mot de passe</label>
         <input type="password" name="password" id="password" required>
       </div>
-      <div>
-      <input type="submit" value="Log In" id="login">
+      <div class="inputcontainer">
+        <input type="submit" value="Se connecter" id="first_button">
       </div>
     </div>
   </form>
 
 {% endblock %}
 {% block footer %}
-  <a href="{{ url_for('auth.register') }}" id="register">register</a>
+  <a href="{{ url_for('auth.register') }}" id="second_button">S'enregistrer</a>
 {% endblock %}

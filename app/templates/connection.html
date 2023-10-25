@@ -6,11 +6,13 @@
 </head>
 
 <body>
-    <div class="logbox">
-        {% block title %}{% endblock %}
-        
+    <div class="vertical">
+        <div class="logbox">
+            {% block title %}{% endblock %}
+            
             {% block content %}{% endblock %}
-        
-        {% block footer %}{% endblock %}
+            
+            {% block footer %}{% endblock %}
+        </div>
     </div>
 </body>

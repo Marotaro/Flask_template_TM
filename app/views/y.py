@@ -11,6 +11,7 @@ y_bp = Blueprint("y", __name__, url_prefix="/y")
 
 # Routes /y/create
 @y_bp.route("/create", methods=("GET", "POST"))
+@login_required
 def create():
     if request.method == "POST":
         # Récupérer les informations de la requet HTTP
@@ -58,6 +59,7 @@ def create():
 
 # Route /y/see
 @y_bp.route("/see/<int:id_channel>", methods=("GET", "POST"))
+@login_required
 def see(id_channel):
     # récupérer la base de données
     db = get_db()
@@ -73,7 +75,7 @@ def see(id_channel):
             (id_channel,),
         ).fetchall()
         channel_post =  db.execute(
-            "SELECT text, image, username FROM Post JOIN User ON id_user = id_user_fk"
+            "SELECT text, image, username FROM Post JOIN User ON id_user = id_user_fk WHERE id_channel_fk = ?",(id_channel,)
         ).fetchall()
         return render_template(
             "Y/see.html", channel_info=channel_info, channel_themes=channel_themes, channel_post = channel_post

@@ -1,8 +1,10 @@
 {% extends 'base.html' %}
 
 {% block header %}
-  <h1>{% block title %}404 not found (Page non trouvée){% endblock %}</h1>
+  {% block title %}404 not found (Page non trouvée){% endblock %}
 {% endblock %}
+
+{% block title_page %}ERROR 404 ;({% endblock %}
 
 {% block content%}
     <p><a href="{{ url_for('home.landing_page') }}" >Retourner à l'accueil</a></p>

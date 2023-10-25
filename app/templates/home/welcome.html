@@ -7,13 +7,15 @@
 </head>
 
 <body>
-    <div id="container">
-        <img src="static/image/Y_logo2.svg" id="title_logo">
-        <div id="vl"></div>
-        <div id="interaction">
-            <h1 id="home_title">Bienvenue</h1>
-            <a href="{{ url_for('auth.register') }}" class="log_button">Register</a>
-            <a href="{{ url_for('auth.login') }}" class="log_button">Log In</a>
+    <div id="vertical">
+        <div id="container">
+            <img src="static/image/Y_logo2.svg" id="title_logo">
+            <div id="vl"></div>
+            <div id="interaction">
+                <h1 id="home_title">Bienvenue</h1>
+                <a href="{{ url_for('auth.register') }}" class="log_button">Register</a>
+                <a href="{{ url_for('auth.login') }}" class="log_button">Log In</a>
+            </div>
         </div>
     </div>
 </body>

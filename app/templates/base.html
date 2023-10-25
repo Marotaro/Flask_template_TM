@@ -4,10 +4,15 @@
     <title>{% block title %}{% endblock %} - Y</title>
 <!--    <link rel="stylesheet" href={% block css %}{% endblock %}>-->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/page.css')}}">
 </head>
 
 <body>
-        <div>{% block title_page %}{% endblock%}</div>
+        <div>
+            <div class="title_page">
+                <h1 id="text">{% block title_page %}{% endblock%}</h1>
+                <hr id="line">
+            </div>
         <div>{% block content %}{% endblock %}</div>
 
     <script type="text/javascript" src="{{url_for('static', filename='js/script.js')}}"></script>

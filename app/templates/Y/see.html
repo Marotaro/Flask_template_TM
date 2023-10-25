@@ -1,11 +1,11 @@
 {% extends 'base.html' %}
 
 {% block header %}
-  <h1>{% block title %}{{ channel_info['name'] }}{% endblock %}</h1>
+  {% block title %}{{ channel_info['name'] }}{% endblock %}
 {% endblock %}
 
 {% block title_page%}
-  <p>{{ channel_info['name'] }}</p>
+  {{ channel_info['name'] }}
 {% endblock %}
 
 {% block content %} 
@@ -18,8 +18,15 @@
   {% else %}
     <li> Ce Y n'a pas de theme</li>
   {% endif %}
+  <div id="postcontainer">
   {% for post in channel_post%}
-  <p>{{ post['username'] }}</p>
-  <li>{{ post['text'] }}</li>
+  <div class="post">
+    <div class="userinfo">
+      <p>@{{ post['username'] }}</p>
+    </div>
+
+    <p>{{ post['text'] }}</p>
+  </div>
   {% endfor %}
+  </div>
 {% endblock %}

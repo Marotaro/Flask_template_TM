@@ -1,5 +1,6 @@
 from flask import (Blueprint, flash, g, redirect, render_template, request, session, url_for)
 from app.db.db import get_db
+from app.utils import *
 
 # Routes /...
 home_bp = Blueprint("home", __name__)
@@ -13,6 +14,7 @@ def landing_page():
 
 
 @home_bp.route("/home", methods=("GET", "POST"))
+@login_required
 def home_page():
     db = get_db()
 

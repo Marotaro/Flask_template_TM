@@ -4,6 +4,8 @@ from app.utils import *
 from app.function import *
 from app.views.themes import *
 from app.views.permission import *
+from app.config import *
+import os
 
 # Routes /y/...
 y_bp = Blueprint("y", __name__, url_prefix="/y")
@@ -18,11 +20,19 @@ def create():
         name = request.form["name"]
         description = request.form["bio"]
         owner = g.user["id_user"]
-        # si icon n'a pas de valeur mettre la valeur par défaut
-        if request.form["icon"] == None:
-            icon = "default"
+        # si image n'est pas dans la request, mettre la valeur par défaut
+        if "image" not in request.files:
+            link = "app/image/y/logotest.pnd"
         else:
-            icon = request.form["icon"]
+            icon = request.files["image"]
+            if icon.filename == '':
+                link = "app/image/y/logotest.png"
+            elif icon:
+                link = os.path.join(UPLOAD_FOLDER_Y, icon.filename)
+                icon.save(link)
+
+
+
         # récupérer la base de donné
         db = get_db()
         theme = correct_theme(request.form["themes"])
@@ -35,7 +45,7 @@ def create():
             # crée la ligne de la nouvelle channel
             db.execute(
                 "INSERT INTO Channel (name, date, description, icon) VALUES (?, ?, ?, ?)",
-                (name, datenow(), description, icon),
+                (name, datenow(), description, link),
             )
             db.commit()
             # récupere son id
@@ -80,4 +90,27 @@ def see(id_channel):
         return render_template(
             "Y/see.html", channel_info=channel_info, channel_themes=channel_themes, channel_post = channel_post
         )
+    
+# Route /y/browse
+@y_bp.route("/browse", methods = ("GET", "POST"))
+@login_required
+def browse():
+    # récuperer la base de données
+    db = get_db()
+
+    #récupérer les channels ou l'utilisateur est abonné
+    followed_channel = db.execute(
+        "SELECT * FROM Channel JOIN Permission ON id_channel = id_channel_fk WHERE id_user_fk = ? AND type = member", (g.user['id_user'],)
+    ).fetchall()
+
+    #récupérer les channels pour lesquelle l'utilisateur n'a pas de lien
+    random_channel = db.execute(
+        "SELECT * FROM Channel JOIN Permission ON id_channel = id_channel_fk WHERE id_user_fk = ? AND type = None", (g.user['id_user'],)
+    ).fetchall()
+
+    return render_template(
+        "Y/browse.html", followed_channel=followed_channel, random_channel=random_channel
+    )
+
+
         

@@ -1,27 +1,29 @@
 {% extends 'connection.html' %}
 
 {% block header %}register{% endblock %}
+{% block css %}<link rel="stylesheet" href="{{ url_for('static', filename='css/register.css') }}"> {% endblock %}
 {% block title %}<h1 id="boxtitle">S'enregister</h1>{% endblock %}
 
 
 {% block content %}
+<div id="interactive">
   <form method="post">
-    <div class="loginfo">
       <div class="inputcontainer">
-        <label for="username">Nom d'utilisateur</label>
-        <input name="username" id="username" required>
+        <label for="idantifiant">Nom d'utilisateur</label>
+        <input type="text" name="username" id="username" required>
       </div>
       <div class="inputcontainer">
-        <label for="email">Email</label>
-        <input type="email" name="email" id="email" required>
+        <label for="idantifiant">Email</label>
+        <input type="text" name="email" id="email" required>
       </div>
       <div class="inputcontainer">
         <label for="password">Mot de passe</label>
-        <input type="password" name="password" id="password" autocomplete="new-password" required>
+        <input type="password" name="password" id="password" required>
       </div>
       <div class="inputcontainer">
         <input type="submit" value="S'enregister" id="first_button">
       </div>
-    </div>
   </form>
+  <a href="{{ url_for('auth.login') }}" id="second_button">Se connecter</a>
+</div>
 {% endblock %}

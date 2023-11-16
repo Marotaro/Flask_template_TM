@@ -20,19 +20,6 @@ def create():
         name = request.form["name"]
         description = request.form["bio"]
         owner = g.user["id_user"]
-        # si image n'est pas dans la request, mettre la valeur par défaut
-        if "image" not in request.files:
-            link = "app/image/y/logotest.pnd"
-        else:
-            icon = request.files["image"]
-            if icon.filename == '':
-                link = "app/image/y/logotest.png"
-            elif icon:
-                link = os.path.join(UPLOAD_FOLDER_Y, icon.filename)
-                icon.save(link)
-
-
-
         # récupérer la base de donné
         db = get_db()
         theme = correct_theme(request.form["themes"])
@@ -44,8 +31,8 @@ def create():
         if name:
             # crée la ligne de la nouvelle channel
             db.execute(
-                "INSERT INTO Channel (name, date, description, icon) VALUES (?, ?, ?, ?)",
-                (name, datenow(), description, link),
+                "INSERT INTO Channel (name, date, description) VALUES (?, ?, ?)",
+                (name, datenow(), description),
             )
             db.commit()
             # récupere son id
@@ -58,6 +45,21 @@ def create():
             if theme:
                 new_theme(theme, db)
                 link_theme_y(id_channel, theme, db)
+                    # si image n'est pas dans la request, mettre la valeur par défaut
+                    
+            if "image" in request.files:
+                icon = request.files["image"]
+                if icon.filename == '':
+                    link = r"C:\Users\loanm\OneDrive - EDUETATFR\C-Sud\TM\Application\Flask_template_TM\app\static\image\y_icon\default.png"
+                elif icon:
+                    icon.filename = str(id_channel)+".png"
+                    link = os.path.join(UPLOAD_FOLDER_Y, icon.filename)
+                    icon.save(link)
+                db.execute(
+                "UPDATE Channel SET icon = ? WHERE id_channel = ?",(link, id_channel)
+                 )
+                db.commit()
+                    
             return redirect(url_for("home.home_page"))
         else:
             error = "No Y's name given"

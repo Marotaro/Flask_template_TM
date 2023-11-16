@@ -2,6 +2,7 @@
 
 <head>
     <title>{% block header %}{% endblock %} - Y</title>
+    <link rel="shortcut icon" href="{{ url_for('static', filename='shortcuticon.png') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/log.css') }}">
     {% block css %}{% endblock %}
 </head>

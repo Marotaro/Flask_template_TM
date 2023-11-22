@@ -18,7 +18,7 @@ def landing_page():
 def home_page():
     db = get_db()
 
-    mychannel = []
+    mychannels = []
     # récupérer les channels
     ##celle ou l'utilisateur est l'owner
     id_channels = [
@@ -28,16 +28,16 @@ def home_page():
             (g.user["id_user"], "owner"),
         ).fetchall()
     ]
-    if id_channels:
-        for id_channel in id_channels:
-            mychannel.append(
-                db.execute(
-                    "SELECT * FROM Channel WHERE id_channel = ?", (id_channel,)
-                ).fetchall()
-            )
-    mychannel = [row[0] for row in mychannel]
+    for id_channel in id_channels:
+        channel_details = db.execute(
+            "SELECT * FROM Channel JOIN Image_channel ON id_channel = id_channel_fk WHERE id_channel = ?",
+            (id_channel,),
+        ).fetchone()
+
+        if channel_details:
+            mychannels.append(channel_details)
     # Affichage de la page d'un utilisateur connecté
-    return render_template("home/index.html", mychannel=mychannel)
+    return render_template("home/index.html", mychannels=mychannels)
 
 
 # Gestionnaire d'erreur 404 pour toutes les routes inconnues

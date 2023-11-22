@@ -13,11 +13,12 @@
   <li><a href="{{ url_for('y.create')}}">create</a></li>
   <div class="element">
     <h3>Mes Channels</h3>
-    {% if mychannel %}
+    {% if mychannels %}
       <div class="midle_container">
-      {% for channel in mychannel %}
+      {% for channel in mychannels %}
       <a href="{{ url_for('y.see', id_channel = channel['id_channel'])}}">
           <div class="channel_bulb">
+            <img src="{{ channel['location'] }}" class="channel_icon">
             {{ channel['name'] }}
           </div>
         </a>

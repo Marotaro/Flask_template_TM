@@ -56,8 +56,8 @@ def create():
                 elif icon:
                     lastidimage = db.execute("SELECT MAX(id_image) FROM Image_channel").fetchone()[0]
                     icon.filename = str(lastidimage)+".png"
-                    link = os.path.join(UPLOAD_FOLDER_Y, icon.filename)
-                    icon.save(link)
+                    icon.save(os.path.join(UPLOAD_FOLDER_Y, icon.filename))
+                    link = "static/image/y_icon/" + str(icon.filename)
                     db.execute(
                     "UPDATE Image_channel SET location = ? WHERE id_image = ?",(link, lastidimage)
                     )

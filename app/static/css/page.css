@@ -65,6 +65,13 @@ body{
     line-height: normal;
 }
 
+.channel_icon {
+    aspect-ratio: 1 / 1 ;
+    width: 6vw;
+    height: auto;
+    border-radius: 50%;
+}
+
 #postcontainer{
     display: flex;
     align-items: center;

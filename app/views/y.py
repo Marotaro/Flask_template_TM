@@ -46,18 +46,21 @@ def create():
                 new_theme(theme, db)
                 link_theme_y(id_channel, theme, db)
                     # si image n'est pas dans la request, mettre la valeur par défaut
-                    
+            
+
+            db.execute("INSERT INTO Image_channel (id_channel_fk) VALUES (?)", (id_channel,),)
             if "image" in request.files:
                 icon = request.files["image"]
                 if icon.filename == '':
-                    link = r"C:\Users\loanm\OneDrive - EDUETATFR\C-Sud\TM\Application\Flask_template_TM\app\static\image\y_icon\default.png"
+                    pass
                 elif icon:
-                    icon.filename = str(id_channel)+".png"
+                    lastidimage = db.execute("SELECT MAX(id_image) FROM Image_channel").fetchone()[0]
+                    icon.filename = str(lastidimage)+".png"
                     link = os.path.join(UPLOAD_FOLDER_Y, icon.filename)
                     icon.save(link)
-                db.execute(
-                "UPDATE Channel SET icon = ? WHERE id_channel = ?",(link, id_channel)
-                 )
+                    db.execute(
+                    "UPDATE Image_channel SET location = ? WHERE id_image = ?",(link, lastidimage)
+                    )
                 db.commit()
                     
             return redirect(url_for("home.home_page"))

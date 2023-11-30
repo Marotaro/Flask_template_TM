@@ -78,22 +78,10 @@ form{
     background-color: #262626;
     outline: 0px;
     border: 0px;
-    font-size: 16px;
     padding: 0 5%;
 }
 
-.inputcontainer input[type="text"]:-webkit-autofill{
-    -webkit-text-fill-color: #060606;
 
-}
-
-
-.inputcontainer input:focus ~ label,
-.inputcontainer input:valid ~ label{
-	top:-12px;
-	font-size:12px;
-	
-}
 
 #first_button{
     display: flex;
@@ -111,6 +99,7 @@ form{
     font-weight: 800;
     line-height: normal;
     text-decoration: none;
+    cursor: pointer;
 }
 
 #second_button{

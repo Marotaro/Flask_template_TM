@@ -6,6 +6,7 @@
 <!--    <link rel="stylesheet" href={% block css %}{% endblock %}>-->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/page.css')}}">
+    <script src="{{ url_for('static', filename='js/script.js')}}"></script>
 </head>
 
 <body>
@@ -14,7 +15,12 @@
                 <h1 id="text">{% block title_page %}{% endblock%}</h1>
                 <hr id="line">
             </div>
+            <div id="cascadmenu">
+                <button id="showButtons" onclick="menu()">pp</button>
+                <div id="hiddenButtons">
+                  <a href="{{ url_for('user.show_profile') }}" class="buttons"><img src="{{ url_for('static', filename ='image/buttons/userbuttons/userbutton.svg')}}" class="buttonsicon"></a>
+                  <a href="{{ url_for('auth.logout')}}" class="buttons"><img src="{{ url_for('static', filename = 'image/buttons/logoutbuttons/logoutbutton.svg')}}" class="buttonsicon"></a>
+                </div>
+            </div>
         <div>{% block content %}{% endblock %}</div>
-
-    <script type="text/javascript" src="{{url_for('static', filename='js/script.js')}}"></script>
 </body>

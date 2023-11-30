@@ -10,5 +10,6 @@
         <li>Password: {{g.user.password}}</li>
         <li>Creation: {{g.user.date}}</li>
     </ul>
+    <a href="{{ url_for('password.changepassword')}}">changer de mot de passe</a>
     
 {% endblock %}

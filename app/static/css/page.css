@@ -93,7 +93,32 @@ body{
     margin-top: 2.5%;
 }
 
-.userinfo{
-    
+#cascadmenu{
+    position: fixed;
+    top: 30px;
+    right: 30px;
+    width: max(5%,65px);
+}
+
+#hiddenButtons{
+    display: none;
+    align-items: center;
+    flex-direction: column;
+}
+
+.buttons{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #424242;
+    width: 35%;
+    aspect-ratio: 1/1;
+    padding: 10%;
+    border-radius: 50%;
+    margin-bottom: 5%;
+}
+
+.buttonsicon{
+    width: 90%;
 }
 

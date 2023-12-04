@@ -52,7 +52,6 @@ def forgot_password():
             #on sauvgarde le token dans une table nommé Token avec comme information le token, l'utilisateur au quel il est lié et la date avec l'heure précise en digit
             db.execute("INSERT INTO Token (token, id_user_fk, expiry) values (?, ?, ?)", (token, id_user, time.timestamp()))
             #code pour envoier le token par mail
-            formatted_message = f"reset"
             send_email(email,reset_message(token),"Réinitialisation du mot de passe")
         #code qui permet de supprimer les token expiré à chaque fois que quelqu'un fait une demande de token
         db.execute("DELETE FROM Token WHERE expiry > ?", (time.timestamp(),))

@@ -1,0 +1,10 @@
+p{
+    margin-left: 10%;
+    margin-top: 20%;
+    color:#fff;	
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: max(2.75vmin,15px);
+    font-style: normal;
+    font-weight: 800;
+    line-height: normal;
+}

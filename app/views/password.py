@@ -92,4 +92,4 @@ def reset_password(token):
     else:
         error = "request doesn't exist"
         flash(error)
-        return redirect( url_for('password.forgot_passsword'))
+        return redirect( url_for('password.forgot_password'))

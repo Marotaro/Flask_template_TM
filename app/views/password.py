@@ -41,9 +41,9 @@ def forgot_password():
         #émail retourner par un Form
         email = request.form['email']
         db = get_db()
-        #on regarde si l'utilisateur est dans la base de donné grâce à son email
-        id_user = db.execute("SELECT id_user FROM User WHERE email = ?",(email,)).fetchone()[0]
-        if id_user != None:
+        #on regarde si l'utilisateur est dans la base de donné grâce à son email sinon on renvoie un message d'erreur
+        try:
+            id_user = db.execute("SELECT id_user FROM User WHERE email = ?",(email,)).fetchone()[0]
             #on détruit par principe le token que l'utilisateur pourrait déjà avoir
             db.execute("DELETE FROM Token WHERE id_user_fk = ?", (id_user,))
             #générer le token
@@ -52,11 +52,18 @@ def forgot_password():
             #on sauvgarde le token dans une table nommé Token avec comme information le token, l'utilisateur au quel il est lié et la date avec l'heure précise en digit
             db.execute("INSERT INTO Token (token, id_user_fk, expiry) values (?, ?, ?)", (token, id_user, time.timestamp()))
             #code pour envoier le token par mail
-            send_email(email,reset_message(token),"Réinitialisation du mot de passe")
-        #code qui permet de supprimer les token expiré à chaque fois que quelqu'un fait une demande de token
-        db.execute("DELETE FROM Token WHERE expiry > ?", (time.timestamp(),))
-        db.commit()
-        return render_template('password/confirm_request.html')
+            if send_email(email,reset_message(token),"Réinitialisation du mot de passe") == "error":
+                error = "Oups, il y a eu un problème lors de l'envoie du mail "
+                flash(error)
+                return render_template('password/forgot_password.html')
+            #code qui permet de supprimer les token expiré à chaque fois que quelqu'un fait une demande de token
+            db.execute("DELETE FROM Token WHERE expiry > ?", (time.timestamp(),))
+            db.commit()
+            return render_template('password/confirm_request.html')
+        except:
+            error = "Cet utilisateur n'existe pas"
+            flash(error)
+            return render_template('password/forgot_password.html')
     else:
         return render_template('password/forgot_password.html')
     

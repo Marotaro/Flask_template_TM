@@ -1,9 +1,10 @@
 from flask import (Blueprint, flash, g, redirect, render_template, request, session, url_for)
 from app.db.db import get_db
 from app.utils import *
-from app.function import *
-from app.views.themes import *
-from app.views.permission import *
+from app.function.now import datenow
+from app.function.themes import *
+from app.function.permission import *
+from app.function.image import upload_image
 from app.config import *
 import os
 
@@ -48,20 +49,7 @@ def create():
                     # si image n'est pas dans la request, mettre la valeur par défaut
             
 
-            db.execute("INSERT INTO Image_channel (id_channel_fk) VALUES (?)", (id_channel,),)
-            if "image" in request.files:
-                icon = request.files["image"]
-                if icon.filename == '':
-                    pass
-                elif icon:
-                    lastidimage = db.execute("SELECT MAX(id_image) FROM Image_channel").fetchone()[0]
-                    icon.filename = str(lastidimage)+".png"
-                    icon.save(os.path.join(UPLOAD_FOLDER_Y, icon.filename))
-                    link = "static/image/y_icon/" + str(icon.filename)
-                    db.execute(
-                    "UPDATE Image_channel SET location = ? WHERE id_image = ?",(link, lastidimage)
-                    )
-                db.commit()
+            upload_image("y",request.files['image'],id_channel,db)
                     
             return redirect(url_for("home.home_page"))
         else:

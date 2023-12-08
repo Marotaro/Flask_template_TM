@@ -1,0 +1,11 @@
+#center-horizontaly{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+
+}
+
+#imageButton{
+    aspect-ratio: 1/1;
+    width: 10%;
+}

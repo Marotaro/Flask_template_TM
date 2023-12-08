@@ -2,8 +2,8 @@ from flask import (Blueprint, flash, g, redirect, render_template, request, sess
 from app.db.db import get_db
 from werkzeug.security import check_password_hash, generate_password_hash
 from app.utils import *
-from app.function import *
-from app.email import reset_message
+from app.function.send_email import *
+from app.function.email import reset_message
 import random
 import string
 from datetime import datetime, timedelta

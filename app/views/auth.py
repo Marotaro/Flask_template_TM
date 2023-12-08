@@ -1,7 +1,7 @@
 from flask import (Blueprint, flash, g, redirect, render_template, request, session, url_for)
 from werkzeug.security import check_password_hash, generate_password_hash
 from app.db.db import get_db
-from app.function import datenow
+from app.function.now import datenow
 import os
 
 # Création d'un blueprint contenant les routes ayant le préfixe /auth/...

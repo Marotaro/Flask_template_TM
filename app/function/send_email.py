@@ -1,13 +1,8 @@
-from datetime import date
 #smtplib est une librairie rajoutée, il faut donc la téléchargée 
 import smtplib
 from app.config import MDP
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
-
-def datenow():
-    today= date.today()
-    return today.strftime("%d/%m/%Y")
 
 def send_email(to_email, message, subject):
     #Information de connection

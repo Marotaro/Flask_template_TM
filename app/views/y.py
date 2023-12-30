@@ -5,6 +5,7 @@ from app.function.now import datenow
 from app.function.themes import *
 from app.function.permission import *
 from app.function.image import upload_image
+from app.function.token import create_token
 from app.config import *
 import os
 
@@ -20,6 +21,7 @@ def create():
         # Récupérer les informations de la requet HTTP
         name = request.form["name"]
         description = request.form["bio"]
+        opento = request.form["opento"]
         owner = g.user["id_user"]
         # récupérer la base de donné
         db = get_db()
@@ -32,8 +34,8 @@ def create():
         if name:
             # crée la ligne de la nouvelle channel
             db.execute(
-                "INSERT INTO Channel (name, date, description) VALUES (?, ?, ?)",
-                (name, datenow(), description),
+                "INSERT INTO Channel (name, date, opento, description) VALUES (?, ?, ?, ?)",
+                (name, datenow(), opento, description),
             )
             db.commit()
             # récupere son id
@@ -67,7 +69,7 @@ def see(id_channel):
     # récupérer la base de données
     db = get_db()
 
-    if allowed(id_channel, g.user["id_user"], db) == False:
+    if not allowed(id_channel, g.user["id_user"], db):
         return render_template("Y/not_permitted.html")
     else:
         channel_info = db.execute(
@@ -92,18 +94,30 @@ def browse():
     db = get_db()
 
     #récupérer les channels ou l'utilisateur est abonné
-    followed_channel = db.execute(
-        "SELECT * FROM Channel JOIN Permission ON id_channel = id_channel_fk WHERE id_user_fk = ? AND type = member", (g.user['id_user'],)
-    ).fetchall()
+    #followed_channel = db.execute(
+    #    "SELECT * FROM Channel JOIN Permission ON id_channel = id_channel_fk WHERE id_user_fk = ? AND type = member", (g.user['id_user'],)
+    #).fetchall()
 
     #récupérer les channels pour lesquelle l'utilisateur n'a pas de lien
-    random_channel = db.execute(
-        "SELECT * FROM Channel JOIN Permission ON id_channel = id_channel_fk WHERE id_user_fk = ? AND type = None", (g.user['id_user'],)
+    public_channel = db.execute(
+        "SELECT * FROM Channel WHERE opento = ?", ('public',)
     ).fetchall()
 
     return render_template(
-        "Y/browse.html", followed_channel=followed_channel, random_channel=random_channel
+        "Y/browse.html", public_channel=public_channel
     )
 
-
+@y_bp.route("/invite/<int:id_channel>", methods = ("GET","POST"))
+@login_required
+def invite(id_channel):
+    db = get_db()
+    if not can_invite(id_channel, g.user['id_user'], ['owner','admin'], db):
+        return render_template("Y/not_permitted.html")
+    if request.method == "POST":
+        expiration = request.form['expiration']
+        token = create_token(g.user['id_user'],id_channel, int(expiration), 'channel', db)
+        message = "lien copier dans le press papier"
+        return redirect(url_for("y.see", id_channel = id_channel))
+    else:
+        return render_template('Y/invite.html')
         

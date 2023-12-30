@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  {% block title %}invite Y{% endblock %}
+{% endblock %}
+
+{% block title_page %}
+    invite Y
+{% endblock %}
+
+{% block content %}
+<form method="POST">
+    <select id="expiration" name="expiration">
+        <option value="10">10 minutes</option>
+        <option value="30">30 minutes</option>
+        <option value="60">1 heure</option>
+    </select>
+    <input type="submit" value="create" name="submit" id="submit">
+</form>
+{% endblock %}

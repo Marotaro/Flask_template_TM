@@ -4,7 +4,10 @@ import os
 
 def upload_image(destination,image,fk_id,db):
     table, fk_row_name, folder, short_folder = ("Image_channel","id_channel_fk",UPLOAD_FOLDER_Y, SHORT_FOLDER_Y) if destination == "y" else (("Image_user","id_user_fk",UPLOAD_FOLDER_USER, SHORT_FOLDER_USER) if destination == "user" else ("Image_post","id_post_fk",UPLOAD_FOLDER_POST, SHORT_FOLDER_POST))
-    lastidimage = int(db.execute(f"SELECT MAX(id_image) FROM {table}").fetchone()[0]) + 1
+    try:
+        lastidimage = int(db.execute(f"SELECT MAX(id_image) FROM {table}").fetchone()[0]) + 1
+    except:
+        lastidimage = 0
     try:
         if image and image.filename != '':
             extension = os.path.splitext(image.filename)[1]

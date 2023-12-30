@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  {% block title %}browse Y{% endblock %}
+{% endblock %}
+
+{% block title_page %}
+    browse Y
+{% endblock %}
+
+{% block content %}
+<div class="midle_container">
+  {% for channel in public_channel %}
+  <a href="{{ url_for('y.see', id_channel = channel['id_channel'])}}">
+      <div class="channel_bulb">
+        <img src="{{ channel['location'] }}" class="channel_icon">
+        {{ channel['name'] }}
+      </div>
+    </a>
+  {% endfor %}
+  </div>
+{% endblock %}

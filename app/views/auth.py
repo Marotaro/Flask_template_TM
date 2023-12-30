@@ -2,6 +2,7 @@ from flask import (Blueprint, flash, g, redirect, render_template, request, sess
 from werkzeug.security import check_password_hash, generate_password_hash
 from app.db.db import get_db
 from app.function.now import datenow
+from app.function.image import upload_image
 import os
 
 # Création d'un blueprint contenant les routes ayant le préfixe /auth/...
@@ -27,8 +28,9 @@ def register():
         if username and password and email:
             try:
                 db.execute("INSERT INTO User (username, password, email, date) VALUES (?, ?, ?, ?)",(username, generate_password_hash(password), email, datenow()))
-                # db.commit() permet de valider une modification de la base de données
                 db.commit()
+                id_user = db.execute("SELECT id_user FROM User where email = ?", (email,)).fetchone()
+                upload_image("user", False, id_user[0], db)
             except db.IntegrityError:
 
                 # La fonction flash dans Flask est utilisée pour stocker un message dans la session de l'utilisateur
@@ -115,7 +117,7 @@ def load_logged_in_user():
     else:
          # On récupère la base de données et on récupère l'utilisateur correspondant à l'id stocké dans le cookie session
         db = get_db()
-        g.user = db.execute('SELECT * FROM User WHERE id_user = ?', (id_user,)).fetchone()
+        g.user = db.execute('SELECT * FROM User LEFT JOIN Image_user on User.id_user = Image_user.id_user_fk WHERE id_user = ?', (id_user,)).fetchone()
 
 
 

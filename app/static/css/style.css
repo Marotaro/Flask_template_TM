@@ -1,3 +1,12 @@
 body{
     background-color: #060606;
 }
+
+#profilbutton{
+    width: 1vw;
+}
+
+#pp{
+    aspect-ratio: 1 / 1 ;
+    width: 90%;
+}

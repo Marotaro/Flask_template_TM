@@ -68,13 +68,13 @@ def create():
 def see(id_channel):
     # récupérer la base de données
     db = get_db()
-
-    if not allowed(id_channel, g.user["id_user"], db):
-        return render_template("Y/not_permitted.html")
-    else:
-        channel_info = db.execute(
+    channel_info = db.execute(
             "SELECT * FROM Channel WHERE id_channel = ?", (id_channel,)
         ).fetchone()
+    if channel_info['opento'] == "private"  and (not allowed(id_channel, g.user["id_user"], db)):
+        return render_template("Y/not_permitted.html")
+    else:
+        
         channel_themes = db.execute(
             "SELECT name FROM Related_channel JOIN Themes On id_theme = id_theme_fk WHERE id_channel_fk = ? ",
             (id_channel,),

@@ -1,5 +1,6 @@
 from flask import (Blueprint, flash, g, redirect, render_template, request, session, url_for)
 from app.db.db import get_db
+from app.function.get_channel import *
 from app.utils import *
 
 # Routes /...
@@ -18,26 +19,13 @@ def landing_page():
 def home_page():
     db = get_db()
 
-    mychannels = []
+
     # récupérer les channels
     ##celle ou l'utilisateur est l'owner
-    id_channels = [
-        row[0]
-        for row in db.execute(
-            "SELECT id_channel_fk FROM Permission WHERE id_user_fk = ? AND  type = ?",
-            (g.user["id_user"], "owner"),
-        ).fetchall()
-    ]
-    for id_channel in id_channels:
-        channel_details = db.execute(
-            "SELECT * FROM Channel JOIN Image_channel ON id_channel = id_channel_fk WHERE id_channel = ?",
-            (id_channel,),
-        ).fetchone()
-
-        if channel_details:
-            mychannels.append(channel_details)
+    mychannels = get_y_by_user(g.user['id_user'], "owner", db)
+    memberchannels = get_y_by_user(g.user['id_user'], "member", db)
     # Affichage de la page d'un utilisateur connecté
-    return render_template("home/index.html", mychannels=mychannels)
+    return render_template("home/index.html", mychannels=mychannels,memberchannels=memberchannels)
 
 
 # Gestionnaire d'erreur 404 pour toutes les routes inconnues

@@ -4,7 +4,7 @@ from werkzeug.security import check_password_hash, generate_password_hash
 from app.utils import *
 from app.function.send import *
 from app.function.email import reset_message
-from app.function.token import create_token
+from app.function.token import *
 import random
 import string
 from datetime import datetime, timedelta
@@ -62,32 +62,26 @@ def forgot_password():
 def reset_password(token):
     db = get_db()
     #on contrôle que la demande existe
-    existing_request = db.execute("SELECT id_user_fk, expiry FROM Token WHERE token = ?",(token,)).fetchone()
-    if existing_request != None :
-        #contrôle que la demande n'est pas expirée
-        if datetime.utcnow().timestamp() < int(existing_request['expiry']):
-            if request.method == 'POST':
-                new_password = request.form['new_password']
-                password_check = request.form['password_check']
-                #contrôle que les deux mot de passe corresponde bien
-                if new_password == password_check:
-                    #on update le mot de passe de l'utilisateur
-                    db.execute("UPDATE User SET password = ? WHERE id_user = ?",(generate_password_hash(new_password),existing_request['id_user_fk']))
-                    #on suprime la demande
-                    db.execute("DELETE FROM Token WHERE id_user_fk = ?", (existing_request['id_user_fk'],))
-                    db.commit()
-                    return redirect( url_for('auth.login'))
-                else:
-                    error = "not same"
-                    flash(error)
-                    return redirect( url_for('password.reset_password', token = token))
+    if valid_token(token,db) :
+        token_information = get_token(token,db)
+        if request.method == 'POST':
+            new_password = request.form['new_password']
+            password_check = request.form['password_check']
+            #contrôle que les deux mot de passe corresponde bien
+            if new_password == password_check:
+                #on update le mot de passe de l'utilisateur
+                db.execute("UPDATE User SET password = ? WHERE id_user = ?",(generate_password_hash(new_password),token_information['id_user_fk']))
+                #on suprime la demande
+                db.execute("DELETE FROM Token WHERE id_user_fk = ?", (token_information['id_user_fk'],))
+                db.commit()
+                return redirect( url_for('auth.login'))
             else:
-                return render_template('password/reset_password.html')
+                error = "not same"
+                flash(error)
+                return redirect( url_for('password.reset_password', token = token))
         else:
-            error = "token exipered"
-            flash(error)
-            return redirect( url_for('password.forgot_password'))
+            return render_template('password/reset_password.html')
     else:
-        error = "request doesn't exist"
+        error = "request doesn't exist or is expired"
         flash(error)
         return redirect( url_for('password.forgot_password'))

@@ -25,6 +25,22 @@
     {% else %}
       <p>vous n'avez pas de channel</p>
     {% endif %}
+
+    <h3>Membres</h3>
+    {% if memberchannels %}
+      <div class="midle_container">
+      {% for channel in memberchannels %}
+      <a href="{{ url_for('y.see', id_channel = channel['id_channel'])}}">
+          <div class="channel_bulb">
+            <img src="{{ channel['location'] }}" class="channel_icon">
+            {{ channel['name'] }}
+          </div>
+        </a>
+      {% endfor %}
+      </div>
+    {% else %}
+      <p>vous n'êtes pas membre d'un Y</p>
+    {% endif %}
   </div>
   <a href="{{ url_for('y.browse')}}">browse</a>
 {% endblock %}

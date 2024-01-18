@@ -18,6 +18,13 @@
   {% else %}
     <li> Ce Y n'a pas de theme</li>
   {% endif %}
+
+  {% with message = get_flashed_messages() %}
+  {% if message %}
+  <li>{{ message }}</li>
+  {% endif %}
+  {% endwith %}
+
   <a href="{{ url_for('y.invite', id_channel = channel_info['id_channel'])}}">invite</a>
   <div id="postcontainer">
   {% for post in channel_post%}

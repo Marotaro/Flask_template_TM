@@ -5,7 +5,7 @@ from app.function.now import datenow
 from app.function.themes import *
 from app.function.permission import *
 from app.function.image import upload_image
-from app.function.token import create_token
+from app.function.token import *
 from app.config import *
 import os
 
@@ -43,7 +43,7 @@ def create():
                 "SELECT id_channel FROM Channel ORDER BY id_channel DESC LIMIT 1;"
             ).fetchone()[0]
             # met le propriétaire par defaut
-            on_create_owner(id_channel, owner, db)
+            add_permition(id_channel, owner, "owner", db)
             # créer les nouveaux themes si besoin et les lient avec la channel si theme est non nul
             if theme:
                 new_theme(theme, db)
@@ -71,7 +71,7 @@ def see(id_channel):
     channel_info = db.execute(
             "SELECT * FROM Channel WHERE id_channel = ?", (id_channel,)
         ).fetchone()
-    if channel_info['opento'] == "private"  and (not allowed(id_channel, g.user["id_user"], db)):
+    if channel_info['opento'] == "private"  and (not is_allowed(id_channel, g.user["id_user"], db)):
         return render_template("Y/not_permitted.html")
     else:
         
@@ -117,7 +117,23 @@ def invite(id_channel):
         expiration = request.form['expiration']
         token = create_token(g.user['id_user'],id_channel, int(expiration), 'channel', db)
         message = "lien copier dans le press papier"
+        flash(f"{message}: {host}/y/join/{token}")
         return redirect(url_for("y.see", id_channel = id_channel))
     else:
         return render_template('Y/invite.html')
-        
+    
+
+@y_bp.route("/join/<string:token>", methods = ("GET","POST"))
+@login_required
+def join(token):
+    db = get_db()
+    if valid_token(token,db):
+        try:
+            token_information = get_token(token,db)
+            add_permition(token_information["id_channel_fk"], g.user['id_user'], "member", db)
+            #flash([x for x in token_information])
+            return redirect(url_for("y.see", id_channel = token_information["id_channel_fk"]))
+        except:
+            return redirect(url_for("home.home_page"))
+    else:
+        return render_template("Y/invite.html")

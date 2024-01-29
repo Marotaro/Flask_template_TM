@@ -1,3 +1,18 @@
+/*variables*/
+:root{
+    /*couleurs*/
+    --white:#ffffff;
+    --gray-white:#d3d3d3;
+    --background-color: #060606;
+    --frame-color: #424242;
+    --inputbox-color:#262626;
+    /*size*/
+    --boxtitle: max(5vw,40px);
+    /*font*/
+    --boxtitlefont-family: Arial, Helvetica, sans-serif;
+}
+/*--------------------------------------------------------------------------------------------------*/
+/*apparence elements page base*/
 body{
     background-color: #060606;
 }
@@ -10,3 +25,188 @@ body{
     aspect-ratio: 1 / 1 ;
     width: 90%;
 }
+/*--------------------------------------------------------------------------------------------------*/
+/*centrer des éléments*/
+.center-wh{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+/*--------------------------------------------------------------------------------------------------*/
+/*apparence elements page d'accueil*/
+#welcomepage-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    width: fit-content;
+    height: 95vh;
+    margin-left: -3vw;
+}
+
+#title_logo{
+    width: max(min(30vw,85vh),100px);
+    flex-shrink: 0;
+}
+
+#vl{
+    border-left: 5px solid var(--frame-color);
+    height: max(min(max(300px, 70vh),50vw),150px);
+    margin: 2vw;
+}
+
+#home_title{
+    width: fit-content;
+    height: fit-content;
+    flex-shrink: 0;
+    color: var(--gray-white);
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: max(10vw,40px);
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    margin-bottom: min(30px,2vh);
+    margin-top: 0px;
+}
+
+.log_button{
+    width: 100%;
+    height: fit-content;
+    flex-shrink: 0;
+    border-radius: 100px;
+    background:var(--gray-white);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    color:var(--background-color);
+    text-align: center;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: max(2vw,8px);
+    font-style: normal;
+    font-weight: 800;
+    line-height: normal;
+    text-decoration: none;
+    margin-top: 10%;
+    padding: 3%  0;
+}
+
+.log_button:hover{
+    box-shadow: 0px 0px 20px 10px rgba(255, 255, 255, 0.25);
+    transition: 0.3s;
+}
+/*--------------------------------------------------------------------------------------------------*/
+/*apparence elements pages log*/
+.logbox{
+    width: fit-content;
+    height: fit-content;
+    flex-shrink: 0;
+    border-radius: 60px;
+    background:var(--frame-color);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 5.05% auto;
+}
+
+.logbox #boxtitle{
+    padding: max(2vh,25px);
+    margin-top: 0px;
+    justify-content: left;
+    color: var(--white);
+    font-family: var(--boxtitlefont-family);
+    font-size: max(5vw,35px);
+    font-style: normal;
+    font-weight: 800;
+    line-height: normal;
+}
+
+.logbox #interactive{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    height: fit-content;
+}
+
+.logbox form{
+    margin-top: -15%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    flex-shrink: 0;
+    fill: var(--inputbox-color);
+}
+
+.logbox .inputcontainer{
+    width: 100%;
+    height: fit-content;
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 4%;
+}
+
+.logbox .inputcontainer label{
+    width: 90%;
+    margin-left: 5%;
+    margin-right: 0%;
+	font-size:20%;
+	color:var(--white);	
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 800;
+    line-height: normal;
+}
+
+.logbox .inputcontainer input{
+    color:var(--white);
+    width:80%;
+    height: max(7.5vh,30px);
+    border-radius: 60px;
+    background-color: var(--inputbox-color);
+    outline: 0px;
+    border: 0px;
+    padding: 0 5%;
+}
+
+.logbox #firstbutton{
+    width: fit-content;
+    background-color: var(--white);
+    border: 0px;
+    color:var(--background-color);
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: max(2vw,15px);
+    font-style: normal;
+    font-weight: 800;
+    line-height: normal;
+    text-decoration: none;
+    cursor: pointer;
+    margin-bottom: 5%;
+}
+
+.logbox #secondbutton{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: fit-content;
+    height: 4.5vh;
+    border-radius: 60px;
+    background: rgb(142, 142, 142);
+    border: 0px;
+    color:var(--background-color);
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: max(1.75vw,11px);
+    font-style: normal;
+    font-weight: 800;
+    line-height: normal;
+    text-decoration: none;
+    margin-bottom: 2%;
+    padding: 0 1vw ;
+}
+/*------------------------------------------------------------------------------------------------------*/
+/*apparence page home*/

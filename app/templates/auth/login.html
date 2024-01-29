@@ -1,7 +1,6 @@
 {% extends 'connection.html' %}
 
 {% block header %}login{% endblock %}
-{% block css %}<link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}"> {% endblock %}
 {% block title %}<h1 id="boxtitle">Se connecter</h1>{% endblock %}
 
 
@@ -17,10 +16,11 @@
         <input type="password" name="password" id="password" required>
       </div>
       <div class="inputcontainer">
-        <input type="submit" value="Se connecter" id="first_button">
+        <input type="submit" value="Se connecter" id="firstbutton">
       </div>
   </form>
-  <a href="{{ url_for('auth.register') }}" id="second_button">S'enregistrer</a>
   <a href="{{ url_for('password.forgot_password')}}">forgot passsword</a>
+  <a href="{{ url_for('auth.register') }}" id="secondbutton">S'enregistrer</a>
+
 </div>
   {% endblock %}

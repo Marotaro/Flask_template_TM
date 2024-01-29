@@ -4,19 +4,17 @@
     <title>Welcome - Y</title>
     <link rel="icon" href="{{ url_for('static', filename='shortcuticon.png') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/welcome.css')}}">
 </head>
 
 <body>
-    <div id="vertical">
-        <div id="container">
+    <div class="center-wh">
+        <div id="welcomepage-container">
             <img src="static/image/Y_logo2.svg" id="title_logo">
             <div id="vl"></div>
             <div id="interaction">
                 <h1 id="home_title">Bienvenue</h1>
                 <a href="{{ url_for('auth.login') }}" class="log_button">Se connecter</a>
                 <a href="{{ url_for('auth.register') }}" class="log_button">Créer un compte</a>
-
             </div>
         </div>
     </div>

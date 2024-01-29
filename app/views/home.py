@@ -16,7 +16,7 @@ def landing_page():
 
 @home_bp.route("/home", methods=("GET", "POST"))
 @login_required
-def home_page():
+def home():
     db = get_db()
 
 

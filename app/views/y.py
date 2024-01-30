@@ -53,7 +53,7 @@ def create():
 
             upload_image("y",request.files['image'],id_channel,db)
                     
-            return redirect(url_for("home.home_page"))
+            return redirect(url_for("home.home"))
         else:
             error = "No Y's name given"
             flash(error)
@@ -134,6 +134,6 @@ def join(token):
             #flash([x for x in token_information])
             return redirect(url_for("y.see", id_channel = token_information["id_channel_fk"]))
         except:
-            return redirect(url_for("home.home_page"))
+            return redirect(url_for("home.home"))
     else:
         return render_template("Y/invite.html")

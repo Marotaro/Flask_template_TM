@@ -1,0 +1,13 @@
+svg path{
+    stroke: #12aa58;
+    transition : stroke 0.3s ease;
+}
+
+body{
+    background-color: blueviolet;
+}
+
+
+svg:hover  path{
+    stroke: red;
+}

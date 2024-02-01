@@ -34,7 +34,12 @@
       <p>@{{ post['username'] }}</p>
     </div>
 
-    <p>{{ post['text'] }}</p>
+    <p>{{ post['text'] }} {{ post['id_post'] }}</p>
+    {% if post['id_post'] in liked_post %}
+    <i class="fa-solid fa-heart like-button-on" id="like-button-{{ post['id_post'] }}" onclick="like({{ post['id_post'] }})"></i>
+    {% else %}
+    <i class="fa-regular fa-heart like-button-off" id="like-button-{{ post['id_post'] }}" onclick="like({{ post['id_post'] }})"></i>
+    {% endif %}
   </div>
   {% endfor %}
   </div>

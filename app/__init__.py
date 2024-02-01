@@ -28,7 +28,6 @@ def create_app():
     app.register_blueprint(y_bp)
     app.register_blueprint(post_bp)
     app.register_blueprint(password_bp)
-
     # On retourne l'instance de l'application Flask
     return app
 

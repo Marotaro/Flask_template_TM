@@ -1,7 +1,8 @@
-from flask import (Blueprint, flash, g, redirect, render_template, request, session, url_for)
+from flask import (Blueprint, flash, g, redirect, render_template, request, session, url_for, jsonify)
 from app.db.db import get_db
 from app.utils import *
 from app.function.now import *
+from app.function.exist import *
 
 
 post_bp = Blueprint('post', __name__, url_prefix='/post')
@@ -25,5 +26,21 @@ def create_post(id_channel,respondto):
             return redirect(url_for('create_post', id_channel = id_channel, respondto = respondto))
     else:
         return render_template('post/create.html')
-        
-
+    
+@post_bp.route('/like_post/<id_post>', methods = ["GET"])
+@login_required
+def like_post(id_post):
+    db = get_db()
+    post = db.execute("SELECT CASE WHEN EXISTS (SELECT * FROM Post WHERE id_post= ?)THEN 1 ELSE 0 END", (id_post,)).fetchone()[0]
+    if post:
+        liked = db.execute("SELECT CASE WHEN EXISTS (SELECT * FROM Likes WHERE id_user_fk = ? AND id_post_fk = ?)THEN 1 ELSE 0 END", (g.user["id_user"], id_post,)).fetchone()[0]
+        if liked:
+            db.execute("DELETE FROM Likes WHERE id_user_fk = ? AND id_post_fk = ?", (g.user["id_user"], id_post,))
+            liked = False
+        else:
+            db.execute("INSERT INTO Likes (id_user_fk, id_post_fk) VALUES (?,?)",(g.user["id_user"], id_post,))
+            liked = True
+        db.commit()
+        return jsonify({"liked": liked}, 400)
+    else:
+        return jsonify({"error": "La publication n'existe pas"}, 400)

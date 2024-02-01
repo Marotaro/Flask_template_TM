@@ -3,6 +3,7 @@ from werkzeug.security import check_password_hash, generate_password_hash
 from app.db.db import get_db
 from app.function.now import datenow
 from app.function.image import upload_image
+from app.config import WORKING_DIR
 import os
 
 # Création d'un blueprint contenant les routes ayant le préfixe /auth/...

@@ -1,5 +1,5 @@
 from app.db.db import get_db
-from app.config import *
+from app.config import WORKING_DIR, host, SHORT_FOLDER_POST, SHORT_FOLDER_USER, SHORT_FOLDER_Y
 import os
 
 def upload_image(destination,image,fk_id,db):
@@ -12,12 +12,12 @@ def upload_image(destination,image,fk_id,db):
         if image and image.filename != '':
             extension = os.path.splitext(image.filename)[1]
             image.filename = str(lastidimage) + extension
-            image.save(os.path.join(WORKING_DIR, short_folder, image.filename))
-            link = short_folder + str(image.filename)
+            image.save(os.path.join(WORKING_DIR + short_folder, image.filename))
+            link = host + short_folder + str(image.filename)
             db.execute(f"INSERT INTO {table} ({fk_row_name}, location) VALUES (?,?)", (fk_id, link),)
         else:
-            db.execute(f"INSERT INTO {table} ({fk_row_name}, location) VALUES (?,?)", (fk_id,os.path.join(short_folder, "default.png")),)
+            db.execute(f"INSERT INTO {table} ({fk_row_name}, location) VALUES (?,?)", (fk_id,os.path.join(host, short_folder, "default.png")),)
     except:
-        db.execute(f"INSERT INTO {table} ({fk_row_name}, location) VALUES (?,?)", (fk_id,os.path.join(short_folder, "default.png")),)
+        db.execute(f"INSERT INTO {table} ({fk_row_name}, location) VALUES (?,?)", (fk_id,os.path.join(host, short_folder, "default.png")),)
     db.commit()
     

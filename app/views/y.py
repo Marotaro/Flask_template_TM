@@ -97,14 +97,9 @@ def browse():
     # récuperer la base de données
     db = get_db()
 
-    #récupérer les channels ou l'utilisateur est abonné
-    #followed_channel = db.execute(
-    #    "SELECT * FROM Channel JOIN Permission ON id_channel = id_channel_fk WHERE id_user_fk = ? AND type = member", (g.user['id_user'],)
-    #).fetchall()
-
     #récupérer les channels pour lesquelle l'utilisateur n'a pas de lien
     public_channel = db.execute(
-        "SELECT * FROM Channel WHERE opento = ?", ('public',)
+        "SELECT * FROM Channel JOIN Image_channel ON id_channel = id_channel_fk WHERE opento = ?", ('public',)
     ).fetchall()
 
     return render_template(

@@ -27,20 +27,65 @@
   {% endwith %}
 
   <a href="{{ url_for('y.invite', id_channel = channel_info['id_channel'])}}">invite</a>
-  <div id="postcontainer">
-  {% for post in channel_post%}
-  <div class="post">
-    <div class="userinfo">
-      <p>@{{ post['username'] }}</p>
+{% for post in channel_normal_post %}
+    <div class="center-h">
+    <div>
+      <div class="post">
+        <div class="upperpart">
+          <p>@{{ post['username'] }}</p>
+          <p><img src="{{ url_for('static', filename ='image/buttons/threepoint.svg')}}" alt="" onclick="menu('flex','threepoint')"></p>
+        </div>
+
+        <p>{{ post['text'] }}</p>
+
+        <div class="downpart">
+          {% if post['id_post'] in liked_post %}
+          <i class="fa-solid fa-heart like-button-on" id="like-button-{{ post['id_post'] }}" onclick="like({{ post['id_post'] }})"></i>
+          {% else %}
+          <i class="fa-regular fa-heart like-button-off" id="like-button-{{ post['id_post'] }}" onclick="like({{ post['id_post'] }})"></i>
+          {% endif %}
+          <i class="fa-regular fa-comment comment-button-off" id="comment-{{ post['id_post'] }}" onclick="showRespond({{ post['id_post'] }})"></i>
+          <i class="fa-regular fa-share-from-square"></i>
+        </div>
+      </div>
+
+
+      <!--
+      <div class="menu-option" id="threepoint">
+        <a href="{{ url_for('post.create_post', id_channel = channel_info['id_channel'], respondto = post['id_post'])}}">teste</a>
+      </div>-->
+
+      <div class="responds" id="responds-{{ post['id_post'] }}">
+        {% for respond_post in channel_respond_post %}
+          {% if respond_post['respond_to']|int == post['id_post'] %}
+          <div class="center-h">
+          <div class="little-post">
+            <div class="upperpart">
+              <p>@{{ respond_post['username'] }}</p>
+              <p><img src="{{ url_for('static', filename ='image/buttons/threepoint.svg')}}" alt="" onclick="menu('flex','threepoint')"></p>
+            </div>
+
+            <p>{{ respond_post['text'] }}</p>
+            
+            <div class="downpart">
+              {% if respond_post['id_post'] in liked_post %}
+              <i class="fa-solid fa-heart like-button-on" id="like-button-{{ respond_post['id_post'] }}" onclick="like({{ respond_post['id_post'] }})"></i>
+              {% else %}
+              <i class="fa-regular fa-heart like-button-off" id="like-button-{{ respond_post['id_post'] }}" onclick="like({{ respond_post['id_post'] }})"></i>
+              {% endif %}
+
+              <i class="fa-regular fa-share-from-square"></i>
+            </div>
+          </div>
+          </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
     </div>
 
-    <p>{{ post['text'] }} {{ post['id_post'] }}</p>
-    {% if post['id_post'] in liked_post %}
-    <i class="fa-solid fa-heart like-button-on" id="like-button-{{ post['id_post'] }}" onclick="like({{ post['id_post'] }})"></i>
-    {% else %}
-    <i class="fa-regular fa-heart like-button-off" id="like-button-{{ post['id_post'] }}" onclick="like({{ post['id_post'] }})"></i>
-    {% endif %}
-  </div>
-  {% endfor %}
-  </div>
+
+{% endfor %}
+
+
 {% endblock %}

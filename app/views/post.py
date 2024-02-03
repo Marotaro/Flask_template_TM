@@ -19,7 +19,7 @@ def create_post(id_channel,respondto):
         #récupérer la base de données
         db = get_db()
         if text:
-            db.execute("INSERT INTO Post (id_channel_fk, id_user_fk, date, respond_to, text, image) VALUES (?, ?, ?, ?, ?, ?)", (id_channel, g.user['id_user'], datenow(), respondto, text, image))
+            db.execute("INSERT INTO Post (id_channel_fk, id_user_fk, date, respond_to, text, image) VALUES (?, ?, ?, ?, ?, ?)", (id_channel, g.user['id_user'], datenow(), int(respondto), text, image))
             db.commit()
             return redirect(url_for("y.see", id_channel = id_channel))
         else:

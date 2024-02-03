@@ -1,7 +1,7 @@
-function menu() {
-    var hiddenButtons = document.getElementById('hiddenButtons');
-    if (hiddenButtons.style.display === "none") {
-        hiddenButtons.style.display = "flex";
+function menu(displayType,id) {
+    var hiddenButtons = document.getElementById(id);
+    if (hiddenButtons.style.display !== displayType) {
+        hiddenButtons.style.display = displayType;
     }
     else{
         hiddenButtons.style.display = "none";
@@ -31,4 +31,16 @@ function like(postId) {
                     likeButton.className ="fa-regular fa-heart like-button-off";
                 }
             });
+}
+
+function showRespond(postId) {
+    const responds = document.getElementById(`responds-${postId}`);
+    const comment = document.getElementById(`comment-${postId}`);
+    if (responds.style.display !== 'block') {
+        responds.style.display = 'block'; comment.className = "fa-solid fa-comment comment-button-on";
+    }
+    else{
+        responds.style.display = "none"; comment.className = "fa-regular fa-comment comment-button-off";
+    }
+
 }

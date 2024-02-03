@@ -58,6 +58,15 @@ body{
     color: #B41587;
     transition: 0.3s ease;
 }
+
+.comment-button-off{
+    color: #959595;
+}
+
+.comment-button-on{
+    color: #1C59B7;
+    transition: 0.3s ease;
+}
 /*--------------------------------------------------------------------------------------------------*/
 /*centrer des éléments*/
 .center-wh{
@@ -71,7 +80,7 @@ body{
 .center-h{
     display: flex;
     flex-direction: row ;
-    align-items: center;
+    justify-content: center;
 }
 /*--------------------------------------------------------------------------------------------------*/
 /*apparence elements page d'accueil*/
@@ -269,3 +278,62 @@ body{
 }
 /*------------------------------------------------------------------------------------------------------*/
 /*apparence page home*/
+/*------------------------------------------------------------------------------------------------------*/
+/*apparence page post*/
+
+.incolumn{
+    display: flex;
+    flex-direction: column;
+    width: fit-content;
+}
+
+.post{
+    display: flex;
+    flex-direction: column;
+    align-content: flex-start;
+    justify-content: flex-start;
+    width: 45vw;
+    background-color: #424242;
+    border-radius: 25px;
+    height: fit-content;
+    padding: 1.5% 1.25%;
+    margin-top: 2.5%;
+}
+
+.responds{
+    display: none;
+    transition: 0.5s ease;
+}
+
+.little-post{
+    display: flex;
+    flex-direction: column;
+    align-content: flex-start;
+    justify-content: flex-start;
+    width: 30vw;
+    background-color: #424242;
+    border-radius: 25px;
+    height: fit-content;
+    padding: 1.5% 1.25%;
+    margin-top: 2.5%;
+}
+
+.upperpart{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.downpart{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 5vw;
+}
+
+#threepoint{
+    display:none;
+    float: right;
+    position: relative;
+    right: 5px;
+}

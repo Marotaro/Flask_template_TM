@@ -80,18 +80,6 @@ body{
     width : 100%;
 }
 
-.post{
-    display: flex;
-    flex-direction: column;
-    align-content: flex-start;
-    justify-content: flex-start;
-    width: 45%;
-    background-color: #424242;
-    border-radius: 25px;
-    height: fit-content;
-    padding: 1.5% 1.25%;
-    margin-top: 2.5%;
-}
 
 #cascadmenu{
     position: fixed;

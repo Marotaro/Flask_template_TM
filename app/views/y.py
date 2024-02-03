@@ -79,15 +79,18 @@ def see(id_channel):
             "SELECT name FROM Related_channel JOIN Themes On id_theme = id_theme_fk WHERE id_channel_fk = ? ",
             (id_channel,),
         ).fetchall()
-        channel_post =  db.execute(
-            "SELECT text, image, username, id_post FROM Post JOIN User ON id_user = id_user_fk WHERE id_channel_fk = ?",(id_channel,)
+        channel_normal_post =  db.execute(
+            "SELECT text, image, username, id_post FROM Post JOIN User ON id_user = id_user_fk WHERE id_channel_fk = ? AND respond_to = -1",(id_channel,)
+        ).fetchall()
+        channel_respond_post = db.execute(
+            "SELECT text, image, username, id_post, respond_to FROM Post JOIN User ON id_user = id_user_fk WHERE id_channel_fk = ? AND respond_to != -1",(id_channel,)
         ).fetchall()
         liked_post = [x[0] for x in db.execute(
             "SELECT id_post_fk FROM Likes WHERE id_user_fk = ?", (g.user['id_user'],)
         ).fetchall()]
         print(liked_post)
         return render_template(
-            "Y/see.html", channel_info=channel_info, channel_themes=channel_themes, channel_post = channel_post, liked_post = liked_post
+            "Y/see.html", channel_info=channel_info, channel_themes=channel_themes, channel_normal_post = channel_normal_post, liked_post = liked_post, channel_respond_post = channel_respond_post
         )
     
 # Route /y/browse

@@ -33,7 +33,7 @@
       <div class="post">
         <div class="upperpart">
           <p>@{{ post['username'] }}</p>
-          <p><img src="{{ url_for('static', filename ='image/buttons/threepoint.svg')}}" alt="" onclick="menu('flex','threepoint')"></p>
+          <p><img src="{{ url_for('static', filename ='image/buttons/threepoint.svg')}}" alt="" onclick="menu('flex','threepoint-{{ post['id_post'] }}')"></p>
         </div>
 
         <p>{{ post['text'] }}</p>
@@ -50,12 +50,14 @@
       </div>
 
 
-      <!--
-      <div class="menu-option" id="threepoint">
-        <a href="{{ url_for('post.create_post', id_channel = channel_info['id_channel'], respondto = post['id_post'])}}">teste</a>
-      </div>-->
-
-      <div class="responds" id="responds-{{ post['id_post'] }}">
+      
+      <div class="menu-option" id="threepoint-{{ post['id_post'] }}">
+        <a href="{{ url_for('post.create_post', id_channel = channel_info['id_channel'], respondto = post['id_post'])}}">teste {{ post['id_post'] }} </a>
+      </div>
+      
+      <div class="responds hidden" id="responds-{{ post['id_post'] }}">
+      </div>
+        <!--
         {% for respond_post in channel_respond_post %}
           {% if respond_post['respond_to']|int == post['id_post'] %}
           <div class="center-h">
@@ -83,7 +85,7 @@
       </div>
     </div>
     </div>
-
+    -->
 
 {% endfor %}
 

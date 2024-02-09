@@ -48,6 +48,27 @@ body{
     fill: var(--white);
     transition: 0.3s ease;
 }
+
+::-webkit-scrollbar {
+    width: 10px;
+    margin-right: 1vw;
+    height: 150px;
+}
+
+::-webkit-scrollbar-track {
+    border-radius: 100px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--frame-color);
+    border-radius: 100px;
+    transition: 0.3s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(0deg, rgba(22,57,39,1) 0%, rgba(32,86,59,1) 100%);
+    transition: 0.3s ease;
+}
 /*--------------------------------------------------------------------------------------------------*/
 /*apparence boutons*/
 .like-button-off{
@@ -301,9 +322,10 @@ body{
 }
 
 .responds{
-    display: none;
-    transition: 0.5s ease;
+    display: block;
+    transition: opacity 0.5s ease, transform 0.5s ease;
 }
+
 
 .little-post{
     display: flex;
@@ -316,6 +338,20 @@ body{
     height: fit-content;
     padding: 1.5% 1.25%;
     margin-top: 2.5%;
+}
+
+.hidden{
+    opacity: 0;
+    visibility: hidden;
+    transform: scaleY(0);
+    transform-origin: top;
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.visible{
+    opacity: 1;
+    visibility: visible;
+    transform: scaleY(1);
 }
 
 .upperpart{

@@ -1,4 +1,4 @@
-from flask import (Blueprint, flash, g, redirect, render_template, request, session, url_for)
+from flask import (Blueprint, flash, g, redirect, render_template, request, session, url_for, jsonify)
 from app.db.db import get_db
 from app.utils import *
 from app.function.now import datenow
@@ -7,6 +7,7 @@ from app.function.permission import *
 from app.function.image import upload_image
 from app.function.token import *
 from app.config import *
+
 import os
 
 # Routes /y/...
@@ -82,16 +83,37 @@ def see(id_channel):
         channel_normal_post =  db.execute(
             "SELECT text, image, username, id_post FROM Post JOIN User ON id_user = id_user_fk WHERE id_channel_fk = ? AND respond_to = -1",(id_channel,)
         ).fetchall()
-        channel_respond_post = db.execute(
-            "SELECT text, image, username, id_post, respond_to FROM Post JOIN User ON id_user = id_user_fk WHERE id_channel_fk = ? AND respond_to != -1",(id_channel,)
-        ).fetchall()
         liked_post = [x[0] for x in db.execute(
             "SELECT id_post_fk FROM Likes WHERE id_user_fk = ?", (g.user['id_user'],)
         ).fetchall()]
         print(liked_post)
         return render_template(
-            "Y/see.html", channel_info=channel_info, channel_themes=channel_themes, channel_normal_post = channel_normal_post, liked_post = liked_post, channel_respond_post = channel_respond_post
+            "Y/see.html", channel_info=channel_info, channel_themes=channel_themes, channel_normal_post = channel_normal_post, liked_post = liked_post
         )
+    
+@y_bp.route("/get_comments/<int:id_post>", methods = ("GET","POST"))
+@login_required
+def get_comments(id_post):
+    db = get_db()
+    responds = []
+    comments = db.execute(
+            "SELECT text, image, username, id_post, respond_to FROM Post JOIN User ON id_user = id_user_fk WHERE respond_to = ?", (id_post,)
+        ).fetchall()
+    for comment in comments:
+        respond = {
+            'text' : comment[0],
+            'image' : comment[1],
+            'username' : comment[2],
+            'id_post' : comment[3],
+            'respond_to' : comment[4]
+        }
+        responds.append(respond)
+    liked_resp_post = [x[0] for x in db.execute(
+            "SELECT id_post_fk FROM Post JOIN Likes ON id_post= id_post_fk WHERE respond_to = ? AND Likes.id_user_fk = ?", (id_post,g.user['id_user'],)
+        ).fetchall()]
+    responds.append(liked_resp_post)
+    return jsonify(responds)
+
     
 # Route /y/browse
 @y_bp.route("/browse", methods = ("GET", "POST"))

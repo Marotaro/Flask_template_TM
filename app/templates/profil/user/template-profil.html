@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block header %}{% endblock %}
+
+{% block content %}
+<div>
+    <div class="side-bar">
+        <a href="">utilisateur</a>
+        <a href="">amis</a>
+        <a href="">publications</a>
+        <a href="">Ys</a>
+        <a href="">likes</a>
+        <a href="">favoris</a>
+        <a href="">paramètres</a>
+    </div>
+    {% block inside %}{% endblock %}
+</div>
+{% endblock %}

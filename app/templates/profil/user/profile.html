@@ -1,0 +1,64 @@
+<!doctype html>
+
+<head>
+  <title>Profil- Y</title>
+  <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='shortcuticon.png') }}">
+  {% block css %}{% endblock %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/page.css')}}">
+  <script src="{{ url_for('static', filename='js/script.js')}}"></script>
+  <script src="https://kit.fontawesome.com/5197e334d7.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+  <a href="{{ url_for('home.home')}}" id="homebutton"><i class="fa-solid fa-house home-button" href=""></i></a>
+  
+  <div class="side-bar">
+    <a href=""><i class="fa-solid fa-user profil-button-on"></i></a>
+    <a href=""><i class="fa-solid fa-users friends-button-off"></i></a>
+    <a href=""><i class="fa-solid fa-layer-group posts-button-off"></i></a>
+    <a href="">Ys</a>
+    <a href=""><i class="fa-solid fa-heart like-profil-button-off"></i></a>
+    <a href=""><i class="fa-solid fa-bookmark favoris-button-off"></i></a>
+    <a href=""><i class="fa-solid fa-gear parameters-button-off"></i></a>
+  </div>
+
+  <div class="center-h">
+    <div id="profil-head">
+      <div id="profil-short">
+        <p>@{{ g.user.username }}</p>
+        <img src="{{ g.user['location'] }}">
+      </div>
+      <hr id="line">
+    </div>
+  </div>
+
+  <div class="center-h">
+    <div id="user-general">
+      <div class="cadre" id="user-info">
+        <p>Date d'inscription: {{ g.user['date'] }}</p>
+      </div>
+      <div class="cadre" id="user-bio">
+        <p>Biographie: </p>
+        <p>{{ g.user['bio'] }}</p>
+      </div>
+      <div class="cadre" id="ys">
+        <p>Vous avez créez <b> {{ y_info['nb_created_y'] }} </b> et participez à <b> {{ y_info['nb_member_y'] }}</b> Ys
+        </p>
+      </div>
+      <div class="cadre" id="posts">
+        <p>Vous avez fait <b>{{ post_info['nb_posted_post'] }}</b> publications</p>
+      </div>
+      <div class="cadre" id="like">
+        <p>Vous avez aimez <b>{{ like_info['nb_liked_post'] }}</b> publications, vos publications ont <b>{{ like_info['nb_like_post']}}</b> likes</p>
+        <p></p>
+      </div>
+      <div class="cadre" id="favoris">
+
+      </div>
+    </div>
+  </div>
+
+
+  <a href="{{ url_for('password.changepassword')}}">changer de mot de passe</a>
+</body>

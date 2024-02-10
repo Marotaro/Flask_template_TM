@@ -10,5 +10,9 @@ user_bp = Blueprint('user', __name__, url_prefix='/user')
 @user_bp.route('/profile', methods=('GET', 'POST'))
 @login_required 
 def show_profile():
-    # Affichage de la page principale de l'application
-    return render_template('user/profile.html')
+    db = get_db()
+    y_info = db.execute("SELECT (SELECT COUNT(*) FROM Channel JOIN Permission ON Channel.id_channel = Permission.id_channel_fk WHERE Permission.id_user_fk = ? AND Permission.type = 'owner' ) AS nb_created_y, ( SELECT COUNT(*) FROM Channel JOIN Permission ON Channel.id_channel = Permission.id_channel_fk WHERE Permission.id_user_fk = ? AND (Permission.type = ('owner') OR Permission.type = ('member')) ) AS nb_member_y ", (g.user['id_user'],g.user['id_user'],)).fetchone()
+    post_info = db.execute("SELECT ( SELECT COUNT(*) FROM Post WHERE id_user_fk = ? ) AS nb_posted_post", (g.user['id_user'],)).fetchone()
+    like_info = db.execute("SELECT ( SELECT COUNT(*) FROM Likes WHERE id_user_fk = ? ) AS nb_liked_post, ( SELECT COUNT(*) FROM Likes JOIN Post ON id_post = id_post_fk WHERE Post.id_user_fk = ? ) AS nb_like_post", (g.user['id_user'],g.user['id_user'],)).fetchone()
+#    favorit_info = db.execute("", (,)).fetchone()
+    return render_template('profil/user/profile.html', y_info = y_info, post_info = post_info, like_info = like_info )

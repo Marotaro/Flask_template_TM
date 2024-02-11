@@ -3,7 +3,6 @@
 <head>
   <title>Profil- Y</title>
   <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='shortcuticon.png') }}">
-  {% block css %}{% endblock %}
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/page.css')}}">
   <script src="{{ url_for('static', filename='js/script.js')}}"></script>
@@ -11,12 +10,12 @@
 </head>
 
 <body>
-  <a href="{{ url_for('home.home')}}" id="homebutton"><i class="fa-solid fa-house home-button" href=""></i></a>
+  <a href="{{ url_for('home.home')}}" id="homebutton"><i class="fa-solid fa-house home-button"></i></a>
   
   <div class="side-bar">
-    <a href=""><i class="fa-solid fa-user profil-button-on"></i></a>
+    <a href="{{ url_for('user.show_profile') }}"><i class="fa-solid fa-user profil-button-on"></i></a>
     <a href=""><i class="fa-solid fa-users friends-button-off"></i></a>
-    <a href=""><i class="fa-solid fa-layer-group posts-button-off"></i></a>
+    <a href="{{ url_for('user.show_posts') }}"><i class="fa-solid fa-layer-group posts-button-off"></i></a>
     <a href="">Ys</a>
     <a href=""><i class="fa-solid fa-heart like-profil-button-off"></i></a>
     <a href=""><i class="fa-solid fa-bookmark favoris-button-off"></i></a>
@@ -51,10 +50,9 @@
       </div>
       <div class="cadre" id="like">
         <p>Vous avez aimez <b>{{ like_info['nb_liked_post'] }}</b> publications, vos publications ont <b>{{ like_info['nb_like_post']}}</b> likes</p>
-        <p></p>
       </div>
       <div class="cadre" id="favoris">
-
+        <p>Vous avez mis en favoris <b>{{ favorit_info['nb_favorited_post'] }}</b> publications, <b>{{ favorit_info['nb_favorit_post']}}</b> sont en favoris </p>
       </div>
     </div>
   </div>

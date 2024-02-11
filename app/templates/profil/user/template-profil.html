@@ -1,18 +1,31 @@
-{% extends 'base.html' %}
+<!doctype html>
 
-{% block header %}{% endblock %}
+<head>
+  <title>{% block title_page %}{% endblock %}</title>
+  <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='shortcuticon.png') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/page.css')}}">
+  <script src="{{ url_for('static', filename='js/script.js')}}"></script>
+  <script src="https://kit.fontawesome.com/5197e334d7.js" crossorigin="anonymous"></script>
+</head>
 
-{% block content %}
-<div>
-    <div class="side-bar">
-        <a href="">utilisateur</a>
-        <a href="">amis</a>
-        <a href="">publications</a>
-        <a href="">Ys</a>
-        <a href="">likes</a>
-        <a href="">favoris</a>
-        <a href="">paramètres</a>
+<body>
+  <a href="{{ url_for('home.home')}}" id="homebutton"><i class="fa-solid fa-house home-button"></i></a>
+  
+  <div class="side-bar">
+    {% block button %}{% endblock %}
+  </div>
+  <div class="center-h">
+    <div id="profil-head">
+        <div class="profil-title">
+            {% block title %}{% endblock %}
+        </div>
+        <hr id="line">
     </div>
-    {% block inside %}{% endblock %}
-</div>
-{% endblock %}
+  </div>
+
+  <div>
+    {% block content %}
+    {% endblock %}
+  </div>
+</body>

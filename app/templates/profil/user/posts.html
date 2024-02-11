@@ -1,0 +1,54 @@
+{% extends 'profil/user/template-profil.html' %}
+
+{% block title_page %}
+    MyPosts
+{% endblock %}
+
+{% block button %}
+<a href="{{ url_for('user.show_profile') }}"><i class="fa-solid fa-user profil-button-off"></i></a>
+<a href=""><i class="fa-solid fa-users friends-button-off"></i></a>
+<a href="{{ url_for('user.show_posts') }}"><i class="fa-solid fa-layer-group posts-button-on"></i></a>
+<a href="">Ys</a>
+<a href=""><i class="fa-solid fa-heart like-profil-button-off"></i></a>
+<a href=""><i class="fa-solid fa-bookmark favoris-button-off"></i></a>
+<a href=""><i class="fa-solid fa-gear parameters-button-off"></i></a>
+{% endblock %}
+
+{% block title %}
+    <h1>MyPosts</h1>
+{% endblock %}
+
+
+{% block content %}
+    {% for post in posts %}
+    <div class="center-h">
+        <div>
+          <div class="post">
+            <div class="upperpart">
+                <p>@{{ g.user['username'] }}{{post['id_post']}}</p>
+                <div class="post-info-profil">
+                    <p>depuis <p class="y-little-name">/{{post['ChannelName'] }}</p></p>
+                    {% if post['RespondTo'] %}
+                    <p>à <p class="user-little-name">@{{post['RespondTo']}}</p></p>
+                    {% endif %}
+                    <p><img src="{{ url_for('static', filename ='image/buttons/threepoint.svg')}}" alt="" onclick="menu('flex','threepoint-{{ post['id_post'] }}')"></p>
+                </div>
+            </div>
+    
+            <p>{{ post['text'] }}</p>
+    
+            <div class="downpart">
+              {% if post['id_post']|int in liked_posts %}
+              <i class="fa-solid fa-heart like-button-on" id="like-button-{{ post['id_post'] }}" onclick="like({{ post['id_post'] }})"></i>
+              {% else %}
+              <i class="fa-regular fa-heart like-button-off" id="like-button-{{ post['id_post'] }}" onclick="like({{ post['id_post'] }})"></i>
+              {% endif %}
+              <i class="fa-regular fa-share-from-square"></i>
+            </div>
+
+            <div class="responds hidden" id="responds-{{ post['id_post'] }}"></div>
+          </div>
+        </div>
+    </div>
+    {% endfor %}
+{% endblock %}

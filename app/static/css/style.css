@@ -8,6 +8,8 @@
     --button:#959595;
     --lightgray: rgb(142, 142, 142);
     --inputbox-color:#262626;
+    --cyan: #038d86;
+    --vert: #059A6D;
     /*size*/
     --boxtitle: max(5vw,40px);
     /*font*/
@@ -396,6 +398,8 @@ body{
     height: fit-content;
     padding: 1.5% 1.25%;
     margin-top: 2.5%;
+    font-family:Arial, Helvetica, sans-serif;
+    font-size: 17px;
 }
 
 .responds{
@@ -452,7 +456,7 @@ body{
 }
 
 /*------------------------------------------------------------------------------------------------------*/
-/*apparence page profil*/
+/*apparence page profil générale*/
 
 .side-bar{
     display: flex;
@@ -545,4 +549,33 @@ body{
 #user-general .cadre p {
     font-family:Arial, Helvetica, sans-serif;
     font-size: 20px;
+}
+
+#user-general .cadre #user-bio{
+    display: flex;
+    flex-direction: column;
+}
+
+/*------------------------------------------------------------------------------------------------------*/
+/*apparence page profil posts*/
+.post-info-profil{
+    display: flex;
+    flex-direction: row;
+    gap: 0.5vw;
+    font-family:Arial, Helvetica, sans-serif;
+    font-size: 17px;
+    width: fit-content;
+    text-overflow: clip;
+}
+
+.y-little-name{
+    color: var(--cyan);
+    max-width: 7vw;
+    overflow-x: hidden;
+    text-overflow: clip;
+}
+
+.user-little-name{
+    color: var(--vert);
+    text-overflow: clip;
 }

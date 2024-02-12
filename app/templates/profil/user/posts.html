@@ -1,16 +1,16 @@
 {% extends 'profil/user/template-profil.html' %}
 
 {% block title_page %}
-    MyPosts
+    MyPosts - Y
 {% endblock %}
 
 {% block button %}
 <a href="{{ url_for('user.show_profile') }}"><i class="fa-solid fa-user profil-button-off"></i></a>
 <a href=""><i class="fa-solid fa-users friends-button-off"></i></a>
 <a href="{{ url_for('user.show_posts') }}"><i class="fa-solid fa-layer-group posts-button-on"></i></a>
-<a href="">Ys</a>
-<a href=""><i class="fa-solid fa-heart like-profil-button-off"></i></a>
-<a href=""><i class="fa-solid fa-bookmark favoris-button-off"></i></a>
+<a href="{{ url_for('user.show_ys') }}">Ys</a>
+<a href="{{ url_for('user.show_likes') }}"><i class="fa-solid fa-heart like-profil-button-off"></i></a>
+<a href="{{ url_for('user.show_favorits') }}"><i class="fa-solid fa-bookmark favoris-button-off"></i></a>
 <a href=""><i class="fa-solid fa-gear parameters-button-off"></i></a>
 {% endblock %}
 
@@ -20,12 +20,13 @@
 
 
 {% block content %}
+  {% if posts %}
     {% for post in posts %}
     <div class="center-h">
         <div>
           <div class="post">
             <div class="upperpart">
-                <p>@{{ g.user['username'] }}{{post['id_post']}}</p>
+                <p>@{{ g.user['username'] }}</p>
                 <div class="post-info-profil">
                     <p>depuis <p class="y-little-name">/{{post['ChannelName'] }}</p></p>
                     {% if post['RespondTo'] %}
@@ -51,4 +52,7 @@
         </div>
     </div>
     {% endfor %}
+  {% else %}
+    <p>Vous n'avez pas encore fait de publications</p>
+  {% endif %}
 {% endblock %}

@@ -16,9 +16,9 @@
     <a href="{{ url_for('user.show_profile') }}"><i class="fa-solid fa-user profil-button-on"></i></a>
     <a href=""><i class="fa-solid fa-users friends-button-off"></i></a>
     <a href="{{ url_for('user.show_posts') }}"><i class="fa-solid fa-layer-group posts-button-off"></i></a>
-    <a href="">Ys</a>
-    <a href=""><i class="fa-solid fa-heart like-profil-button-off"></i></a>
-    <a href=""><i class="fa-solid fa-bookmark favoris-button-off"></i></a>
+    <a href="{{ url_for('user.show_ys') }}">Ys</a>
+    <a href="{{ url_for('user.show_likes') }}"><i class="fa-solid fa-heart like-profil-button-off"></i></a>
+    <a href="{{ url_for('user.show_favorits') }}"><i class="fa-solid fa-bookmark favoris-button-off"></i></a>
     <a href=""><i class="fa-solid fa-gear parameters-button-off"></i></a>
   </div>
 
@@ -42,17 +42,17 @@
         <p>{{ g.user['bio'] }}</p>
       </div>
       <div class="cadre" id="ys">
-        <p>Vous avez créez <b> {{ y_info['nb_created_y'] }} </b> et participez à <b> {{ y_info['nb_member_y'] }}</b> Ys
+        <p>Vous avez créé <b> {{ y_info['nb_created_y'] }} </b> et participez à <b> {{ y_info['nb_member_y'] }}</b> Ys
         </p>
       </div>
       <div class="cadre" id="posts">
         <p>Vous avez fait <b>{{ post_info['nb_posted_post'] }}</b> publications</p>
       </div>
       <div class="cadre" id="like">
-        <p>Vous avez aimez <b>{{ like_info['nb_liked_post'] }}</b> publications, vos publications ont <b>{{ like_info['nb_like_post']}}</b> likes</p>
+        <p>Vous avez aimé <b>{{ like_info['nb_liked_post'] }}</b> publications, vos publications ont <b>{{ like_info['nb_like_post']}}</b> likes</p>
       </div>
       <div class="cadre" id="favoris">
-        <p>Vous avez mis en favoris <b>{{ favorit_info['nb_favorited_post'] }}</b> publications, <b>{{ favorit_info['nb_favorit_post']}}</b> sont en favoris </p>
+        <p>Vous avez mis en favori <b>{{ favorit_info['nb_favorited_post'] }}</b> publications, <b>{{ favorit_info['nb_favorit_post']}}</b> sont en favoris </p>
       </div>
     </div>
   </div>

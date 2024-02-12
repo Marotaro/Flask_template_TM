@@ -1,0 +1,51 @@
+{% extends 'profil/user/template-profil.html' %}
+
+{% block title_page %}
+    MyLikes - Y
+{% endblock %}
+
+{% block button %}
+<a href="{{ url_for('user.show_profile') }}"><i class="fa-solid fa-user profil-button-off"></i></a>
+<a href=""><i class="fa-solid fa-users friends-button-off"></i></a>
+<a href="{{ url_for('user.show_posts') }}"><i class="fa-solid fa-layer-group posts-button-off"></i></a>
+<a href="{{ url_for('user.show_ys') }}">Ys</a>
+<a href="{{ url_for('user.show_likes') }}"><i class="fa-solid fa-heart like-profil-button-on"></i></a>
+<a href="{{ url_for('user.show_favorits') }}"><i class="fa-solid fa-bookmark favoris-button-off"></i></a>
+<a href=""><i class="fa-solid fa-gear parameters-button-off"></i></a>
+{% endblock %}
+
+{% block title %}
+    <h1>MyLikes</h1>
+{% endblock %}
+
+{% block content %}
+  {% if likes %}
+    {% for like in likes %}
+    <div class="center-h">
+        <div>
+          <div class="post">
+            <div class="upperpart">
+                <p>@{{ like['CreatorName'] }}</p>
+                <div class="post-info-profil">
+                    <p>depuis <p class="y-little-name">/{{like['ChannelName'] }}</p></p>
+                    {% if like['RespondTo'] %}
+                    <p>à <p class="user-little-name">@{{like['RespondTo']}}</p></p>
+                    {% endif %}
+                    <p><img src="{{ url_for('static', filename ='image/buttons/threepoint.svg')}}" alt="" onclick="menu('flex','threepoint-{{ like['id_post'] }}')"></p>
+                </div>
+            </div>
+    
+            <p>{{ like['text'] }}</p>
+    
+            <div class="downpart">
+              <i class="fa-solid fa-heart like-button-on" id="like-button-{{ like['id_post'] }}" onclick="like({{ like['id_post'] }})"></i>
+              <i class="fa-regular fa-share-from-square"></i>
+            </div>
+          </div>
+        </div>
+    </div>
+    {% endfor %}
+  {% else %}
+    <p>Vous n'avez pas encore aimer de publications</p>
+  {% endif %}
+{% endblock %}

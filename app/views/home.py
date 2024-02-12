@@ -18,8 +18,6 @@ def landing_page():
 @login_required
 def home():
     db = get_db()
-
-
     # récupérer les channels
     ##celle ou l'utilisateur est l'owner
     mychannels = get_y_by_user(g.user['id_user'], "owner", db)

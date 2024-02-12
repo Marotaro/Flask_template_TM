@@ -1,6 +1,7 @@
 import os
 from flask import Flask
 from app.utils import *
+from app.config import host
 
 # Importation des blueprints de l'application
 # Chaque blueprint contient des routes pour l'application
@@ -28,6 +29,11 @@ def create_app():
     app.register_blueprint(y_bp)
     app.register_blueprint(post_bp)
     app.register_blueprint(password_bp)
+
+    @app.before_request
+    def before_request():
+        g.host = host
+
     # On retourne l'instance de l'application Flask
     return app
 

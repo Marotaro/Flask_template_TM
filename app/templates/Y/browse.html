@@ -13,7 +13,7 @@
   {% for channel in public_channel %}
   <a href="{{ url_for('y.see', id_channel = channel['id_channel'])}}">
       <div class="channel_bulb">
-        <img src="{{ channel['location'] }}" class="channel_icon">
+        <img src="{{ g.host + '/' + channel['location'] }}" class="channel_icon">
         {{ channel['name'] }}
       </div>
     </a>

@@ -9,24 +9,36 @@
 {% endblock %}
 
 {% block content %} 
-<svg id="ekTt3RfQsxE1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 74.42131 95.25795" shape-rendering="geometricPrecision" text-rendering="geometricPrecision" width="74.42131" height="95.25795"><g transform="translate(-9.53026-200.05)"><g transform="matrix(8.6106 0 0 8.6106-1512.37-907.878)"><path d="M179.27529,134.32648l.81443.75241c.57189.6146.51953,1.77491-.0951,2.29029l-2.05465,2.15801c-.82683-.55673-1.43868-1.92374-.54571-3.05924l2.01746-2.01745" fill="#2d2d2d" fill-opacity="0" fill-rule="evenodd" stroke-width="0.396875" stroke-linejoin="round"/><path d="M181.64071,135.70674c.59402-.71403.97962-1.75504.29765-2.497l-4.05143-4.34909c-1.2678,1.20165-1.08038,2.43637-.42995,3.25768l2.69545,2.96003c.57189.6146.51953,1.77491-.0951,2.29029l1.61409-1.69859" fill="#2d2d2d" fill-opacity="0" fill-rule="evenodd" stroke-width="0.396875" stroke-linejoin="round"/><path d="M180.03242,137.40143l1.60404-1.68672c.59402-.71403.97962-1.75504.29765-2.497l-4.05143-4.34909c-1.2678,1.20165-1.08038,2.43637-.42995,3.25768l2.69545,2.96003c.57189.6146.51953,1.77491-.0951,2.29029l-2.05465,2.15801c-.82683-.55673-1.43868-1.92374-.54571-3.05924l2.01746-2.01745" fill="none" fill-rule="evenodd" stroke="#2d2d2d" stroke-width="0.396875" stroke-linejoin="round"/><path d="M182.00018,132.01062c.79375-.8158,1.95821-2.50386,2.92695-1.45521.92961,1.0063-.79375,2.49701-1.90169,3.65456.44383-1.04799-.0656-1.17225-1.02526-2.19935Z" fill="#2d2d2d" fill-opacity="0" fill-rule="evenodd" stroke="#2d2d2d" stroke-width="0.397" stroke-linecap="round" stroke-linejoin="round"/></g></g></svg>
-<li><a href="{{ url_for('post.create_post', id_channel = channel_info['id_channel'], respondto = (-1))}}">new_post</a></li>
-  {{ channel_info['name'] }}
-  {% if channel_themes %}
-    {% for theme in channel_themes %}
-      <li> {{ theme[0] }} </li>
-    {% endfor %}
-  {% else %}
-    <li> Ce Y n'a pas de theme</li>
-  {% endif %}
+<div id="head-home">
+  <div class="center-h">
+    <div id="head-home-element" >
+      <a href="{{ url_for('post.create_post', id_channel = channel_info['id_channel'], respondto = (-1))}}"><i class="fa-solid fa-paper-plane"></i></a>
+      <a href="{{ url_for('y.invite', id_channel = channel_info['id_channel'])}}"><i class="fa-solid fa-user-plus"></i></a>
+    </div>
+  </div>
+</div> 
 
-  {% with message = get_flashed_messages() %}
-  {% if message %}
-  <li>{{ message }}</li>
-  {% endif %}
-  {% endwith %}
+<div class="center-h">
+  <div class="incolumn">
+    {% if channel_info['description'] %}
+    <div class="channel-info">
+      <p>Description:</p>
+      <p>{{ channel_info['description'] }}</p>
+    </div>
+    {% endif %}
+    {% if channel_themes %}
+    <div class="channel-info" >
+      <p>Themes:</p>
+      <div id="themes">
+        {% for theme in channel_themes %}
+        <p>#{{ theme[0] }}</p>
+        {% endfor %}
+      </div>
+    </div>
+    {% endif %}
+  </div>
+</div>
 
-  <a href="{{ url_for('y.invite', id_channel = channel_info['id_channel'])}}">invite</a>
 {% for post in channel_normal_post %}
     <div class="center-h">
     <div>
@@ -47,16 +59,17 @@
           <i class="fa-regular fa-comment comment-button-off" id="comment-{{ post['id_post'] }}" onclick="showRespond({{ post['id_post'] }})"></i>
           <i class="fa-regular fa-share-from-square"></i>
         </div>
+
       </div>
 
 
       
-      <div class="menu-option" id="threepoint-{{ post['id_post'] }}">
-        <a href="{{ url_for('post.create_post', id_channel = channel_info['id_channel'], respondto = post['id_post'])}}">teste {{ post['id_post'] }} </a>
-      </div>
+
       
       <div class="responds hidden" id="responds-{{ post['id_post'] }}">
       </div>
+    </div>
+    </div>
         <!--
         {% for respond_post in channel_respond_post %}
           {% if respond_post['respond_to']|int == post['id_post'] %}

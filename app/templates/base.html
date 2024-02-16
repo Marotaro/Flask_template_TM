@@ -17,13 +17,14 @@
                 <hr id="line">
             </div>
 
-                <a href="{{ url_for('home.home')}}" id="homebutton"><i class="fa-solid fa-house"></i></a>
+                <a href="{{ url_for('home.home')}}" id="homebutton"><i class="fa-solid fa-house home-button"></i></a>
 
-            <div id="cascadmenu">
-                <button id="showButtons" onclick="menu('flex','hiddenButtons')"><img src="{{ g.user['location'] }}" id="pp"></button>
-                <div id="hiddenButtons">
-                  <a href="{{ url_for('user.show_profile') }}" class="buttons"><img src="{{ url_for('static', filename ='image/buttons/userbuttons/userbutton.svg')}}" class="buttonsicon"></a>
-                  <a href="{{ url_for('auth.logout')}}" class="buttons"><img src="{{ url_for('static', filename = 'image/buttons/logoutbuttons/logoutbutton.svg')}}" class="buttonsicon"></a>
+
+            <div id="rolling-menu-container">
+                <img src="{{ g.host + '/' + g.user['location'] }}" id="pp" onclick="menu()">
+                <div id="buttons-container">
+                    <a href="{{ url_for('user.show_profile') }}"><i class="fa-solid fa-user"></i></a>
+                    <a href="{{ url_for('auth.logout')}}"><i class="fa-solid fa-right-from-bracket"></i></a>
                 </div>
             </div>
         <div>{% block content %}{% endblock %}</div>

@@ -26,7 +26,7 @@
     <div id="profil-head">
       <div id="profil-short">
         <p>@{{ g.user.username }}</p>
-        <img src="{{ g.user['location'] }}">
+        <img src="{{ g.host + '/' + g.user['location'] }}">
       </div>
       <hr id="line">
     </div>

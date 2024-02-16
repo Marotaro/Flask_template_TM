@@ -13,11 +13,11 @@ def upload_image(destination,image,fk_id,db):
             extension = os.path.splitext(image.filename)[1]
             image.filename = str(lastidimage) + extension
             image.save(os.path.join(WORKING_DIR + short_folder, image.filename))
-            link = host + short_folder + str(image.filename)
+            link = short_folder + str(image.filename)
             db.execute(f"INSERT INTO {table} ({fk_row_name}, location) VALUES (?,?)", (fk_id, link),)
         else:
-            db.execute(f"INSERT INTO {table} ({fk_row_name}, location) VALUES (?,?)", (fk_id,os.path.join(host, short_folder, "default.png")),)
+            db.execute(f"INSERT INTO {table} ({fk_row_name}, location) VALUES (?,?)", (fk_id,os.path.join(short_folder, "default.png")),)
     except:
-        db.execute(f"INSERT INTO {table} ({fk_row_name}, location) VALUES (?,?)", (fk_id,os.path.join(host, short_folder, "default.png")),)
+        db.execute(f"INSERT INTO {table} ({fk_row_name}, location) VALUES (?,?)", (fk_id,os.path.join(short_folder, "default.png")),)
     db.commit()
     

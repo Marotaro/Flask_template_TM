@@ -25,11 +25,6 @@ body{
     width: 1vw;
 }
 
-#pp{
-    aspect-ratio: 1 / 1 ;
-    width: 90%;
-}
-
 #homebutton{
     position: fixed;
     top: 1vh;
@@ -45,6 +40,64 @@ body{
     margin-bottom: 5%;
     z-index: 3;
     text-decoration: none;
+}
+
+#rolling-menu-container{
+    position: fixed;
+    top: 1vh;
+    right: 1.15vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 3;
+    width: fit-content;
+}
+
+#pp{
+    width: 2.75vw;
+    height: 2.75vw;
+    border-radius: 100%;
+    padding: 0.25vw;
+    background-color: var(--frame-color);
+    z-index: 1;
+    cursor: pointer;
+}
+
+#buttons-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    top: -2vh;
+    height: 4vh;
+    gap: 1vh;
+    transform: scaleY(0);
+    transform-origin: top;
+    transition: transform  0.3s, top 0.3s;
+    z-index: 0;
+}
+
+#buttons-container a{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 1vw;
+    height: 1vw;
+    padding: 1vw;
+    background-color: var(--frame-color);
+    border-radius: 100%;
+    text-decoration: none;
+}
+
+#buttons-container a i{
+    font-size: 1.5vw;
+    color: var(--button);
+    transition: color 0.3s ease;
+}
+
+#buttons-container a:hover i{
+    color: var(--white);
+    transition: color 0.3s ease;
 }
 
 #homebutton:hover .home-button{
@@ -378,13 +431,73 @@ body{
 }
 /*------------------------------------------------------------------------------------------------------*/
 /*apparence page home*/
+
+#head-home{
+    position: fixed;
+    top: 1vh;
+    width: 100%;
+}
+
+#head-home-element{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 85%;
+}
+
+#head-home-element a{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 1vw;
+    height: 1vw;
+    padding: 1vw;
+    background-color: var(--frame-color);
+    border-radius: 100%;
+    text-decoration: none;
+}
+
+#head-home-element a i{
+    font-size: 1.5vw;
+    color: var(--button);
+    transition: color 0.3s ease;
+}
+
+#head-home-element a:hover i{
+    color: var(--white);
+    transition: color 0.3s ease;
+}
+
 /*------------------------------------------------------------------------------------------------------*/
 /*apparence page post*/
+
+.channel-info{
+    width: 60%;
+    height: fit-content;
+    padding: 0 2%;
+    background-color: var(--frame-color);
+    border-radius: 25px;
+    margin-bottom: 2vh;
+}
+
+.channel-info p{
+    font-family:Arial, Helvetica, sans-serif;
+    font-size: 17px;
+    line-height: 3vh;
+}
+
+.channel-info #themes{
+    display: flex;
+    flex-direction: row;
+    gap: 2vw;
+    margin-top: -0.5vh;
+    color: var(--cyan);
+}
 
 .incolumn{
     display: flex;
     flex-direction: column;
-    width: fit-content;
+    align-items: center;
 }
 
 .post{
@@ -400,6 +513,7 @@ body{
     margin-top: 2.5%;
     font-family:Arial, Helvetica, sans-serif;
     font-size: 17px;
+    line-height: 3vh;
 }
 
 .responds{
@@ -448,12 +562,7 @@ body{
     gap: 5vw;
 }
 
-#threepoint{
-    display:none;
-    float: right;
-    position: relative;
-    right: 5px;
-}
+
 
 /*------------------------------------------------------------------------------------------------------*/
 /*apparence page profil générale*/
@@ -497,11 +606,12 @@ body{
     border: none;
     height: 3px;
     margin-top: 5vh;
+    margin-bottom: 5vh;
 }
 
 #profil-head{
     width: 80vw;
-    margin-top: 10vh;
+    margin-top: 6vh;
 }
 
 #profil-short{
@@ -519,7 +629,7 @@ body{
 }
 
 #profil-short img{
-    width: 10vw;
+    width: 12vw;
     aspect-ratio: 1/1;
     border-radius: 100%;
     padding: 0.65vw;

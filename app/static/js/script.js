@@ -1,11 +1,15 @@
-function menu(displayType,id) {
-    var hiddenButtons = document.getElementById(id);
-    if (hiddenButtons.style.display !== displayType) {
-        hiddenButtons.style.display = displayType;
+function menu() {
+    var buttonsContainer = document.getElementById('buttons-container')
+    if (buttonsContainer.style.transform !== "scaleY(1)") {
+        buttonsContainer.style.transform = "scaleY(1)";
+        buttonsContainer.style.display = "flex";
+        buttonsContainer.style.top = "1vh";
+    } else {
+        buttonsContainer.style.transform = "scaleY(0)";
+        buttonsContainer.style.display = "flex";
+        buttonsContainer.style.top = "-2vh";
     }
-    else{
-        hiddenButtons.style.display = "none";
-    }
+    
 }
 
 function copy_to_clipboard(text,alert) {

@@ -7,10 +7,16 @@
 {% block title_page %}Home{% endblock %}
 
 {% block content%}
-  <li><span>{{ g.user['username'] }}</span>
-  <a href="{{ url_for('y.create')}}">create</a>
+  <div id="head-home">
+    <div class="center-h">
+      <div id="head-home-element" >
+        <a href="{{ url_for('y.create')}}"><i class="fa-solid fa-plus"></i></a>
+        <a href="{{ url_for('y.browse')}}"><i class="fa-solid fa-magnifying-glass"></i></a>
+      </div>
+    </div>
+  </div>
   <div class="element">
-    <h3>Mes Channels</h3>
+    <h3>Mes Ys</h3>
     {% if mychannels %}
       <div class="midle_container">
       {% for channel in mychannels %}
@@ -26,7 +32,7 @@
       <p>vous n'avez pas de channel</p>
     {% endif %}
 
-    <h3>Membres</h3>
+    <h3>members Ys</h3>
     {% if memberchannels %}
       <div class="midle_container">
       {% for channel in memberchannels %}
@@ -42,5 +48,5 @@
       <p>vous n'êtes pas membre d'un Y</p>
     {% endif %}
   </div>
-  <a href="{{ url_for('y.browse')}}">browse</a>
+  
 {% endblock %}

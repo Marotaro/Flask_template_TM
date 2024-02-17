@@ -70,12 +70,11 @@ def see(id_channel):
     # récupérer la base de données
     db = get_db()
     channel_info = db.execute(
-            "SELECT * FROM Channel WHERE id_channel = ?", (id_channel,)
+            "SELECT * FROM Channel JOIN Image_channel ON id_channel = id_channel_fk WHERE id_channel = ?", (id_channel,)
         ).fetchone()
     if channel_info['opento'] == "private"  and (not is_allowed(id_channel, g.user["id_user"], db)):
         return render_template("Y/not_permitted.html")
     else:
-        
         channel_themes = db.execute(
             "SELECT name FROM Related_channel JOIN Themes On id_theme = id_theme_fk WHERE id_channel_fk = ? ",
             (id_channel,),
@@ -86,7 +85,6 @@ def see(id_channel):
         liked_post = [x[0] for x in db.execute(
             "SELECT id_post_fk FROM Likes WHERE id_user_fk = ?", (g.user['id_user'],)
         ).fetchall()]
-        print(liked_post)
         return render_template(
             "Y/see.html", channel_info=channel_info, channel_themes=channel_themes, channel_normal_post = channel_normal_post, liked_post = liked_post
         )

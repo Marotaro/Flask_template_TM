@@ -113,3 +113,13 @@ function showRespond(postId) {
     }
 
 }
+
+
+//resize textarea
+textarea = document.querySelector(".post-textarea#text");
+textarea.addEventlistener('input', autoResize, false);
+
+function autoResize(){
+    this.style.height = 'auto'
+    this.style.height = this.scrollHeight + '5px'
+}

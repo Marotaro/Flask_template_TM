@@ -11,9 +11,9 @@ body{
     text-align: left;
     color: #FFF;
     font-family: Arial, Helvetica, sans-serif;
-    font-size: 140px;
+    font-size: max(7vw,36px);
     font-style: normal;
-    font-weight: 400;
+    font-weight: 700;
     line-height: normal;
     margin-bottom: -7px;
 }
@@ -65,12 +65,6 @@ body{
     line-height: normal;
 }
 
-.channel_icon {
-    aspect-ratio: 1 / 1 ;
-    width: 6vw;
-    height: auto;
-    border-radius: 50%;
-}
 
 #postcontainer{
     display: flex;

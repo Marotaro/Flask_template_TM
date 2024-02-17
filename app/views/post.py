@@ -13,7 +13,7 @@ post_bp = Blueprint('post', __name__, url_prefix='/post')
 def create_post(id_channel,respondto):
     if request.method == 'POST':
         #récupérer les informations de la request HTTP 
-        text = request.form['text']
+        text = request.form['textarea']
         image = request.form['image']
 
         #récupérer la base de données

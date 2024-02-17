@@ -7,13 +7,32 @@
 {% block title_page%}Create Post{% endblock %}
 
 {% block content %}
-<div>
-    <form method="post">
-        <label for="text">text</label>
-        <textarea name="text" id="text" required></textarea>
-        <label for="image">Image</label>
-        <input type="file" name="image" id="image" accept="image/png, image/jpeg"> 
-        <input type="submit" value="Create">
-    </form>
-</div>
+<form method="post">
+  <div class="center-h">
+    <div class="post">
+      <div class="upperpart">
+        <p>@{{ g.user['username'] }}</p>
+      </div>
+      <textarea name="textarea" class="post-textarea" id="textarea" placeholder="Ecrivez ici" required></textarea>
+      <script>
+          const myText = document.getElementById("textarea");
+          myText.style.cssText = `height: ${myText.scrollHeight}px; overflow-y: hidden`;
+          myText.addEventListener("input", function(){
+              this.style.height = "auto";
+              this.style.height = `${this.scrollHeight}px`;
+          });
+      </script>
+      <div class="downpart">
+        <i class="fa-regular fa-heart like-button-off"></i>
+        <i class="fa-regular fa-comment comment-button-off"></i>
+        <i class="fa-regular fa-share-from-square"></i>
+      </div>
+    </div>
+  </div>
+  <div>
+    <label for="image">Image</label>
+    <input type="file" name="image" id="image" accept="image/png, image/jpeg"> 
+    <input type="submit" value="Create">
+  </div>
+</form>
 {% endblock %}

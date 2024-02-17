@@ -469,6 +469,49 @@ body{
     transition: color 0.3s ease;
 }
 
+.list-y{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    width: 80vw;
+    gap: 3vw;
+}
+
+.list-y a{
+    width: 30vw;
+    text-decoration: none;
+}
+
+.channel-bulb{
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+    align-items: center;
+    background-color: var(--frame-color);
+    border-radius: 25px;
+    padding: 0.5vh 0.5vw;
+}
+
+.channel-bulb p{
+    color:var(--white);
+    font-family: Arial, Helvetica, sans-serif;
+    font-style: normal;
+    font-weight: 600;
+    font-size: max(1.15vw,8px);
+    line-height: normal;
+    text-decoration: none;
+    margin-left: 1vw;
+}
+
+.channel-bulb img{
+    width: 6vw;
+    height: 6vw;
+    border-radius: 50%;
+    padding: 0.5vw;
+}
+
 /*------------------------------------------------------------------------------------------------------*/
 /*apparence page see*/
 
@@ -624,7 +667,19 @@ body{
     gap: 5vw;
 }
 
+/*------------------------------------------------------------------------------------------------------*/
+/*apparence page create post*/
 
+.post-textarea{
+    background-color: var(--frame-color);
+    border: none;
+    color: var(--white);
+    outline: none;
+    resize: none;
+    font-family:Arial, Helvetica, sans-serif;
+    font-size: 17px;
+    line-height: 3vh;
+}
 
 /*------------------------------------------------------------------------------------------------------*/
 /*apparence page profil générale*/

@@ -18,15 +18,17 @@
   <div class="element">
     <h3>Mes Ys</h3>
     {% if mychannels %}
-      <div class="midle_container">
+      <div class="center-h">
+        <div class="list-y">
       {% for channel in mychannels %}
       <a href="{{ url_for('y.see', id_channel = channel['id_channel'])}}">
-          <div class="channel_bulb">
+          <div class="channel-bulb">
             <img src="{{ channel['location'] }}" class="channel_icon">
-            {{ channel['name'] }}
+            <p>{{ channel['name'] }}</p>
           </div>
         </a>
       {% endfor %}
+        </div>
       </div>
     {% else %}
       <p>vous n'avez pas de channel</p>
@@ -34,15 +36,17 @@
 
     <h3>members Ys</h3>
     {% if memberchannels %}
-      <div class="midle_container">
+      <div class="center-h">
+        <div class="list-y">
       {% for channel in memberchannels %}
       <a href="{{ url_for('y.see', id_channel = channel['id_channel'])}}">
-          <div class="channel_bulb">
+          <div class="channel-bulb">
             <img src="{{ channel['location'] }}" class="channel_icon">
-            {{ channel['name'] }}
+            <p>{{ channel['name'] }}</p>
           </div>
         </a>
       {% endfor %}
+        </div>
       </div>
     {% else %}
       <p>vous n'êtes pas membre d'un Y</p>

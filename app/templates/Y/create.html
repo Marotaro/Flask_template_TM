@@ -13,19 +13,24 @@
 {% block content %}
     <div id="center-horizontaly">
       <form method="post" enctype="multipart/form-data">
-        
+        <div>
+        <div>
         <label for="imageInput"><img id="imageButton" src="{{ url_for('static', filename='image/buttons/addimage/addimage.svg') }}" style="cursor: pointer;"></label>
         <input type="file" name="image" id="imageInput" accept="image/png, image/jpeg" style="display: none;" onchange="document.getElementById('imageButton').src = window.URL.createObjectURL(this.files[0])"> 
+        <div>
         <label for="name">Name</label>
         <input type="text" name="name" id="name" required>
-        <label for="bio">bio</label>
-        <textarea name="bio" id="bio"></textarea>
         <label for="themes">Themes</label>
         <input type="text" name="themes" id="themes">
         <select id="opento" name="opento">
           <option value="private">Privée</option>
           <option value="public">Publique</option>
         </select>
+        </div>
+        </div>
+        <label for="bio">bio</label>
+        <textarea name="bio" id="bio"></textarea>
+        </div>
         <input type="submit" value="Create">
       </form>
     </div> 

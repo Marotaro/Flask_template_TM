@@ -11,25 +11,35 @@
 {% endblock %}
 
 {% block content %}
-    <div id="center-horizontaly">
+    <div class="center-h">
       <form method="post" enctype="multipart/form-data">
         <div>
-        <div>
-        <label for="imageInput"><img id="imageButton" src="{{ url_for('static', filename='image/buttons/addimage/addimage.svg') }}" style="cursor: pointer;"></label>
-        <input type="file" name="image" id="imageInput" accept="image/png, image/jpeg" style="display: none;" onchange="document.getElementById('imageButton').src = window.URL.createObjectURL(this.files[0])"> 
-        <div>
-        <label for="name">Name</label>
-        <input type="text" name="name" id="name" required>
-        <label for="themes">Themes</label>
-        <input type="text" name="themes" id="themes">
-        <select id="opento" name="opento">
-          <option value="private">Privée</option>
-          <option value="public">Publique</option>
-        </select>
-        </div>
-        </div>
-        <label for="bio">bio</label>
-        <textarea name="bio" id="bio"></textarea>
+          <div id="y-enter-info">
+            <label for="imageInput"><i class="fa-regular fa-image image-button" id="addimage"></i></label>
+            <input type="file" name="image" id="imageInput" accept="image/png, image/jpeg" style="display: none;" onchange="const i = document.getElementById('addimage'); const img = document.createElement('img'); img.src = window.URL.createObjectURL(this.files[0]); img.className = 'select-image-y' ; i.replaceWith(img);"> 
+            <div id="y-enter-short-info">
+              <label for="name">Name</label>
+              <input type="text" name="name" id="name" required>
+              <label for="themes">Themes</label>
+              <input type="text" name="themes" id="themes">
+            </div>
+            <div id="open-button">
+              <input type="button" id="opento" value="Privée" onclick="const visibleButton = document.getElementById('opento'); const hiddenButton = document.getElementById('opento-hidden'); if (visibleButton.value === 'Privée') {visibleButton.value = 'Publique'; hiddenButton.value = 'public';} else { visibleButton.value = 'Privée'; hiddenButton.value = 'private'; };">
+              <input name="opento" type="hidden" id="opento-hidden" value="private" required>
+            </div>
+          </div>
+          <div id="description">
+            <label for="bio">Description:</label>
+            <textarea name="bio" id="description-text" placeholder="Ecrivez ici"></textarea>
+            <script>
+              const myText = document.getElementById("description-text");
+              myText.style.cssText = `height: ${myText.scrollHeight}px; overflow-y: hidden`;
+              myText.addEventListener("input", function(){
+                  this.style.height = "auto";
+                  this.style.height = `${this.scrollHeight}px`;
+              });
+          </script>
+          </div>
         </div>
         <input type="submit" value="Create">
       </form>

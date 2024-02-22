@@ -80,7 +80,7 @@ def see(id_channel):
             (id_channel,),
         ).fetchall()
         channel_normal_post =  db.execute(
-            "SELECT text, image, username, id_post FROM Post JOIN User ON id_user = id_user_fk WHERE id_channel_fk = ? AND respond_to = -1",(id_channel,)
+            "SELECT text, image, username, id_post, id_user_fk FROM Post JOIN User ON id_user = id_user_fk WHERE id_channel_fk = ? AND respond_to = -1",(id_channel,)
         ).fetchall()
         liked_post = [x[0] for x in db.execute(
             "SELECT id_post_fk FROM Likes WHERE id_user_fk = ?", (g.user['id_user'],)

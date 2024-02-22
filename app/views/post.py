@@ -44,3 +44,16 @@ def like_post(id_post):
         return jsonify({"liked": liked}, 400)
     else:
         return jsonify({"error": "La publication n'existe pas"}, 400)
+    
+@post_bp.route('/delete_post_from_channel/<id_channel>/<id_post>', methods = ["GET","Post"])
+@login_required
+def delete_post_from_channel(id_channel,id_post):
+    db = get_db()
+    creator = db.execute("SELECT CASE WHEN EXISTS (SELECT * FROM Post WHERE id_user_fk = ? AND id_post = ? )THEN 1 ELSE 0 END", (g.user["id_user"], id_post,)).fetchone()[0]
+    if creator:
+        db.execute("DELETE FROM Post WHERE id_post = ?",(id_post,))
+        db.commit()
+        return redirect(url_for('y.see', id_channel = id_channel))
+    else:
+        flash("vous n'est pas autorisé à faire ça")
+        return render_template('home/404.html')

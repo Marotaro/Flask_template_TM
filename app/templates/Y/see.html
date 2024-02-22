@@ -48,41 +48,52 @@
 </div>
 
 {% for post in channel_normal_post %}
+  <div>
     <div class="center-h">
     <div>
-      <div class="post">
-        <div class="upperpart">
-          <p>@{{ post['username'] }}</p>
-          <p><img src="{{ url_for('static', filename ='image/buttons/threepoint.svg')}}" alt="" onclick="menu('flex','threepoint-{{ post['id_post'] }}')"></p>
+      <div id="test">
+        <div class="post">
+          <div class="upperpart">
+            <p>@{{ post['username'] }}</p>
+            <p><img src="{{ url_for('static', filename ='image/buttons/threepoint.svg')}}" alt="" onclick="postMenu({{ post['id_post'] }})"></p>
+          </div>
+
+          {% set lignes = post['text'].split("\n") %}
+          <p>
+            {% for ligne in lignes %}
+            {{ ligne }}<br>
+            {% endfor %}
+          </p>
+
+          <div class="downpart">
+            {% if post['id_post'] in liked_post %}
+            <i class="fa-solid fa-heart like-button-on" id="like-button-{{ post['id_post'] }}" onclick="like({{ post['id_post'] }})"></i>
+            {% else %}
+            <i class="fa-regular fa-heart like-button-off" id="like-button-{{ post['id_post'] }}" onclick="like({{ post['id_post'] }})"></i>
+            {% endif %}
+            <i class="fa-regular fa-comment comment-button-off" id="comment-{{ post['id_post'] }}" onclick="showRespond({{ post['id_post'] }})"></i>
+            <i class="fa-regular fa-share-from-square"></i>
+          </div>
         </div>
-
-        {% set lignes = post['text'].split("\n") %}
-        <p>
-          {% for ligne in lignes %}
-          {{ ligne }}<br>
-          {% endfor %}
-        </p>
-
-        <div class="downpart">
-          {% if post['id_post'] in liked_post %}
-          <i class="fa-solid fa-heart like-button-on" id="like-button-{{ post['id_post'] }}" onclick="like({{ post['id_post'] }})"></i>
-          {% else %}
-          <i class="fa-regular fa-heart like-button-off" id="like-button-{{ post['id_post'] }}" onclick="like({{ post['id_post'] }})"></i>
-          {% endif %}
-          <i class="fa-regular fa-comment comment-button-off" id="comment-{{ post['id_post'] }}" onclick="showRespond({{ post['id_post'] }})"></i>
-          <i class="fa-regular fa-share-from-square"></i>
+        <div class="post-menu" id="post-menu-{{ post['id_post'] }}">
+            <a class=""  href="{{ url_for('post.create_post', id_channel = channel_info['id_channel'], respondto = ( post['id_post'] ))}}"><i class="fa-solid fa-reply"></i></a>
+            {% if g.user['id_user'] == post['id_user_fk'] %}
+            <a href="{{ url_for('post.delete_post_from_channel', id_channel = channel_info['id_channel'] ,id_post = ( post['id_post'] ))}}"><i class="fa-solid fa-trash"></i></a>
+            {% endif %}
         </div>
-
       </div>
-
 
       
 
       
       <div class="responds hidden" id="responds-{{ post['id_post'] }}">
       </div>
+
     </div>
+
     </div>
+
+  </div>
         <!--
         {% for respond_post in channel_respond_post %}
           {% if respond_post['respond_to']|int == post['id_post'] %}
@@ -112,7 +123,6 @@
     </div>
     </div>
     -->
-
 {% endfor %}
 
 

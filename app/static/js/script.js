@@ -12,6 +12,15 @@ function menu() {
     
 }
 
+function postMenu(idPost) {
+    var menu = document.getElementById(`post-menu-${idPost}`);
+    if (menu.style.transform !== "scale(1)") {
+        menu.style.transform = "scale(1)";
+    } else {
+        menu.style.transform = "scale(0)";
+    }
+}
+
 function copy_to_clipboard(text,alert) {
     var textarea = document.createElement('textarea');
     textarea.value = text;

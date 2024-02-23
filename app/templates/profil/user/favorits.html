@@ -6,7 +6,6 @@
 
 {% block button %}
 <a href="{{ url_for('user.show_profile') }}"><i class="fa-solid fa-user profil-button-off"></i></a>
-<a href=""><i class="fa-solid fa-users friends-button-off"></i></a>
 <a href="{{ url_for('user.show_posts') }}"><i class="fa-solid fa-layer-group posts-button-off"></i></a>
 <a href="{{ url_for('user.show_ys') }}">Ys</a>
 <a href="{{ url_for('user.show_likes') }}"><i class="fa-solid fa-heart like-profil-button-off"></i></a>
@@ -31,7 +30,6 @@
                     {% if favorit['RespondTo'] %}
                     <p>à <p class="user-little-name">@{{favorit['RespondTo']}}</p></p>
                     {% endif %}
-                    <p><img src="{{ url_for('static', filename ='image/buttons/threepoint.svg')}}" alt="" onclick="menu('flex','threepoint-{{ favorit['id_post'] }}')"></p>
                 </div>
             </div>
     

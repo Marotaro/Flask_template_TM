@@ -6,7 +6,6 @@
 
 {% block button %}
 <a href="{{ url_for('user.show_profile') }}"><i class="fa-solid fa-user profil-button-off"></i></a>
-<a href=""><i class="fa-solid fa-users friends-button-off"></i></a>
 <a href="{{ url_for('user.show_posts') }}"><i class="fa-solid fa-layer-group posts-button-on"></i></a>
 <a href="{{ url_for('user.show_ys') }}">Ys</a>
 <a href="{{ url_for('user.show_likes') }}"><i class="fa-solid fa-heart like-profil-button-off"></i></a>
@@ -22,32 +21,43 @@
 {% block content %}
   {% if posts %}
     {% for post in posts %}
-    <div class="center-h">
+    <div class="center-h" id = "post-{{ post['id_post'] }}">
         <div>
-          <div class="post">
-            <div class="upperpart">
-                <p>@{{ g.user['username'] }}</p>
-                <div class="post-info-profil">
-                    <p>depuis <p class="y-little-name">/{{post['ChannelName'] }}</p></p>
-                    {% if post['RespondTo'] %}
-                    <p>à <p class="user-little-name">@{{post['RespondTo']}}</p></p>
-                    {% endif %}
-                    <p><img src="{{ url_for('static', filename ='image/buttons/threepoint.svg')}}" alt="" onclick="menu('flex','threepoint-{{ post['id_post'] }}')"></p>
-                </div>
-            </div>
-    
-            <p>{{ post['text'] }}</p>
-    
-            <div class="downpart">
-              {% if post['id_post']|int in liked_posts %}
-              <i class="fa-solid fa-heart like-button-on" id="like-button-{{ post['id_post'] }}" onclick="like({{ post['id_post'] }})"></i>
-              {% else %}
-              <i class="fa-regular fa-heart like-button-off" id="like-button-{{ post['id_post'] }}" onclick="like({{ post['id_post'] }})"></i>
-              {% endif %}
-              <i class="fa-regular fa-share-from-square"></i>
-            </div>
+          <div id="test">
+            <div class="post" >
+              <div class="upperpart">
+                  <p>@{{ g.user['username'] }}</p>
+                  <div class="post-info-profil">
+                      <p>depuis <p class="y-little-name">/{{post['ChannelName'] }}</p></p>
+                      {% if post['RespondTo'] %}
+                      <p>à <p class="user-little-name">@{{post['RespondTo']}}</p></p>
+                      {% endif %}
+                      <p><img src="{{ url_for('static', filename ='image/buttons/threepoint.svg')}}" alt="" onclick="postMenu({{ post['id_post'] }})"></p>
+                  </div>
+              </div>
+      
+              {% set lignes = post['text'].split("\n") %}
+              <p class="text">
+                {% for ligne in lignes %}
+                {{ ligne }}<br>
+                {% endfor %}
+              </p>
+      
+              <div class="downpart">
+                {% if post['id_post']|int in liked_posts %}
+                <i class="fa-solid fa-heart like-button-on" id="like-button-{{ post['id_post'] }}" onclick="like({{ post['id_post'] }})"></i>
+                {% else %}
+                <i class="fa-regular fa-heart like-button-off" id="like-button-{{ post['id_post'] }}" onclick="like({{ post['id_post'] }})"></i>
+                {% endif %}
+                <i class="fa-regular fa-share-from-square"></i>
+              </div>
 
-            <div class="responds hidden" id="responds-{{ post['id_post'] }}"></div>
+              <div class="responds hidden" id="responds-{{ post['id_post'] }}"></div>
+            </div>
+            <div class="post-menu" id="post-menu-{{ post['id_post'] }}">
+              <a href="{{ url_for('post.modify_post', id_post = post['id_post'] )}}"><i class="fa-solid fa-pen-to-square"></i></a>
+              <a onclick="deletePost({{ post['id_post'] }})"><i class="fa-solid fa-trash"></i></a>
+            </div>
           </div>
         </div>
     </div>

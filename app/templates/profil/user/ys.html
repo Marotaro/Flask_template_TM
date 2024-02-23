@@ -6,7 +6,6 @@
 
 {% block button %}
 <a href="{{ url_for('user.show_profile') }}"><i class="fa-solid fa-user profil-button-off"></i></a>
-<a href=""><i class="fa-solid fa-users friends-button-off"></i></a>
 <a href="{{ url_for('user.show_posts') }}"><i class="fa-solid fa-layer-group posts-button-off"></i></a>
 <a href="{{ url_for('user.show_ys') }}">Ys</a>
 <a href="{{ url_for('user.show_likes') }}"><i class="fa-solid fa-heart like-profil-button-off"></i></a>
@@ -19,42 +18,41 @@
 {% endblock %}
 
 {% block content %}
-<div class="center-h">
-    <div>
-    <div id="MyYs">
-        <h3>Mes Channels</h3>
-        {% if myys %}
-          <div class="midle_container">
-            {% for myy in myys %}
-            <a href="{{ url_for('y.see', id_channel = myy['id_channel'])}}">
-              <div class="channel_bulb">
-                <img src="{{ g.host + '/' + myy['location'] }}" class="channel_icon">
-                {{ myy['name'] }}
-              </div>
-            </a>
-            {% endfor %}
-          </div>
-        {% else %}
-          <p>vous n'avez pas de Ys</p>
-        {% endif %}
+<div class="element">
+  <h3>Mes Ys</h3>
+  {% if myys %}
+    <div class="center-h">
+      <div class="list-y">
+    {% for myy in myys %}
+    <a href="{{ url_for('y.see', id_channel = myy['id_channel'])}}">
+        <div class="channel-bulb">
+          <img src="{{ g.host +'/'+ myy['location'] }}" class="channel_icon">
+          <p>{{ myy['name'] }}</p>
+        </div>
+      </a>
+    {% endfor %}
+      </div>
     </div>
-    <div id="MemberYs">
-        <h3>Membres</h3>
-        {% if memberys %}
-            <div class="midle_container">
-            {% for membery in memberys %}
-            <a href="{{ url_for('y.see', id_channel = membery['id_channel'])}}">
-                <div class="channel_bulb">
-                <img src="{{ g.host + '/' + membery['location'] }}" class="channel_icon">
-                {{ membery['name'] }}
-                </div>
-            </a>
-            {% endfor %}
-            </div>
-            {% else %}
-            <p>vous n'êtes pas membre d'un Y</p>
-        {% endif %}
+  {% else %}
+    <p>vous n'avez pas de channel</p>
+  {% endif %}
+
+  <h3>members Ys</h3>
+  {% if memberys %}
+    <div class="center-h">
+      <div class="list-y">
+    {% for membery in memberys %}
+    <a href="{{ url_for('y.see', id_channel = membery['id_channel'])}}">
+        <div class="channel-bulb">
+          <img src="{{ g.host +'/'+ membery['location'] }}" class="channel_icon">
+          <p>{{ membery['name'] }}</p>
+        </div>
+      </a>
+    {% endfor %}
+      </div>
     </div>
-    </div>
+  {% else %}
+    <p>vous n'êtes pas membre d'un Y</p>
+  {% endif %}
 </div>
 {% endblock %}

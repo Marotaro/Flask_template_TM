@@ -13,7 +13,7 @@
       <div class="upperpart">
         <p>@{{ g.user['username'] }}</p>
       </div>
-      <textarea name="textarea" class="post-textarea" id="textarea" placeholder="Ecrivez ici" required></textarea>
+      <textarea name="textarea" class="post-textarea" id="textarea" placeholder="Ecrivez ici" required>{{ modify }}</textarea>
       <script>
           const myText = document.getElementById("textarea");
           myText.style.cssText = `height: ${myText.scrollHeight}px; overflow-y: hidden`;

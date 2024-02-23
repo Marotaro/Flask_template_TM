@@ -95,15 +95,16 @@ def get_comments(id_post):
     db = get_db()
     responds = []
     comments = db.execute(
-            "SELECT text, image, username, id_post, respond_to FROM Post JOIN User ON id_user = id_user_fk WHERE respond_to = ?", (id_post,)
+            "SELECT text, image, username, id_user_fk, id_post, respond_to FROM Post JOIN User ON id_user = id_user_fk WHERE respond_to = ?", (id_post,)
         ).fetchall()
     for comment in comments:
         respond = {
             'text' : comment[0],
             'image' : comment[1],
             'username' : comment[2],
-            'id_post' : comment[3],
-            'respond_to' : comment[4]
+            'id_user' : comment[3],
+            'id_post' : comment[4],
+            'respond_to' : comment[5]
         }
         responds.append(respond)
     liked_resp_post = [x[0] for x in db.execute(

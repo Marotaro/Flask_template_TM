@@ -1,11 +1,11 @@
 function menu() {
     var buttonsContainer = document.getElementById('buttons-container')
-    if (buttonsContainer.style.transform !== "scaleY(1)") {
-        buttonsContainer.style.transform = "scaleY(1)";
+    if (buttonsContainer.style.transform !== "scale(1)") {
+        buttonsContainer.style.transform = "scale(1)";
         buttonsContainer.style.display = "flex";
         buttonsContainer.style.top = "1vh";
     } else {
-        buttonsContainer.style.transform = "scaleY(0)";
+        buttonsContainer.style.transform = "scale(0)";
         buttonsContainer.style.display = "flex";
         buttonsContainer.style.top = "-2vh";
     }
@@ -14,6 +14,15 @@ function menu() {
 
 function postMenu(idPost) {
     var menu = document.getElementById(`post-menu-${idPost}`);
+    if (menu.style.transform !== "scale(1)") {
+        menu.style.transform = "scale(1)";
+    } else {
+        menu.style.transform = "scale(0)";
+    }
+}
+
+function littlePostMenu(idPost) {
+    var menu = document.getElementById(`little-post-menu-${idPost}`);
     if (menu.style.transform !== "scale(1)") {
         menu.style.transform = "scale(1)";
     } else {
@@ -46,7 +55,7 @@ function like(postId) {
             });
 }
 
-function showRespond(postId) {
+function showRespond(postId, idUser, idChannel) {
     const responds = document.getElementById(`responds-${postId}`);
     const comment = document.getElementById(`comment-${postId}`);
 
@@ -60,6 +69,10 @@ function showRespond(postId) {
                 //création center div
                 var CenterDiv = document.createElement("div");
                 CenterDiv.className = "center-h";
+
+                //création little test
+                var littleTest = document.createElement("div");
+                littleTest.id = "little-test";
 
                 //création  little post
                 var littlePost = document.createElement("div");
@@ -77,7 +90,7 @@ function showRespond(postId) {
                 var threePoint = document.createElement("p");
                 var image = document.createElement("img");
                 image.src = "http://127.0.0.1:5000/static/image/buttons/threepoint.svg";
-                image.onclick = function() {menu('flex',"threepoint")};
+                image.onclick = function() {littlePostMenu(`${respPost.id_post}`)};
                 threePoint.appendChild(image);
                 upperPart.appendChild(threePoint);
 
@@ -106,10 +119,48 @@ function showRespond(postId) {
                 share.className = "fa-regular fa-share-from-square";
                 downPart.appendChild(share);
 
+
+                //création overlay elements
+                var littleMenu = document.createElement("div");
+                littleMenu.className = "little-post-menu";
+                littleMenu.id = `little-post-menu-${respPost.id_post}`;
+
+                    //création element
+                    if (respPost.id_user === idUser) {
+                        var deleteButton = document.createElement("a");
+                        deleteButton.href = `/post/delete_post_from_channel/${idChannel}/${respPost.id_post}`;
+
+                        var trashIcon = document.createElement('i');
+                        trashIcon.className = "fa-solid fa-trash";
+                        deleteButton.appendChild(trashIcon);
+
+                        var modifyButton = document.createElement("a");
+                        modifyButton.href = `/post/modify_post_from_channel/${idChannel}/${respPost.id_post}`;
+
+                        var modifyIcon = document.createElement('i');
+                        modifyIcon.className = "fa-solid fa-pen-to-square";
+                        modifyButton.appendChild(modifyIcon);
+
+                        littleMenu.appendChild(modifyButton);
+                        littleMenu.appendChild(deleteButton);
+                    } else {
+                        var nothing = document.createElement("a");
+                        nothing.onclick = function() {littlePostMenu(`${respPost.id_post}`)};
+
+                        var xmark = document.createElement('i');
+                        xmark.className = "fa-solid fa-xmark";
+                        nothing.appendChild(xmark);
+
+                        littleMenu.appendChild(nothing);
+                    };
+                
+
                 littlePost.appendChild(upperPart)
                 littlePost.appendChild(text)
                 littlePost.appendChild(downPart)
-                CenterDiv.appendChild(littlePost)
+                littleTest.appendChild(littlePost)
+                littleTest.appendChild(littleMenu)
+                CenterDiv.appendChild(littleTest)
                 responds.appendChild(CenterDiv)
             }
             responds.className = 'responds visible'; 
@@ -131,4 +182,14 @@ textarea.addEventlistener('input', autoResize, false);
 function autoResize(){
     this.style.height = 'auto'
     this.style.height = this.scrollHeight + '5px'
+}
+
+//delete Post from user page
+function deletePost(postId){
+    fetch(`/post/delete_post/${postId}`)
+    .then((res) => res.json())
+    .then((respmes) => {
+        var post = document.getElementById(`post-${postId}`);
+        post.innerHTML = "";
+    }); 
 }

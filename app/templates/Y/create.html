@@ -16,7 +16,7 @@
         <div>
           <div id="y-enter-info">
             <label for="imageInput"><i class="fa-regular fa-image image-button" id="addimage"></i></label>
-            <input type="file" name="image" id="imageInput" accept="image/png, image/jpeg" style="display: none;" onchange="const i = document.getElementById('addimage'); const img = document.createElement('img'); img.src = window.URL.createObjectURL(this.files[0]); img.className = 'select-image-y' ; i.replaceWith(img);"> 
+            <input type="file" name="image" id="imageInput" accept="image/png, image/jpeg" style="display: none;" onchange="const i = document.getElementById('addimage'); const img = document.createElement('img'); img.src = window.URL.createObjectURL(this.files[0]); img.className = 'select-image-y' ; img.id = 'modify-image'; i.replaceWith(img); var input = document.getElementById('imageInput'); input.onchange = function() {const img2 = document.getElementById('modify-image'); const img3 = document.createElement('img'); img3.src = window.URL.createObjectURL(this.files[0]); img3.className = 'select-image-y' ; img3.id ='modify-image'; img2.replaceWith(img3);};"> 
             <div id="y-enter-short-info">
               <label for="name">Name</label>
               <input type="text" name="name" id="name" required>
@@ -41,7 +41,9 @@
           </script>
           </div>
         </div>
-        <input type="submit" value="Create">
+        <div class="center-h">
+          <input type="submit" value="Create" class="create-button">
+        </div>
       </form>
     </div> 
 {% endblock %}

@@ -1,0 +1,131 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  {% block title %}{{ channel_info['name'] }}{% endblock %}
+{% endblock %}
+
+{% block title_page%}
+<div class="title-page-see">
+  <p>{{ channel_info['name'] }}</p>
+  <img src="{{ g.host + '/' + channel_info['location'] }}">
+</div>
+{% endblock %}
+
+
+{% block content %}
+<div id="head-home">
+    <div class="center-h">
+      <div id="head-home-element" >
+        <a href="{{ url_for('y.see', id_channel = channel_info['id_channel'] )}}"><i class="fa-solid fa-less-than"></i></a>
+        <a href="{{ url_for('y.invite', id_channel = channel_info['id_channel'])}}"><i class="fa-solid fa-user-plus"></i></a>
+      </div>
+    </div>
+  </div> 
+<div>
+
+</div>
+{% if g.user['id_user'] in owners|map(attribute="id_user") or g.user['id_user'] in admins|map(attribute="id_user") %}
+<div class="center-h">
+    <form method="post" enctype="multipart/form-data">
+      <div>
+        <div id="y-enter-info">
+          <label for="imageInput"><img src="{{ g.host +'/'+ channel_info['location'] }}"  class="select-image-y" id="modify-image"></label>
+          <input type="file" name="image" id="imageInput" accept="image/png, image/jpeg" style="display: none;" onchange="const img = document.getElementById('modify-image'); const img2 = document.createElement('img'); img2.src = window.URL.createObjectURL(this.files[0]); img2.className = 'select-image-y' ; img2.id ='modify-image'; img.replaceWith(img2);"> 
+          <div id="y-enter-short-info">
+            <label for="name">Name</label>
+            <input type="text" name="name" id="name" value="{{ channel_info['name'] }}" required>
+            <label for="themes">Themes</label>
+            <input type="text" name="themes" id="themes" value="{% for theme in channel_themes %} #{{ theme['name'] }} {% endfor %}">
+          </div>
+        </div>
+        <div id="description">
+          <label for="bio">Description:</label>
+          <textarea name="bio" id="description-text" placeholder="Ecrivez ici">{{ channel_info['description'] }}</textarea>
+          <script>
+            const myText = document.getElementById("description-text");
+            myText.style.cssText = `height: ${myText.scrollHeight}px; overflow-y: hidden`;
+            myText.addEventListener("input", function(){
+                this.style.height = "auto";
+                this.style.height = `${this.scrollHeight}px`;
+            });
+        </script>
+        </div>
+      </div>
+      <div class="center-h">
+        <input type="submit" value="Mettre à jour" class="create-button">
+      </div>
+    </form>
+  </div> 
+  <div id="delete-y">
+    <a href="{{ url_for('y.delete', id_channel = channel_info['id_channel']) }}"><i class="fa-solid fa-trash"></i></a>
+  </div>
+{% else %}
+<div class="center-h">
+    <div class="incolumn">
+      {% if channel_info['description'] %}
+      <div class="channel-info">
+        <p>Description:</p>
+        {% set lignes = channel_info['description'].split('\n') %}
+        <p>
+          {% for ligne in lignes %}
+          {{ligne}}<br>
+          {% endfor %}
+        </p>
+      </div>
+      {% endif %}
+      {% if channel_themes %}
+      <div class="channel-info" >
+        <p>Themes:</p>
+        <div id="themes">
+          {% for theme in channel_themes %}
+          <p>#{{ theme[0] }}</p>
+          {% endfor %}
+        </div>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+{% endif %}
+
+<div class="center-h">
+    <div class="about-info">
+        <div class="about-separator">
+            <p>Users</p>
+            <hr>
+        </div>
+        <div class="types-container">
+            <div class="type-container">
+                <p>Owners</p>
+                {% for owner in owners %}
+                <div class="users-container">
+                    <p>@{{ owner['username'] }}</p>
+                </div>
+                {% endfor %}
+            </div>
+
+            {% if admins %}
+            <div class="type-container">
+                <p>Admins</p>
+                {% for admin in admins %}
+                <div class="users-container">
+                    <p>@{{ admin['username'] }}</p>
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            {% if members %}
+            <div class="type-container">
+                <p>Members</p>
+                {% for member in members %}
+                <div class="users-container">
+                    <p>@{{ member['username'] }}</p>
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+{% endblock %}

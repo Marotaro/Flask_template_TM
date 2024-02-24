@@ -1,12 +1,21 @@
 {% extends 'base.html' %}
 
+
+
 {% block header %}
-  {% block title %}Create Post{% endblock %}
+  {% block title %}{% if modify %} Modifier Puplication {% else %} Créer Publication {% endif %}{% endblock %}
 {% endblock %}
 
-{% block title_page%}Create Post{% endblock %}
+{% block title_page%}{% if modify %} Modifier Puplication {% else %} Créer Publication {% endif %}{% endblock %}
 
 {% block content %}
+<div id="head-home">
+  <div class="center-h">
+    <div id="head-home-element" >
+      <a href="{{ url_for('y.see', id_channel = id_channel )}}"><i class="fa-solid fa-less-than"></i></a>
+    </div>
+  </div>
+</div> 
 <form method="post">
   <div class="center-h">
     <div class="post">

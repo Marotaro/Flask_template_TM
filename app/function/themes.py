@@ -26,14 +26,17 @@ def new_theme(themes, db):
 
 
 def link_theme_y(id_y, themes, db):
+    db.execute("DELETE FROM Related_channel WHERE id_channel_fk = ?", (id_y,))
+    db.commit()
     for theme in themes:
         id_theme = db.execute(
             "SELECT id_theme FROM Themes WHERE name = ?", (theme,)
-        ).fetchone()
-        db.execute(
-            "INSERT INTO Related_channel (id_channel_fk,id_theme_fk) VALUES (?,?)",
-            (id_y,id_theme[0],),
-        )
-        db.commit()
+        ).fetchone()[0]
+        if not db.execute("SELECT CASE WHEN EXISTS (SELECT * FROM Related_channel WHERE id_channel_fk = ? AND id_theme_fk = ? )THEN 1 ELSE 0 END", (id_y, id_theme,)).fetchone()[0]:
+            db.execute(
+                "INSERT INTO Related_channel (id_channel_fk,id_theme_fk) VALUES (?,?)",
+                (id_y,id_theme,),
+            )
+            db.commit()
 
 

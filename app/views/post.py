@@ -3,6 +3,7 @@ from app.db.db import get_db
 from app.utils import *
 from app.function.now import *
 from app.function.exist import *
+from app.function.permission import *
 
 
 post_bp = Blueprint('post', __name__, url_prefix='/post')
@@ -21,11 +22,12 @@ def create_post(id_channel,respondto):
         if text:
             db.execute("INSERT INTO Post (id_channel_fk, id_user_fk, date, respond_to, text, image) VALUES (?, ?, ?, ?, ?, ?)", (id_channel, g.user['id_user'], datenow(), int(respondto), text, image))
             db.commit()
+            add_permition(id_channel, g.user['id_user'], 'member', db)
             return redirect(url_for("y.see", id_channel = id_channel))
         else:
             return redirect(url_for('create_post', id_channel = id_channel, respondto = respondto))
     else:
-        return render_template('post/create.html')
+        return render_template('post/create.html', id_channel = id_channel)
     
 @post_bp.route('/like_post/<id_post>', methods = ["GET"])
 @login_required
@@ -77,7 +79,7 @@ def modify_post_from_channel(id_channel,id_post):
                 return redirect(url_for('modify_post_from_channel', id_channel = id_channel, id_post = id_post))
         else:
             text = db.execute("SELECT text FROM Post WHERE id_post = ?", (id_post,)).fetchone()[0]
-            return render_template('post/create.html', modify = text)
+            return render_template('post/create.html', modify = text, id_channel = id_channel)
     else:
         flash("vous n'est pas autorisé à faire ça")
         return render_template('home/404.html')

@@ -126,5 +126,7 @@
     -->
 {% endfor %}
 
-
+<div id="about">
+  <a href="{{ url_for('y.about', id_channel = channel_info['id_channel']) }}"><i class="fa-solid fa-gear"></i></a>
+</div>
 {% endblock %}

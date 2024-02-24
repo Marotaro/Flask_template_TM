@@ -593,12 +593,12 @@ body{
     border: none;
     color: var(--button);
     font-family: Arial, Helvetica, sans-serif;
-    font-size: max(1vw,15px);
+    font-size: max(1vw,10px);
     font-style: normal;
     font-weight: 600;
     line-height: normal;
     height: 4vh;
-    width: 6vw;
+    width: max(7vw, 60px);
     padding: 1vh 1vw;
     cursor: pointer;
     transition: color 0.3s ease;
@@ -640,6 +640,27 @@ body{
     outline: none;
     resize: none;
     min-height: 6vh;
+}
+
+.create-button{
+    background-color: var(--frame-color);
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    color: var(--button);
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: max(1vw,15px);
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    padding: 1vh 1vw;
+    margin-top: 1vh;
+    transition: color 0.3s ease;
+}
+
+.create-button:hover{
+    color: var(--white);
+    transition: color 0.3s ease;
 }
 
 /*------------------------------------------------------------------------------------------------------*/
@@ -721,6 +742,10 @@ body{
     flex-direction: row;
     gap: 2vw;
     margin-top: -0.5vh;
+    font-family:Arial, Helvetica, sans-serif;
+    font-size: 17px;
+    font-weight: 600;
+    line-height: 3vh;
     color: var(--cyan);
 }
 
@@ -898,6 +923,96 @@ body{
 }
 
 .little-post-menu a:hover .fa-trash{
+    color: var(--rouge);
+}
+
+#about{
+    position: fixed;
+    bottom: 1vh;
+    right: 1vw;
+}
+
+#about a{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: max(1vw,10px);
+    height: max(1vw,10px);
+    padding: max(1vw,10px);
+    margin: 0.25vw;
+    background-color: var(--frame-color);
+    border-radius: 100%;
+    text-decoration: none;
+}
+
+#about a i{
+    font-size: max(1.5vw,10px);
+    color: var(--button);
+    transition: color 0.3s ease;
+}
+
+#about a:hover i{
+    color: var(--white);
+}
+/*------------------------------------------------------------------------------------------------------*/
+/*apparence page about*/
+
+.about-info{
+    width: 60vw;
+}
+
+.about-separator{
+
+}
+
+.types-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: space-between;
+}
+
+.type-container .users-container{
+    text-align: center;
+}
+
+.type-container .users-container p{
+    width: 7vw;
+    background-color: var(--frame-color);
+    padding: 1vh 1vw;
+    border-radius: 50px;
+    font-family:Arial, Helvetica, sans-serif;
+    font-size: 17px;
+    font-weight: 600;
+    line-height: 3vh;
+}
+
+#delete-y{
+    position: fixed;
+    bottom: 1vh;
+    left: 1vw;
+}
+
+#delete-y a{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: max(1vw,10px);
+    height: max(1vw,10px);
+    padding: max(1vw,10px);
+    margin: 0.25vw;
+    background-color: var(--frame-color);
+    border-radius: 100%;
+    text-decoration: none;
+}
+
+#delete-y a i{
+    font-size: max(1.5vw,10px);
+    color: var(--button);
+    transition: color 0.3s ease;
+}
+
+#delete-y a:hover i{
     color: var(--rouge);
 }
 /*------------------------------------------------------------------------------------------------------*/

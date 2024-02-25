@@ -6,7 +6,7 @@
   {% block title %}{% if modify %} Modifier Puplication {% else %} Créer Publication {% endif %}{% endblock %}
 {% endblock %}
 
-{% block title_page%}{% if modify %} Modifier Puplication {% else %} Créer Publication {% endif %}{% endblock %}
+{% block title_page%}{% if modify %} Modifier Publication {% else %} Créer Publication {% endif %}{% endblock %}
 
 {% block content %}
 <div id="head-home">
@@ -16,13 +16,13 @@
     </div>
   </div>
 </div> 
-<form method="post">
+<form method="post" enctype="multipart/form-data">
   <div class="center-h">
     <div class="post">
       <div class="upperpart">
         <p>@{{ g.user['username'] }}</p>
       </div>
-      <textarea name="textarea" class="post-textarea" id="textarea" placeholder="Ecrivez ici" required>{{ modify }}</textarea>
+      <textarea name="textarea" class="post-textarea" id="textarea" placeholder="Ecrivez ici" required>{% if modify %}{{ modify['text'] }}{% endif %}</textarea>
       <script>
           const myText = document.getElementById("textarea");
           myText.style.cssText = `height: ${myText.scrollHeight}px; overflow-y: hidden`;
@@ -31,6 +31,15 @@
               this.style.height = `${this.scrollHeight}px`;
           });
       </script>
+      <div class="center-h">
+        {% if modify and modify['location'] %}
+        <label for="imageInput"><img src="{{ g.host +'/'+ modify['location'] }}" id="post-img-modify"></label>
+        <input type="file" name="image" id="imageInput" accept="image/png, image/jpeg" style="display: none;" onchange="const i = document.getElementById('post-img-modify'); const img = document.createElement('img'); img.src = window.URL.createObjectURL(this.files[0]); img.id = 'post-img-modify'; i.replaceWith(img); var input = document.getElementById('imageInput'); input.onchange = function() {const img2 = document.getElementById('post-img-modify'); const img3 = document.createElement('img'); img3.src = window.URL.createObjectURL(this.files[0]); img3.id ='post-img-modify'; img2.replaceWith(img3);};"> 
+        {% else %}
+        <label for="imageInput"><i class="fa-regular fa-image image-button" id="addimage"></i></label>
+        <input type="file" name="image" id="imageInput" accept="image/png, image/jpeg" style="display: none;" onchange="const i = document.getElementById('addimage'); const img = document.createElement('img'); img.src = window.URL.createObjectURL(this.files[0]); img.id = 'post-img-modify'; i.replaceWith(img); var input = document.getElementById('imageInput'); input.onchange = function() {const img2 = document.getElementById('post-img-modify'); const img3 = document.createElement('img'); img3.src = window.URL.createObjectURL(this.files[0]); img3.id ='post-img-modify'; img2.replaceWith(img3);};"> 
+        {% endif %}
+      </div>
       <div class="downpart">
         <i class="fa-regular fa-heart like-button-off"></i>
         <i class="fa-regular fa-comment comment-button-off"></i>
@@ -38,10 +47,8 @@
       </div>
     </div>
   </div>
-  <div>
-    <label for="image">Image</label>
-    <input type="file" name="image" id="image" accept="image/png, image/jpeg"> 
-    <input type="submit" value="Create">
+  <div class="center-h">
+    <input type="submit" value="{% if modify %}Modifier{% else %}Créer{% endif %}" class="create-button">
   </div>
 </form>
 {% endblock %}

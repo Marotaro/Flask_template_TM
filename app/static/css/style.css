@@ -546,6 +546,7 @@ body{
     height: 8vw;
     padding: 0.5vw;
     background-color: var(--frame-color);
+    cursor: pointer;
 }
 
 #y-enter-short-info{
@@ -654,8 +655,11 @@ body{
     font-weight: 600;
     line-height: normal;
     padding: 1vh 1vw;
-    margin-top: 1vh;
+    margin-top: 3vh;
     transition: color 0.3s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .create-button:hover{
@@ -782,6 +786,12 @@ body{
     width: 45vw;
 }
 
+.post img{
+    max-width: 40vw;
+    max-height: 50vh;
+    margin-bottom: 1vh;
+}
+
 .responds{
     display: block;
     transition: opacity 0.5s ease, transform 0.5s ease;
@@ -822,6 +832,7 @@ body{
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    margin-bottom: -3vh;
 }
 
 .downpart{
@@ -957,8 +968,53 @@ body{
 /*------------------------------------------------------------------------------------------------------*/
 /*apparence page about*/
 
+#fun-fact{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#fun-fact p{
+    background-color: var(--frame-color);
+    width: 20vw;
+    padding: 1vh 1vw;
+    border-radius: 50px;
+    font-family:Arial, Helvetica, sans-serif;
+    font-weight: 550;
+    font-size: 17px;
+    line-height: 3vh;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#fun-fact #numbers{
+    display: flex;
+    flex-direction: row;
+    gap: 1vw;
+
+}
+
+#fun-fact #numbers p{
+    background-color: var(--frame-color);
+    width: 20vw;
+    padding: 1vh 1vw;
+    border-radius: 50px;
+    font-family:Arial, Helvetica, sans-serif;
+    font-weight: 550;
+    font-size: 17px;
+    line-height: 3vh;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .about-info{
-    width: 60vw;
+    width: 50vw;
+    margin-top: 3vh;
 }
 
 .about-separator{
@@ -970,21 +1026,106 @@ body{
     flex-direction: row;
     justify-content: space-around;
     align-items: space-between;
+    text-align: center;
+    gap: 6vw;
+    flex-wrap: wrap;
+}
+
+.type-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: start;
+}
+
+.type-container p{
+    width: 10vw;
+    background-color: var(--frame-color);
+    padding: 1vh 1vw;
+    height: 2vw;
+    border-radius: 50px;
+    font-family:Arial, Helvetica, sans-serif;
+    font-size: 20px;
+    font-weight: 600;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    user-select: none;
 }
 
 .type-container .users-container{
     text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 10vw;
 }
 
 .type-container .users-container p{
     width: 7vw;
     background-color: var(--frame-color);
     padding: 1vh 1vw;
+    height: 2vw;
     border-radius: 50px;
     font-family:Arial, Helvetica, sans-serif;
     font-size: 17px;
     font-weight: 600;
-    line-height: 3vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    user-select: none;
+    cursor: pointer;
+}
+
+.users-container .user-container{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.users-container .user-container a{
+    display: none;
+    align-items: center;
+    justify-content: center;
+    width: max(1vw,10px);
+    height: max(1vw,10px);
+    padding: max(1vw,10px);
+    margin: 0.25vw;
+    background-color: var(--frame-color);
+    border-radius: 100%;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.users-container .user-container #hide{
+    display: none;
+    width: max(1vw,10px);
+    height: max(1vw,10px);
+    padding: max(1vw,10px);
+    margin: 0.25vw;
+    background-color: var(--background-color);
+}
+
+.users-container .user-container a i{
+    font-size: max(1.5vw,10px);
+    color: var(--button);
+    transition: color 0.3s ease;
+}
+
+.users-container .user-container a:hover #admin{
+    color: var(--cyan);
+    transition: color 0.3s ease;
+}
+
+.users-container .user-container a:hover #member{
+    color: var(--vert);
+    transition: color 0.3s ease;
+}
+
+.users-container .user-container a:hover #ban{
+    color: var(--rouge);
+    transition: color 0.3s ease;
 }
 
 #delete-y{
@@ -1027,7 +1168,10 @@ body{
     font-family:Arial, Helvetica, sans-serif;
     font-size: 17px;
     line-height: 3vh;
+    margin-top: 3vh;
 }
+
+
 
 /*------------------------------------------------------------------------------------------------------*/
 /*apparence page profil générale*/

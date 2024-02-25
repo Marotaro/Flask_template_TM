@@ -193,3 +193,164 @@ function deletePost(postId){
         post.innerHTML = "";
     }); 
 }
+
+//show change role
+function showChangeRole(idUser, type) {
+    if (type === 'admin') {
+        const aRight = document.getElementById(`change-role-${idUser}-right`);
+        const aLeft = document.getElementById(`change-role-${idUser}-left`);
+        if (aRight.style.display !== 'flex') {
+            aRight.style.display = 'flex';
+            aLeft.style.display = 'flex';
+            aLeft.style.opacity = '0';
+        } else {
+            aRight.style.display = 'none';
+            aLeft.style.display = 'none';
+            aLeft.style.opacity = '0';
+        };
+
+    } else if (type === 'ban') {
+        const aRight = document.getElementById(`change-role-${idUser}-right`);
+        const aLeft = document.getElementById(`change-role-${idUser}-left`);
+        if (aLeft.style.display !== 'flex') {
+            aLeft.style.display = 'flex';
+            aRight.style.display = 'flex';
+            aRight.style.opacity = '0';
+        } else {
+            aLeft.style.display = 'none';
+            aRight.style.display = 'none';
+            aRight.style.opacity = '0';
+        };
+
+    } else if (type === 'member') {
+        const aRight = document.getElementById(`change-role-${idUser}-right`);
+        const aLeft = document.getElementById(`change-role-${idUser}-left`);
+
+        if (aRight.style.display !== 'flex') {
+            aRight.style.display = 'flex';
+            aLeft.style.display = 'flex';
+        } else {
+            aRight.style.display = 'none';
+            aLeft.style.display = 'none';
+        };
+    }
+    
+
+}
+
+//change role
+function changeRole(idChannel, idUser, userName, type) {
+    const oldCase = document.getElementById(`user-container-${idUser}`);
+    oldCase.remove();
+
+    if (type !== 'none') {
+        fetch(`/y/change_role/${idChannel}/${idUser}/${type}`)
+        .then((res) => res.json())
+        .then((respmes) => {
+            var newCase = document.createElement('div');
+            newCase.className = 'user-container';
+            newCase.id = `user-container-${idUser}`;
+
+            if (type === 'member'){
+                const newBox = document.getElementById('member-box');
+                
+                var aLeft = document.createElement('a');
+                aLeft.className = 'change-role';
+                aLeft.id = `change-role-${idUser}-left`;
+                aLeft.onclick = function() {changeRole(idChannel, idUser, userName, 'admin')};
+    
+                var iLeft = document.createElement('i');
+                iLeft.className = 'fa-solid fa-star-of-life';
+                iLeft.id = 'admin';
+    
+                aLeft.appendChild(iLeft);
+    
+                var p = document.createElement('p');
+                p.onclick = function() {showChangeRole(idUser, type)};
+                p.innerText = "@" + userName;
+    
+                var aRight = document.createElement('a');
+                aRight.className = 'change-role';
+                aRight.id = `change-role-${idUser}-right`;
+                aRight.onclick =function() {changeRole(idChannel, idUser, userName, 'ban')};
+    
+                var iRight = document.createElement('i');
+                iRight.className = 'fa-solid fa-door-closed';
+                iRight.id = 'ban';
+    
+                aRight.appendChild(iRight);
+    
+                newCase.appendChild(aLeft);
+                newCase.appendChild(p);
+                newCase.appendChild(aRight);
+    
+                newBox.appendChild(newCase);
+
+
+            } else if (type === 'admin') {
+
+                const newBox = document.getElementById('admin-box');
+
+                var aLeft = document.createElement('a');
+                aLeft.className = 'change-role';
+                aLeft.id = `change-role-${idUser}-left`;
+
+                var p = document.createElement('p');
+                p.onclick = function() {showChangeRole(idUser, type)};
+                p.innerText = "@" + userName;
+
+                var aRight = document.createElement('a');
+                aRight.className = 'change-role';
+                aRight.id = `change-role-${idUser}-right`;
+                aRight.onclick =function() {changeRole(idChannel, idUser, userName, 'member')};
+
+                var iRight = document.createElement('i');
+                iRight.className = 'fa-solid fa-user';
+                iRight.id = 'member';
+
+                aRight.appendChild(iRight);
+                newCase.appendChild(aLeft);
+                newCase.appendChild(p);
+                newCase.appendChild(aRight);
+
+
+
+                newBox.appendChild(newCase)
+            } else if (type === 'ban') {
+
+                const newBox = document.getElementById('ban-box');
+
+                var aLeft = document.createElement('a');
+                aLeft.className = 'change-role';
+                aLeft.id = `change-role-${idUser}-left`;
+                aLeft.onclick =function() {changeRole(idChannel, idUser, userName, 'member')};
+
+                var iLeft = document.createElement('i');
+                iLeft.className = 'fa-solid fa-user';
+                iLeft.id = 'member';
+
+                var p = document.createElement('p');
+                p.onclick = function() {showChangeRole(idUser, type)};
+                p.innerText = "@" + userName;
+
+                var aRight = document.createElement('a');
+                aRight.className = 'change-role';
+                aRight.id = `change-role-${idUser}-right`;
+
+
+
+
+                aLeft.appendChild(iLeft);
+                newCase.appendChild(aLeft);
+                newCase.appendChild(p);
+                newCase.appendChild(aRight);
+
+
+
+                newBox.appendChild(newCase)
+            };
+
+            
+        });
+    }
+}

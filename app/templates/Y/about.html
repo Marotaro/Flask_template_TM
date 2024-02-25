@@ -88,14 +88,26 @@
 {% endif %}
 
 <div class="center-h">
+  {% set dates = channel_info['date'].split("/") %}
+  <div class="about-info">
+    <div id="fun-fact">
+      <p>Créé le {{ dates[0] }} du {{ dates[1] +" "+ dates[2] }}</p>
+      <p>Y {% if channel_info['opento'] == "public" %}Publique{% else %}Privé{% endif %}</p>
+      <div id="numbers">
+        <p>{{ nb_participants }} participants</p>
+        <p>{{ nb_posts }} publications</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="center-h">
     <div class="about-info">
-        <div class="about-separator">
-            <p>Users</p>
-            <hr>
-        </div>
+      {% if g.user['id_user'] in owners|map(attribute="id_user") %}
         <div class="types-container">
             <div class="type-container">
-                <p>Owners</p>
+                <p>{% if owners|count > 1 %}Propriétaires{% else %}Propriétaire{% endif %}</p>
                 {% for owner in owners %}
                 <div class="users-container">
                     <p>@{{ owner['username'] }}</p>
@@ -103,28 +115,92 @@
                 {% endfor %}
             </div>
 
-            {% if admins %}
             <div class="type-container">
-                <p>Admins</p>
-                {% for admin in admins %}
-                <div class="users-container">
-                    <p>@{{ admin['username'] }}</p>
+                <p>{% if admins|count > 1 %}Admins{% else %}Admin{% endif %}</p>
+                <div class="users-container" id="admin-box">
+                  {% for admin in admins %}
+                    <div class="user-container" id="user-container-{{ admin['id_user'] }}">
+                      <a class="change-role" id="change-role-{{ admin['id_user'] }}-left"></a>
+                      <p onclick="showChangeRole({{ admin['id_user'] }}, 'admin')">@{{ admin['username'] }}</p>
+                      <a class="change-role" id="change-role-{{ admin['id_user'] }}-right" onclick="changeRole({{ channel_info['id_channel'] }}, {{ admin['id_user'] }}, '{{ admin['username'] }}', 'member')"><i class="fa-solid fa-user" id="member"></i></a>
+                    </div>
+                  {% endfor %}
                 </div>
-                {% endfor %}
             </div>
-            {% endif %}
 
-            {% if members %}
             <div class="type-container">
-                <p>Members</p>
-                {% for member in members %}
-                <div class="users-container">
-                    <p>@{{ member['username'] }}</p>
+                <p>{% if members|count > 1 %}Membres{% else %}Membre{% endif %}</p>
+                <div class="users-container" id="member-box">
+                  {% for member in members %}
+                    <div class="user-container" id="user-container-{{ member['id_user'] }}">
+                      <a class="change-role" id="change-role-{{ member['id_user'] }}-left" onclick="changeRole({{ channel_info['id_channel'] }}, {{ member['id_user'] }}, '{{ member['username']|string }}', 'admin')"><i class="fa-solid fa-star-of-life" id="admin"></i></a>
+                      <p onclick="showChangeRole({{ member['id_user'] }}, 'member')">@{{ member['username'] }}</p>
+                      <a class="change-role" id="change-role-{{ member['id_user'] }}-right" onclick="changeRole({{ channel_info['id_channel'] }}, {{ member['id_user'] }}, '{{ member['username']|string }}', 'ban')"><i class="fa-solid fa-door-closed" id="ban" ></i></a>
+                    </div>
+                  {% endfor %}
                 </div>
-                {% endfor %}
             </div>
-            {% endif %}
+
+            <div class="type-container">
+              <p>{% if bans|count > 1 %}Bans{% else %}Ban{% endif %}</p>
+              <div class="users-container" id="ban-box">
+                {% for ban in bans %}
+                  <div class="user-container" id="user-container-{{ ban['id_user'] }}">
+                    <a class="change-role" id="change-role-{{ ban['id_user'] }}-left" onclick="changeRole({{ channel_info['id_channel'] }}, {{ ban['id_user'] }}, '{{ ban['username'] }}', 'member')"><i class="fa-solid fa-user" id="member"></i></a>
+                    <p onclick="showChangeRole({{ ban['id_user'] }}, 'ban')">@{{ ban['username'] }}</p>
+                    <a class="change-role" id="change-role-{{ ban['id_user'] }}-right"></a>
+                  </div>
+                {% endfor %}
+              </div>
+          </div>
         </div>
+      {% else %}
+
+        <div class="types-container">
+          <div class="type-container">
+              <p>{% if owners|count > 1 %}Propriétaires{% else %}Propriétaire{% endif %}</p>
+              {% for owner in owners %}
+              <div class="users-container">
+                  <p>@{{ owner['username'] }}</p>
+              </div>
+              {% endfor %}
+          </div>
+
+          <div class="type-container">
+              <p>{% if admins|count > 1 %}Admins{% else %}Admin{% endif %}</p>
+              <div class="users-container" id="admin-box">
+                {% for admin in admins %}
+                  <div class="user-container" id="user-container-{{ admin['id_user'] }}">
+                    <p>@{{ admin['username'] }}</p>
+                  </div>
+                {% endfor %}
+              </div>
+          </div>
+
+          <div class="type-container">
+              <p>{% if members|count > 1 %}Membres{% else %}Membre{% endif %}</p>
+              <div class="users-container" id="member-box">
+                {% for member in members %}
+                  <div class="user-container" id="user-container-{{ member['id_user'] }}">
+                    <p>@{{ member['username'] }}</p>
+
+                  </div>
+                {% endfor %}
+              </div>
+          </div>
+
+          <div class="type-container">
+            <p>{% if bans|count > 1 %}Bans{% else %}Ban{% endif %}</p>
+            <div class="users-container" id="ban-box">
+              {% for ban in bans %}
+                <div class="user-container" id="user-container-{{ ban['id_user'] }}">
+                  <p>@{{ ban['username'] }}</p>
+                </div>
+              {% endfor %}
+            </div>
+        </div>
+        </div>
+      {% endif %}
     </div>
 </div>
 

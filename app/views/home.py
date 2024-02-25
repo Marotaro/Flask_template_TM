@@ -21,7 +21,8 @@ def home():
     # récupérer les channels
     ##celle ou l'utilisateur est l'owner
     mychannels = get_y_by_user(g.user['id_user'], "owner", db)
-    memberchannels = get_y_by_user(g.user['id_user'], "member", db)
+    memberchannels = get_y_by_user(g.user['id_user'], "member", db) + get_y_by_user(g.user['id_user'], "admin", db)
+    
     # Affichage de la page d'un utilisateur connecté
     return render_template("home/index.html", mychannels=mychannels,memberchannels=memberchannels)
 

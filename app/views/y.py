@@ -80,7 +80,7 @@ def see(id_channel):
             (id_channel,),
         ).fetchall()
         channel_normal_post =  db.execute(
-            "SELECT text, image, username, id_post, id_user_fk FROM Post JOIN User ON id_user = id_user_fk WHERE id_channel_fk = ? AND respond_to = -1",(id_channel,)
+            "SELECT text, location, username, id_post, id_user_fk FROM Post JOIN User ON id_user = id_user_fk LEFT JOIN Image_post ON id_post_fk = id_post WHERE id_channel_fk = ? AND respond_to = -1;",(id_channel,)
         ).fetchall()
         liked_post = [x[0] for x in db.execute(
             "SELECT id_post_fk FROM Likes WHERE id_user_fk = ?", (g.user['id_user'],)
@@ -209,11 +209,14 @@ def about(id_channel):
             owners = db.execute("SELECT id_user, username FROM Permission JOIN User ON id_user_fk = id_user WHERE id_channel_fk = ? AND type = 'owner'", (id_channel,)).fetchall()
             admins = db.execute("SELECT id_user, username FROM Permission JOIN User ON id_user_fk = id_user WHERE id_channel_fk = ? AND type = 'admin'", (id_channel,)).fetchall()
             members = db.execute("SELECT id_user, username FROM Permission JOIN User ON id_user_fk = id_user WHERE id_channel_fk = ? AND type = 'member'", (id_channel,)).fetchall()
+            bans = db.execute("SELECT id_user, username FROM Permission JOIN User ON id_user_fk = id_user WHERE id_channel_fk = ? AND type = 'ban'", (id_channel,)).fetchall()
             channel_themes = db.execute(
                 "SELECT name FROM Related_channel JOIN Themes On id_theme = id_theme_fk WHERE id_channel_fk = ? ",
                 (id_channel,),
             ).fetchall()
-            return render_template("Y/about.html", channel_info = channel_info, owners = owners, admins = admins, members = members, channel_themes = channel_themes)
+            nb_participants = db.execute("SELECT count(id_user_fk) FROM Permission WHERE id_channel_fk = ?",(id_channel,)).fetchone()[0]
+            nb_posts = db.execute("SELECT count(id_post) FROM Post WHERE id_channel_fk = ?", (id_channel,)).fetchone()[0]
+            return render_template("Y/about.html", channel_info = channel_info, owners = owners, admins = admins, members = members, bans = bans ,channel_themes = channel_themes, nb_participants = nb_participants, nb_posts = nb_posts)
 
 @y_bp.route("/delete/<int:id_channel>", methods = ("GET","POST"))
 @login_required
@@ -228,6 +231,21 @@ def delete(id_channel):
         db.execute("DELETE FROM Channel WHERE id_channel = ?", (id_channel,))
         db.commit()
         return redirect(url_for("home.home"))
+    else:
+        flash("Vous n'êtes pas authorisé à faire cela")
+        return render_template("home/404.html")
+    
+
+
+@y_bp.route("/change_role/<int:id_channel>/<int:id_user>/<string:type>", methods = ("GET","POST"))
+@login_required
+def change_role(id_channel, id_user, type):
+    db = get_db()
+    permission = db.execute("SELECT type FROM Permission WHERE id_user_fk = ? AND id_channel_fk = ?", (g.user['id_user'], id_channel,)).fetchone()[0] 
+    if permission == "owner":
+        db.execute("UPDATE Permission SET type = ? WHERE id_channel_fk = ? AND id_user_fk = ?", (type, id_channel, id_user))
+        db.commit()
+        return jsonify({"role": type, "user": id_user})
     else:
         flash("Vous n'êtes pas authorisé à faire cela")
         return render_template("home/404.html")

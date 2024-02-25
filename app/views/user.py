@@ -51,3 +51,4 @@ def show_favorits():
     db = get_db()
     favorits =  db.execute("SELECT Asdf.id_post, Asdf.text, Creator.username AS CreatorName, FromUser.username AS RespondTo, Channel.name AS ChannelName FROM Favorit JOIN Post AS Asdf ON Asdf.id_post = Favorit.id_post_fk LEFT JOIN Post AS RespondToPost ON Asdf.respond_to = RespondToPost.id_post LEFT JOIN User AS FromUser ON RespondToPost.id_user_fk = FromUser.id_user JOIN Channel ON Channel.id_channel = Asdf.id_channel_fk JOIN User AS Creator ON Creator.id_user = Asdf.id_user_fk WHERE Favorit.id_user_fk = ?", (g.user['id_user'],)).fetchall()
     return render_template("profil/user/favorits.html", favorits=favorits)
+

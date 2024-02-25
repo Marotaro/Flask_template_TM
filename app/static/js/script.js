@@ -98,6 +98,14 @@ function showRespond(postId, idUser, idChannel) {
                 var text = document.createElement("p");
                 text.innerText = respPost.text
 
+                //création partie image
+                var littleCenterDiv = document.createElement('div');
+                littleCenterDiv.className = "center-h"
+
+                var img = document.createElement('img');
+                img.src= `${respPost.location}`;
+                littleCenterDiv.appendChild(img);
+
                 //création downPart
                 var downPart = document.createElement("div");
                 downPart.className = "downpart";
@@ -157,6 +165,7 @@ function showRespond(postId, idUser, idChannel) {
 
                 littlePost.appendChild(upperPart)
                 littlePost.appendChild(text)
+                littlePost.appendChild(littleCenterDiv)
                 littlePost.appendChild(downPart)
                 littleTest.appendChild(littlePost)
                 littleTest.appendChild(littleMenu)

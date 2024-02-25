@@ -95,12 +95,12 @@ def get_comments(id_post):
     db = get_db()
     responds = []
     comments = db.execute(
-            "SELECT text, image, username, id_user_fk, id_post, respond_to FROM Post JOIN User ON id_user = id_user_fk WHERE respond_to = ?", (id_post,)
+            "SELECT text, location, username, id_user_fk, id_post, respond_to FROM Post JOIN User ON id_user = id_user_fk LEFT JOIN Image_post ON id_post_fk = id_post WHERE respond_to = ?", (id_post,)
         ).fetchall()
     for comment in comments:
         respond = {
             'text' : comment[0],
-            'image' : comment[1],
+            'location' : g.host + '/'+ comment[1],
             'username' : comment[2],
             'id_user' : comment[3],
             'id_post' : comment[4],

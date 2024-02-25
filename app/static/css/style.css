@@ -814,6 +814,12 @@ body{
     line-height: 3vh;
 }
 
+.little-post img{
+    max-width: 25vw;
+    max-height: 35vh;
+    margin-bottom: 1vh;
+}
+
 .hidden{
     opacity: 0;
     visibility: hidden;

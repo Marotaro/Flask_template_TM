@@ -1091,7 +1091,7 @@ body{
 }
 
 .users-container .user-container a{
-    display: none;
+    display: flex;
     align-items: center;
     justify-content: center;
     width: max(1vw,10px);
@@ -1102,6 +1102,8 @@ body{
     border-radius: 100%;
     text-decoration: none;
     cursor: pointer;
+    transform: scale(0);
+    transition: transform 0.3s ease;
 }
 
 .users-container .user-container #hide{
@@ -1306,4 +1308,76 @@ body{
 .user-little-name{
     color: var(--vert);
     text-overflow: clip;
+}
+/*------------------------------------------------------------------------------------------------------*/
+/*apparence page profil parametre*/
+
+#parametre-upper-part #user-info{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 3vw;
+}
+
+#parametre-upper-part #user-info img{
+    width: 8vw;
+    height: 8vw;
+    border-radius: 100%;
+    padding: 0.5vw;
+    background-color: var(--frame-color);
+}
+
+#parametre-upper-part #user-info #name{
+    display: flex;
+    flex-direction: column;
+}
+
+#parametre-upper-part #user-info #name label{
+    color: var(--white);
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: max(1vw,15px);
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+}
+
+#parametre-upper-part #user-info #name input{
+    background-color: var(--frame-color);
+    border: none;
+    border-radius: 25px;
+    padding: 1vh 1vw;
+    height: 4vh;
+    width: 20vw;
+    outline: none;
+    color: var(--white);
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: max(1vw,15px);
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+}
+
+#change-password{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--frame-color);
+    width: 15vw;
+    height: 4vh;
+    margin-top: 3vh;
+    border-radius: 25px;
+    text-align: center;
+    text-decoration: none;
+    color: var(--button);
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: max(1vw,15px);
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    transition: color 0.3s ease;
+}
+
+#change-password:hover{
+    color: var(--white);
+    transition: color 0.3s ease;
 }

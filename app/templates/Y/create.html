@@ -7,7 +7,7 @@
   {% endblock %}
 
 {% block title_page%}
-    <p>Create Y</p>
+    <p>Créer un Y</p>
 {% endblock %}
 
 {% block content %}
@@ -18,10 +18,10 @@
             <label for="imageInput"><i class="fa-regular fa-image image-button" id="addimage"></i></label>
             <input type="file" name="image" id="imageInput" accept="image/png, image/jpeg" style="display: none;" onchange="const i = document.getElementById('addimage'); const img = document.createElement('img'); img.src = window.URL.createObjectURL(this.files[0]); img.className = 'select-image-y' ; img.id = 'modify-image'; i.replaceWith(img); var input = document.getElementById('imageInput'); input.onchange = function() {const img2 = document.getElementById('modify-image'); const img3 = document.createElement('img'); img3.src = window.URL.createObjectURL(this.files[0]); img3.className = 'select-image-y' ; img3.id ='modify-image'; img2.replaceWith(img3);};"> 
             <div id="y-enter-short-info">
-              <label for="name">Name</label>
-              <input type="text" name="name" id="name" required>
-              <label for="themes">Themes</label>
-              <input type="text" name="themes" id="themes">
+              <label for="name">Nom</label>
+              <input type="text" name="name" id="name" required placeholder="l'incroyable Y">
+              <label for="themes">Thèmes</label>
+              <input type="text" name="themes" id="themes" placeholder="#theme #exemple">
             </div>
             <div id="open-button">
               <input type="button" id="opento" value="Privée" onclick="const visibleButton = document.getElementById('opento'); const hiddenButton = document.getElementById('opento-hidden'); if (visibleButton.value === 'Privée') {visibleButton.value = 'Publique'; hiddenButton.value = 'public';} else { visibleButton.value = 'Privée'; hiddenButton.value = 'private'; };">
@@ -42,7 +42,7 @@
           </div>
         </div>
         <div class="center-h">
-          <input type="submit" value="Create" class="create-button">
+          <input type="submit" value="Créer" class="create-button">
         </div>
       </form>
     </div> 

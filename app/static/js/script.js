@@ -208,26 +208,26 @@ function showChangeRole(idUser, type) {
     if (type === 'admin') {
         const aRight = document.getElementById(`change-role-${idUser}-right`);
         const aLeft = document.getElementById(`change-role-${idUser}-left`);
-        if (aRight.style.display !== 'flex') {
-            aRight.style.display = 'flex';
-            aLeft.style.display = 'flex';
+        if (aRight.style.transform !== 'scale(1)') {
+            aRight.style.transform = 'scale(1)';
+            aLeft.style.transform = 'scale(1)';
             aLeft.style.opacity = '0';
         } else {
-            aRight.style.display = 'none';
-            aLeft.style.display = 'none';
+            aRight.style.transform = 'scale(0)';
+            aLeft.style.transform = 'scale(0)';
             aLeft.style.opacity = '0';
         };
 
     } else if (type === 'ban') {
         const aRight = document.getElementById(`change-role-${idUser}-right`);
         const aLeft = document.getElementById(`change-role-${idUser}-left`);
-        if (aLeft.style.display !== 'flex') {
-            aLeft.style.display = 'flex';
-            aRight.style.display = 'flex';
+        if (aLeft.style.transform !== 'scale(1)') {
+            aLeft.style.transform = 'scale(1)';
+            aRight.style.transform = 'scale(1)';
             aRight.style.opacity = '0';
         } else {
-            aLeft.style.display = 'none';
-            aRight.style.display = 'none';
+            aLeft.style.transform = 'scale(0)';
+            aRight.style.transform = 'scale(0)';
             aRight.style.opacity = '0';
         };
 
@@ -235,12 +235,12 @@ function showChangeRole(idUser, type) {
         const aRight = document.getElementById(`change-role-${idUser}-right`);
         const aLeft = document.getElementById(`change-role-${idUser}-left`);
 
-        if (aRight.style.display !== 'flex') {
-            aRight.style.display = 'flex';
-            aLeft.style.display = 'flex';
+        if (aRight.style.transform !== 'scale(1)') {
+            aRight.style.transform = 'scale(1)';
+            aLeft.style.transform = 'scale(1)';
         } else {
-            aRight.style.display = 'none';
-            aLeft.style.display = 'none';
+            aRight.style.transform = 'scale(0)';
+            aLeft.style.transform = 'scale(0)';
         };
     }
     

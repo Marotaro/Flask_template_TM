@@ -1,0 +1,39 @@
+{% extends 'profil/user/template-profil.html' %}
+
+{% block title_page %}
+    Parametre - Y
+{% endblock %}
+
+{% block title %}
+    <h1>Parametre</h1>    
+{% endblock %}
+
+{% block button %}
+<a href="{{ url_for('user.show_profile') }}"><i class="fa-solid fa-user profil-button-off"></i></a>
+<a href="{{ url_for('user.show_posts') }}"><i class="fa-solid fa-layer-group posts-button-off"></i></a>
+<a href="{{ url_for('user.show_ys') }}">Ys</a>
+<a href="{{ url_for('user.show_likes') }}"><i class="fa-solid fa-heart like-profil-button-off"></i></a>
+<a href="{{ url_for('user.show_favorits') }}"><i class="fa-solid fa-bookmark favoris-button-off"></i></a>
+<a href="{{ url_for('user.show_parametre')}}"><i class="fa-solid fa-gear parameters-button-on"></i></a>
+{% endblock %}
+
+{% block content %}
+<div class="center-h" id="parametre-upper-part">
+    <form method="post" enctype="multipart/form-data">
+        <div id="user-info">
+            <label for="imageInput"><img src="{{ g.host +'/'+ g.user['location'] }}"  id="modify-image"></label>
+            <input type="file" name="image" id="imageInput" accept="image/png, image/jpeg" style="display: none;" onchange="const img = document.getElementById('modify-image'); const img2 = document.createElement('img'); img2.src = window.URL.createObjectURL(this.files[0]); img2.className = 'select-image-y' ; img2.id ='modify-image'; img.replaceWith(img2);"> 
+            <div id="name">
+                <label for="username">Nom d'utilisateur</label>
+                <input type="text" name="username" id="username" required value="{{ g.user['username'] }}">
+            </div>
+        </div>
+        <div class="center-h">
+            <input type="submit" value="Mettre à jour" class="create-button">
+        </div>
+    </form>
+</div>
+<div class="center-h">
+    <a href="{{ url_for('password.changepassword')}}" id="change-password">changer de mot de passe</a>
+</div>
+{% endblock %}

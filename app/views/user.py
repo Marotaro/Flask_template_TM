@@ -1,6 +1,7 @@
 from flask import (Blueprint, flash, g, redirect, render_template, request, session, url_for)
 from app.db.db import get_db
 from app.function.get_channel import *
+from app.function.image import update_image
 from app.utils import *
 
 # Routes /user/...
@@ -52,3 +53,21 @@ def show_favorits():
     favorits =  db.execute("SELECT Asdf.id_post, Asdf.text, Creator.username AS CreatorName, FromUser.username AS RespondTo, Channel.name AS ChannelName FROM Favorit JOIN Post AS Asdf ON Asdf.id_post = Favorit.id_post_fk LEFT JOIN Post AS RespondToPost ON Asdf.respond_to = RespondToPost.id_post LEFT JOIN User AS FromUser ON RespondToPost.id_user_fk = FromUser.id_user JOIN Channel ON Channel.id_channel = Asdf.id_channel_fk JOIN User AS Creator ON Creator.id_user = Asdf.id_user_fk WHERE Favorit.id_user_fk = ?", (g.user['id_user'],)).fetchall()
     return render_template("profil/user/favorits.html", favorits=favorits)
 
+@user_bp.route('/show_parametre', methods=('GET', 'POST'))
+@login_required
+def show_parametre():
+    if request.method == 'POST':
+        #try:
+            new_username = request.form['username']
+            image = request.files['image']
+
+            db = get_db()
+
+            db.execute("UPDATE User SET username = ? WHERE id_user = ?", (new_username, g.user['id_user']))
+            db.commit()
+            update_image('user', image, g.user['id_user'], db)
+            return redirect(url_for("user.show_parametre"))
+        #except:
+        #    return redirect(url_for("user.show_parametre"))
+    else:
+        return render_template("profil/user/parametre.html")

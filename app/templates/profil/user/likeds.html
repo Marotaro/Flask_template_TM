@@ -10,7 +10,7 @@
 <a href="{{ url_for('user.show_ys') }}">Ys</a>
 <a href="{{ url_for('user.show_likes') }}"><i class="fa-solid fa-heart like-profil-button-on"></i></a>
 <a href="{{ url_for('user.show_favorits') }}"><i class="fa-solid fa-bookmark favoris-button-off"></i></a>
-<a href=""><i class="fa-solid fa-gear parameters-button-off"></i></a>
+<a href="{{ url_for('user.show_parametre')}}"><i class="fa-solid fa-gear parameters-button-off"></i></a>
 {% endblock %}
 
 {% block title %}

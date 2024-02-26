@@ -24,7 +24,7 @@ def changepassword():
                 db = get_db()
                 db.execute("UPDATE User SET password = ? WHERE id_user = ?",(generate_password_hash(new_password),g.user['id_user']))
                 db.commit()
-                return render_template('user/profile.html')
+                return redirect(url_for('user.show_profile'))
             else:
                 error = "old password incorrect"
                 flash(error)

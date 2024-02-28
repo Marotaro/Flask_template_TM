@@ -81,6 +81,11 @@
         </div>
         <div class="post-menu" id="post-menu-{{ post['id_post'] }}">
             <a class=""  href="{{ url_for('post.create_post', id_channel = channel_info['id_channel'], respondto = ( post['id_post'] ))}}"><i class="fa-solid fa-reply"></i></a>
+            {% if post['id_post']|int in favorited_posts %}
+            <a onclick="favorit({{ post['id_post'] }})"><i class="fa-solid fa-bookmark favorit-button-on" id="favorit-button-{{ post['id_post'] }}" onclick="favorit({{ post['id_post'] }})"></i></a>
+            {% else %}
+            <a><i class="fa-solid fa-bookmark favorit-button-off" id="favorit-button-{{ post['id_post'] }}" onclick="favorit({{ post['id_post'] }})"></i></a>
+            {% endif %}
             {% if g.user['id_user'] == post['id_user_fk'] %}
             <a href="{{ url_for('post.modify_post_from_channel', id_channel = channel_info['id_channel'] ,id_post = ( post['id_post'] ))}}"><i class="fa-solid fa-pen-to-square"></i></a>
             <a href="{{ url_for('post.delete_post_from_channel', id_channel = channel_info['id_channel'] ,id_post = ( post['id_post'] ))}}"><i class="fa-solid fa-trash"></i></a>

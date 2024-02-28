@@ -27,21 +27,25 @@ def register():
         # Si le nom d'utilisateur et le mot de passe ont bien une valeur
         # on essaie d'insérer l'utilisateur dans la base de données
         if username and password and email:
-            try:
-                db.execute("INSERT INTO User (username, password, email, date) VALUES (?, ?, ?, ?)",(username, generate_password_hash(password), email, datenow()))
-                db.commit()
-                id_user = db.execute("SELECT id_user FROM User where email = ?", (email,)).fetchone()
-                upload_image("user", False, id_user[0], db)
-            except db.IntegrityError:
+            if not db.execute("SELECT CASE WHEN EXISTS (SELECT * FROM User WHERE username = ?) THEN 1 ELSE 0 END", (username,)).fetchone()[0]:
+                try:
+                    db.execute("INSERT INTO User (username, password, email, date) VALUES (?, ?, ?, ?)",(username, generate_password_hash(password), email, datenow()))
+                    db.commit()
+                    id_user = db.execute("SELECT id_user FROM User where email = ?", (email,)).fetchone()
+                    upload_image("user", False, id_user[0], db)
+                except db.IntegrityError:
 
-                # La fonction flash dans Flask est utilisée pour stocker un message dans la session de l'utilisateur
-                # dans le but de l'afficher ultérieurement, généralement sur la page suivante après une redirection
-                error = f"Email {email} is already registered."
+                    # La fonction flash dans Flask est utilisée pour stocker un message dans la session de l'utilisateur
+                    # dans le but de l'afficher ultérieurement, généralement sur la page suivante après une redirection
+                    error = f"Email {email} is already registered."
+                    flash(error)
+                    return redirect(url_for("auth.register"))
+                
+                return redirect(url_for("auth.login"))
+            else:
+                error = f"Username {username} already exist"
                 flash(error)
                 return redirect(url_for("auth.register"))
-            
-            return redirect(url_for("auth.login"))
-         
         else:
             error = "Username or password invalid"
             flash(error)

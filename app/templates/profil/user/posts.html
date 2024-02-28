@@ -7,9 +7,11 @@
 {% block button %}
 <a href="{{ url_for('user.show_profile') }}"><i class="fa-solid fa-user profil-button-off"></i></a>
 <a href="{{ url_for('user.show_posts') }}"><i class="fa-solid fa-layer-group posts-button-on"></i></a>
-<a href="{{ url_for('user.show_ys') }}">Ys</a>
+<a href="{{ url_for('user.show_ys') }}">
+  <img id ="Y-uni-logo" src="{{ g.host +'/static/image/Y_logoV3_uni.svg' }}">
+</a>
 <a href="{{ url_for('user.show_likes') }}"><i class="fa-solid fa-heart like-profil-button-off"></i></a>
-<a href="{{ url_for('user.show_favorits') }}"><i class="fa-solid fa-bookmark favoris-button-off"></i></a>
+<a href="{{ url_for('user.show_favorits') }}"><i class="fa-solid fa-bookmark favorit-profil-button-off"></i></a>
 <a href="{{ url_for('user.show_parametre')}}"><i class="fa-solid fa-gear parameters-button-off"></i></a>
 {% endblock %}
 
@@ -42,12 +44,21 @@
                 {{ ligne }}<br>
                 {% endfor %}
               </p>
-      
+              {% if post['location'] %}
+              <div class="center-h">
+                <img src="{{ g.host +'/'+ post['location']}}" alt="">
+              </div>
+              {% endif %}
               <div class="downpart">
                 {% if post['id_post']|int in liked_posts %}
                 <i class="fa-solid fa-heart like-button-on" id="like-button-{{ post['id_post'] }}" onclick="like({{ post['id_post'] }})"></i>
                 {% else %}
                 <i class="fa-regular fa-heart like-button-off" id="like-button-{{ post['id_post'] }}" onclick="like({{ post['id_post'] }})"></i>
+                {% endif %}
+                {% if post['id_post']|int in favorited_posts %}
+                <i class="fa-solid fa-bookmark favorit-button-on" id="favorit-button-{{ post['id_post'] }}" onclick="favorit({{ post['id_post'] }})"></i>
+                {% else %}
+                <i class="fa-solid fa-bookmark favorit-button-off" id="favorit-button-{{ post['id_post'] }}" onclick="favorit({{ post['id_post'] }})"></i>
                 {% endif %}
                 <i class="fa-regular fa-share-from-square"></i>
               </div>

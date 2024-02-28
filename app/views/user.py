@@ -22,11 +22,14 @@ def show_profile():
 @login_required 
 def show_posts():
     db = get_db()
-    posts = db.execute("SELECT Post.id_post, Post.text, FromUser.username AS RespondTo, Channel.name AS ChannelName FROM Post LEFT JOIN Post AS RespondToPost ON Post.respond_to = RespondToPost.id_post LEFT JOIN User AS FromUser ON RespondToPost.id_user_fk = FromUser.id_user JOIN Channel ON Channel.id_channel = Post.id_channel_fk WHERE Post.id_user_fk = ?", (g.user['id_user'],)).fetchall()
+    posts = db.execute("SELECT Post.id_post, Post.text, Image_post.location, FromUser.username AS RespondTo, Channel.name AS ChannelName FROM Post LEFT JOIN Post AS RespondToPost ON Post.respond_to = RespondToPost.id_post LEFT JOIN User AS FromUser ON RespondToPost.id_user_fk = FromUser.id_user JOIN Channel ON Channel.id_channel = Post.id_channel_fk LEFT JOIN Image_post ON Post.id_post = Image_post.id_post_fk WHERE Post.id_user_fk = ?", (g.user['id_user'],)).fetchall()
     liked_posts = [x[0] for x in db.execute(
             "SELECT id_post_fk FROM Likes WHERE id_user_fk = ?", (g.user['id_user'],)
         ).fetchall()]
-    return render_template('profil/user/posts.html', posts = posts, liked_posts = liked_posts)
+    favorited_posts = [x[0] for x in db.execute(
+        "SELECT id_post_fk FROM Favorit WHERE id_user_fk = ?", (g.user['id_user'],)
+    ).fetchall()]
+    return render_template('profil/user/posts.html', posts = posts, liked_posts = liked_posts, favorited_posts = favorited_posts)
 
 @user_bp.route('/show_ys', methods=('GET', 'POST'))
 @login_required
@@ -43,15 +46,21 @@ def show_ys():
 @login_required
 def show_likes():
     db = get_db()
-    likes =  db.execute("SELECT Asdf.id_post, Asdf.text, Creator.username AS CreatorName, FromUser.username AS RespondTo, Channel.name AS ChannelName FROM Likes JOIN Post AS Asdf ON Asdf.id_post = Likes.id_post_fk LEFT JOIN Post AS RespondToPost ON Asdf.respond_to = RespondToPost.id_post LEFT JOIN User AS FromUser ON RespondToPost.id_user_fk = FromUser.id_user JOIN Channel ON Channel.id_channel = Asdf.id_channel_fk JOIN User AS Creator ON Creator.id_user = Asdf.id_user_fk WHERE Likes.id_user_fk = ?", (g.user['id_user'],)).fetchall()
-    return render_template("profil/user/likeds.html", likes=likes)
+    likes =  db.execute("SELECT Asdf.id_post, Asdf.text, Image_post.location, Creator.username AS CreatorName, FromUser.username AS RespondTo, Channel.name AS ChannelName FROM Likes JOIN Post AS Asdf ON Asdf.id_post = Likes.id_post_fk LEFT JOIN Post AS RespondToPost ON Asdf.respond_to = RespondToPost.id_post LEFT JOIN User AS FromUser ON RespondToPost.id_user_fk = FromUser.id_user JOIN Channel ON Channel.id_channel = Asdf.id_channel_fk JOIN User AS Creator ON Creator.id_user = Asdf.id_user_fk LEFT JOIN Image_post ON Asdf.id_post = Image_post.id_post_fk WHERE Likes.id_user_fk = ?", (g.user['id_user'],)).fetchall()
+    favorited_posts = [x[0] for x in db.execute(
+        "SELECT id_post_fk FROM Favorit WHERE id_user_fk = ?", (g.user['id_user'],)
+    ).fetchall()]
+    return render_template("profil/user/likeds.html", likes=likes, favorited_posts = favorited_posts)
 
 @user_bp.route('/show_favorits', methods=('GET', 'POST'))
 @login_required
 def show_favorits():
     db = get_db()
-    favorits =  db.execute("SELECT Asdf.id_post, Asdf.text, Creator.username AS CreatorName, FromUser.username AS RespondTo, Channel.name AS ChannelName FROM Favorit JOIN Post AS Asdf ON Asdf.id_post = Favorit.id_post_fk LEFT JOIN Post AS RespondToPost ON Asdf.respond_to = RespondToPost.id_post LEFT JOIN User AS FromUser ON RespondToPost.id_user_fk = FromUser.id_user JOIN Channel ON Channel.id_channel = Asdf.id_channel_fk JOIN User AS Creator ON Creator.id_user = Asdf.id_user_fk WHERE Favorit.id_user_fk = ?", (g.user['id_user'],)).fetchall()
-    return render_template("profil/user/favorits.html", favorits=favorits)
+    favorits =  db.execute("SELECT Asdf.id_post, Asdf.text, Image_post.location, Creator.username AS CreatorName, FromUser.username AS RespondTo, Channel.name AS ChannelName FROM Favorit JOIN Post AS Asdf ON Asdf.id_post = Favorit.id_post_fk LEFT JOIN Post AS RespondToPost ON Asdf.respond_to = RespondToPost.id_post LEFT JOIN User AS FromUser ON RespondToPost.id_user_fk = FromUser.id_user JOIN Channel ON Channel.id_channel = Asdf.id_channel_fk JOIN User AS Creator ON Creator.id_user = Asdf.id_user_fk LEFT JOIN Image_post ON Asdf.id_post = Image_post.id_post_fk WHERE Favorit.id_user_fk = ?", (g.user['id_user'],)).fetchall()
+    liked_posts = [x[0] for x in db.execute(
+        "SELECT id_post_fk FROM Likes WHERE id_user_fk = ?", (g.user['id_user'],)
+    ).fetchall()]
+    return render_template("profil/user/favorits.html", favorits=favorits, liked_posts = liked_posts)
 
 @user_bp.route('/show_parametre', methods=('GET', 'POST'))
 @login_required
@@ -62,9 +71,13 @@ def show_parametre():
             image = request.files['image']
 
             db = get_db()
-
-            db.execute("UPDATE User SET username = ? WHERE id_user = ?", (new_username, g.user['id_user']))
-            db.commit()
+            if not db.execute("SELECT CASE WHEN EXISTS (SELECT * FROM User WHERE username = ?) THEN 1 ELSE 0 END", (new_username,)).fetchone()[0]:
+                db.execute("UPDATE User SET username = ? WHERE id_user = ?", (new_username, g.user['id_user']))
+                db.commit()
+            else:
+                error = f"Username {new_username} already exists"
+                flash(error)
+                return redirect(url_for("user.show_parametre"))
             update_image('user', image, g.user['id_user'], db)
             return redirect(url_for("user.show_parametre"))
         #except:

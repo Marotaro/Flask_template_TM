@@ -85,8 +85,11 @@ def see(id_channel):
         liked_post = [x[0] for x in db.execute(
             "SELECT id_post_fk FROM Likes WHERE id_user_fk = ?", (g.user['id_user'],)
         ).fetchall()]
+        favorited_posts = [x[0] for x in db.execute(
+            "SELECT id_post_fk FROM Favorit WHERE id_user_fk = ?", (g.user['id_user'],)
+        ).fetchall()]
         return render_template(
-            "Y/see.html", channel_info=channel_info, channel_themes=channel_themes, channel_normal_post = channel_normal_post, liked_post = liked_post
+            "Y/see.html", channel_info=channel_info, channel_themes=channel_themes, channel_normal_post = channel_normal_post, liked_post = liked_post, favorited_posts = favorited_posts
         )
     
 @y_bp.route("/get_comments/<int:id_post>", methods = ("GET","POST"))
@@ -110,7 +113,11 @@ def get_comments(id_post):
     liked_resp_post = [x[0] for x in db.execute(
             "SELECT id_post_fk FROM Post JOIN Likes ON id_post= id_post_fk WHERE respond_to = ? AND Likes.id_user_fk = ?", (id_post,g.user['id_user'],)
         ).fetchall()]
+    favorited_resp_post = [x[0] for x in db.execute(
+            "SELECT id_post_fk FROM Post JOIN Favorit ON id_post= id_post_fk WHERE respond_to = ? AND Favorit.id_user_fk = ?", (id_post,g.user['id_user'],)
+        ).fetchall()]
     responds.append(liked_resp_post)
+    responds.append(favorited_resp_post)
     return jsonify(responds)
 
     

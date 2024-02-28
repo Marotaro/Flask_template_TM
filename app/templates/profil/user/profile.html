@@ -15,9 +15,11 @@
   <div class="side-bar">
     <a href="{{ url_for('user.show_profile') }}"><i class="fa-solid fa-user profil-button-on"></i></a>
     <a href="{{ url_for('user.show_posts') }}"><i class="fa-solid fa-layer-group posts-button-off"></i></a>
-    <a href="{{ url_for('user.show_ys') }}">Ys</a>
+    <a href="{{ url_for('user.show_ys') }}">
+      <img id ="Y-uni-logo" src="{{ g.host +'/static/image/Y_logoV3_uni.svg' }}">
+    </a>
     <a href="{{ url_for('user.show_likes') }}"><i class="fa-solid fa-heart like-profil-button-off"></i></a>
-    <a href="{{ url_for('user.show_favorits') }}"><i class="fa-solid fa-bookmark favoris-button-off"></i></a>
+    <a href="{{ url_for('user.show_favorits') }}"><i class="fa-solid fa-bookmark favorit-profil-button-off"></i></a>
     <a href="{{ url_for('user.show_parametre')}}"><i class="fa-solid fa-gear parameters-button-off"></i></a>
     </div>
 

@@ -55,6 +55,20 @@ function like(postId) {
             });
 }
 
+function favorit(postId) {
+    const favoritButton = document.getElementById(`favorit-button-${postId}`);
+
+        fetch(`/post/favorit_post/${postId}`, { methods: "GET" })
+            .then((res) => res.json())
+            .then((data) => { console.log(data);
+                if (data[0].favorited === true) {
+                    favoritButton.className ="fa-solid fa-bookmark favorit-button-on";
+                } else {
+                    favoritButton.className ="fa-solid fa-bookmark favorit-button-off";
+                }
+            });
+}
+
 function showRespond(postId, idUser, idChannel) {
     const responds = document.getElementById(`responds-${postId}`);
     const comment = document.getElementById(`comment-${postId}`);
@@ -65,7 +79,7 @@ function showRespond(postId, idUser, idChannel) {
         .then((respPosts) => { 
             console.log(respPosts.slice(-1)[0].includes(15));
             console.log(respPosts.slice(-1)); // Vérifiez si les données sont correctement récupérées
-            for (const respPost of respPosts.slice(0,-1)) {
+            for (const respPost of respPosts.slice(0,-2)) {
                 //création center div
                 var CenterDiv = document.createElement("div");
                 CenterDiv.className = "center-h";
@@ -113,7 +127,7 @@ function showRespond(postId, idUser, idChannel) {
                 //création like
                 var heart = document.createElement("i");
                 console.log(respPost.respond_to);
-                if (respPosts.slice(-1)[0].includes(respPost.id_post)) {
+                if (respPosts.slice(-2)[0].includes(respPost.id_post)) {
                     heart.className = "fa-solid fa-heart like-button-on";
                 } else {
                     heart.className = "fa-regular fa-heart like-button-off";
@@ -151,16 +165,21 @@ function showRespond(postId, idUser, idChannel) {
 
                         littleMenu.appendChild(modifyButton);
                         littleMenu.appendChild(deleteButton);
+                    }
+                    var fav = document.createElement("a");
+
+                    var bookmark = document.createElement("i");
+                    if (respPosts.slice(-1)[0].includes(respPost.id_post)) {
+                        bookmark.className = "fa-solid fa-bookmark favorit-button-on";
                     } else {
-                        var nothing = document.createElement("a");
-                        nothing.onclick = function() {littlePostMenu(`${respPost.id_post}`)};
-
-                        var xmark = document.createElement('i');
-                        xmark.className = "fa-solid fa-xmark";
-                        nothing.appendChild(xmark);
-
-                        littleMenu.appendChild(nothing);
+                        bookmark.className = "fa-solid fa-bookmark favirt-button-off";
                     };
+                    bookmark.id = `favorit-button-${respPost.id_post}`;
+                    bookmark.onclick =function() {favorit(respPost.id_post)};
+                    fav.appendChild(bookmark);
+
+                    littleMenu.appendChild(fav);
+
                 
 
                 littlePost.appendChild(upperPart)

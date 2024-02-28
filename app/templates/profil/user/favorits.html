@@ -7,9 +7,11 @@
 {% block button %}
 <a href="{{ url_for('user.show_profile') }}"><i class="fa-solid fa-user profil-button-off"></i></a>
 <a href="{{ url_for('user.show_posts') }}"><i class="fa-solid fa-layer-group posts-button-off"></i></a>
-<a href="{{ url_for('user.show_ys') }}">Ys</a>
+<a href="{{ url_for('user.show_ys') }}">
+  <img id ="Y-uni-logo" src="{{ g.host +'/static/image/Y_logoV3_uni.svg' }}">
+</a>
 <a href="{{ url_for('user.show_likes') }}"><i class="fa-solid fa-heart like-profil-button-off"></i></a>
-<a href="{{ url_for('user.show_favorits') }}"><i class="fa-solid fa-bookmark favoris-button-on"></i></a>
+<a href="{{ url_for('user.show_favorits') }}"><i class="fa-solid fa-bookmark favorit-profil-button-on"></i></a>
 <a href="{{ url_for('user.show_parametre')}}"><i class="fa-solid fa-gear parameters-button-off"></i></a>
 {% endblock %}
 
@@ -33,10 +35,24 @@
                 </div>
             </div>
     
-            <p>{{ favorit['text'] }}</p>
-    
+            {% set lignes = favorit['text'].split("\n") %}
+            <p class="text">
+              {% for ligne in lignes %}
+              {{ ligne }}<br>
+              {% endfor %}
+            </p>
+            {% if favorit['location'] %}
+            <div class="center-h">
+              <img src="{{ g.host +'/'+ favorit['location']}}" alt="">
+            </div>
+            {% endif %}
             <div class="downpart">
+              {% if favorit['id_post']|int in liked_posts %}
               <i class="fa-solid fa-heart like-button-on" id="like-button-{{ favorit['id_post'] }}" onclick="like({{ favorit['id_post'] }})"></i>
+              {% else %}
+              <i class="fa-regular fa-heart like-button-off" id="like-button-{{ favorit['id_post'] }}" onclick="like({{ favorit['id_post'] }})"></i>
+              {% endif %}
+              <i class="fa-solid fa-bookmark favorit-button-on" id="favorit-button-{{ favorit['id_post'] }}" onclick="favorit({{ favorit['id_post'] }})"></i>
               <i class="fa-regular fa-share-from-square"></i>
             </div>
           </div>

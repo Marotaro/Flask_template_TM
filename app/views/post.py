@@ -53,6 +53,24 @@ def like_post(id_post):
     else:
         return jsonify({"error": "La publication n'existe pas"}, 400)
     
+@post_bp.route('/favorit_post/<id_post>', methods = ["GET"])
+@login_required
+def favorit_post(id_post):
+    db = get_db()
+    post = db.execute("SELECT CASE WHEN EXISTS (SELECT * FROM Post WHERE id_post= ?)THEN 1 ELSE 0 END", (id_post,)).fetchone()[0]
+    if post:
+        favorit = db.execute("SELECT CASE WHEN EXISTS (SELECT * FROM Favorit WHERE id_user_fk = ? AND id_post_fk = ?)THEN 1 ELSE 0 END", (g.user["id_user"], id_post,)).fetchone()[0]
+        if favorit:
+            db.execute("DELETE FROM Favorit WHERE id_user_fk = ? AND id_post_fk = ?", (g.user["id_user"], id_post,))
+            favorited = False
+        else:
+            db.execute("INSERT INTO Favorit (id_user_fk, id_post_fk) VALUES (?,?)",(g.user["id_user"], id_post,))
+            favorited = True
+        db.commit()
+        return jsonify({"favorited": favorited}, 400)
+    else:
+        return jsonify({"error": "La publication n'existe pas"}, 400)
+    
 @post_bp.route('/delete_post_from_channel/<id_channel>/<id_post>', methods = ["GET","Post"])
 @login_required
 def delete_post_from_channel(id_channel,id_post):

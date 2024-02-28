@@ -11,6 +11,7 @@
     --cyan: #038d86;
     --vert: #059A6D;
     --rouge: #eb2053 ;
+    --gold: #f79e29; 
     /*size*/
     --boxtitle: max(5vw,40px);
     /*font*/
@@ -129,6 +130,8 @@ body{
 }
 /*--------------------------------------------------------------------------------------------------*/
 /*apparence boutons*/
+
+
 .home-button{
     color: var(--button);
     font-size: 1.5vw;
@@ -203,12 +206,22 @@ body{
     transition: color 0.3s ease;
 }
 
-.favoris-button-off{
+.favorit-button-off{
     color: var(--button);
     transition: color 0.3s ease;
 }
 
-.favoris-button-on{
+.favorit-button-on{
+    color: var(--gold);
+    transition: color 0.3s ease;
+}
+
+.favorit-profil-button-off{
+    color: var(--button);
+    transition: color 0.3s ease;
+}
+
+.favorit-profil-button-on{
     color: var(--white);
     transition: color 0.3s ease;
 }
@@ -896,6 +909,13 @@ body{
     color: var(--rouge);
 }
 
+.post-menu a:hover .fa-bookmark{
+    color: var(--gold);
+}
+
+.post-menu a .favorit-button-on{
+    color: var(--gold);
+}
 
 #little-test{
     position: relative;
@@ -943,6 +963,13 @@ body{
     color: var(--rouge);
 }
 
+.little-post-menu a:hover .fa-bookmark{
+    color: var(--gold);
+}
+
+.little-post-menu a .favorit-button-on{
+    color: var(--gold);
+}
 #about{
     position: fixed;
     bottom: 1vh;
@@ -1216,6 +1243,16 @@ body{
     color: var(--white);
 }
 
+.side-bar a img{
+    width: 1.5vw;
+    transition: filter 0.3s ease;
+}
+
+.side-bar a:hover img{
+    filter: brightness(200%);
+    transition: filter 0.3s ease;
+}
+
 #line{
     width: 90%;
     color: #424242;
@@ -1317,6 +1354,7 @@ body{
     flex-direction: row;
     align-items: center;
     gap: 3vw;
+
 }
 
 #parametre-upper-part #user-info img{
@@ -1380,4 +1418,78 @@ body{
 #change-password:hover{
     color: var(--white);
     transition: color 0.3s ease;
+}
+
+/*------------------------------------------------------------------------------------------------------*/
+/*apparence page MDP*/
+
+.mdpbox{
+    display: flex;
+    flex-direction: column;
+    width: max(30vw,350px);
+    background-color: var(--frame-color);
+    border-radius: 50px;
+}
+
+.mdpbox form{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    margin-top: -1.5vh;
+}
+
+.mdpbox h2{
+    margin-left: 7%;
+    margin-top: 1%;
+    color:#FFF;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: max(7vmin,30px);
+    font-style: normal;
+    font-weight: 800;
+    line-height: normal;
+}
+
+.mdpbox #inputs-container .input-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    margin: 1vh 0 ;
+}
+
+.mdpbox #inputs-container .input-container input{
+    color:var(--white);
+    width:80%;
+    height: max(7.5vh,30px);
+    border-radius: 60px;
+    background-color: var(--inputbox-color);
+    outline: 0px;
+    border: 0px;
+    padding: 0 5%;
+}
+
+.mdpbox #inputs-container .input-container label{
+    width: 70%;
+    text-align: left;
+    color:#fff;	
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: max(2.75vmin,15px);
+    font-style: normal;
+    font-weight: 800;
+    line-height: normal;
+}
+
+.mdpbox #inputs-container input[type="submit"]{
+    background-color: #ffffff;
+    border: none;
+    border-radius: 100px;
+    padding: 16px 32px;
+    text-decoration: none;
+    margin: 2vh 0px;
+    color: rgb(0, 0, 0);
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: max(2vmin,12px);
+    font-style: normal;
+    font-weight: 800;
+    cursor: pointer;
 }

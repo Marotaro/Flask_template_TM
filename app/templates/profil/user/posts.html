@@ -28,7 +28,10 @@
           <div id="test">
             <div class="post" >
               <div class="upperpart">
+                <div class="user-part-info">
+                  <img src="{{ g.host +'/'+ g.user['location'] }}" alt="">
                   <p>@{{ g.user['username'] }}</p>
+                </div>
                   <div class="post-info-profil">
                       <p>depuis <p class="y-little-name">/{{post['ChannelName'] }}</p></p>
                       {% if post['RespondTo'] %}

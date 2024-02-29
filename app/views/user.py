@@ -46,7 +46,7 @@ def show_ys():
 @login_required
 def show_likes():
     db = get_db()
-    likes =  db.execute("SELECT Asdf.id_post, Asdf.text, Image_post.location, Creator.username AS CreatorName, FromUser.username AS RespondTo, Channel.name AS ChannelName FROM Likes JOIN Post AS Asdf ON Asdf.id_post = Likes.id_post_fk LEFT JOIN Post AS RespondToPost ON Asdf.respond_to = RespondToPost.id_post LEFT JOIN User AS FromUser ON RespondToPost.id_user_fk = FromUser.id_user JOIN Channel ON Channel.id_channel = Asdf.id_channel_fk JOIN User AS Creator ON Creator.id_user = Asdf.id_user_fk LEFT JOIN Image_post ON Asdf.id_post = Image_post.id_post_fk WHERE Likes.id_user_fk = ?", (g.user['id_user'],)).fetchall()
+    likes =  db.execute("SELECT Asdf.id_post, Asdf.text, Image_post.location, Creator.username AS CreatorName, Image_user.location AS Creatoricon, FromUser.username AS RespondTo, Channel.name AS ChannelName FROM Likes JOIN Post AS Asdf ON Asdf.id_post = Likes.id_post_fk LEFT JOIN Post AS RespondToPost ON Asdf.respond_to = RespondToPost.id_post LEFT JOIN User AS FromUser ON RespondToPost.id_user_fk = FromUser.id_user JOIN Channel ON Channel.id_channel = Asdf.id_channel_fk JOIN User AS Creator ON Creator.id_user = Asdf.id_user_fk LEFT JOIN Image_post ON Asdf.id_post = Image_post.id_post_fk JOIN Image_user ON Asdf.id_user_fk = Image_user.id_user_fk WHERE Likes.id_user_fk = ?", (g.user['id_user'],)).fetchall()
     favorited_posts = [x[0] for x in db.execute(
         "SELECT id_post_fk FROM Favorit WHERE id_user_fk = ?", (g.user['id_user'],)
     ).fetchall()]
@@ -56,7 +56,7 @@ def show_likes():
 @login_required
 def show_favorits():
     db = get_db()
-    favorits =  db.execute("SELECT Asdf.id_post, Asdf.text, Image_post.location, Creator.username AS CreatorName, FromUser.username AS RespondTo, Channel.name AS ChannelName FROM Favorit JOIN Post AS Asdf ON Asdf.id_post = Favorit.id_post_fk LEFT JOIN Post AS RespondToPost ON Asdf.respond_to = RespondToPost.id_post LEFT JOIN User AS FromUser ON RespondToPost.id_user_fk = FromUser.id_user JOIN Channel ON Channel.id_channel = Asdf.id_channel_fk JOIN User AS Creator ON Creator.id_user = Asdf.id_user_fk LEFT JOIN Image_post ON Asdf.id_post = Image_post.id_post_fk WHERE Favorit.id_user_fk = ?", (g.user['id_user'],)).fetchall()
+    favorits =  db.execute("SELECT Asdf.id_post, Asdf.text, Image_post.location, Creator.username AS CreatorName, Image_user.location AS Creatoricon, FromUser.username AS RespondTo, Channel.name AS ChannelName FROM Favorit JOIN Post AS Asdf ON Asdf.id_post = Favorit.id_post_fk LEFT JOIN Post AS RespondToPost ON Asdf.respond_to = RespondToPost.id_post LEFT JOIN User AS FromUser ON RespondToPost.id_user_fk = FromUser.id_user JOIN Channel ON Channel.id_channel = Asdf.id_channel_fk JOIN User AS Creator ON Creator.id_user = Asdf.id_user_fk LEFT JOIN Image_post ON Asdf.id_post = Image_post.id_post_fk JOIN Image_user ON Asdf.id_user_fk = Image_user.id_user_fk WHERE Favorit.id_user_fk = ?", (g.user['id_user'],)).fetchall()
     liked_posts = [x[0] for x in db.execute(
         "SELECT id_post_fk FROM Likes WHERE id_user_fk = ?", (g.user['id_user'],)
     ).fetchall()]

@@ -80,7 +80,7 @@ def see(id_channel):
             (id_channel,),
         ).fetchall()
         channel_normal_post =  db.execute(
-            "SELECT text, location, username, id_post, id_user_fk FROM Post JOIN User ON id_user = id_user_fk LEFT JOIN Image_post ON id_post_fk = id_post WHERE id_channel_fk = ? AND respond_to = -1;",(id_channel,)
+            "SELECT text, Image_post.location, username, Image_user.location AS usericon , id_post, Post.id_user_fk FROM Post JOIN User ON id_user = Post.id_user_fk LEFT JOIN Image_post ON id_post_fk = id_post JOIN Image_user ON Post.id_user_fk = Image_user.id_user_fk WHERE id_channel_fk = ? AND respond_to = -1;",(id_channel,)
         ).fetchall()
         liked_post = [x[0] for x in db.execute(
             "SELECT id_post_fk FROM Likes WHERE id_user_fk = ?", (g.user['id_user'],)
@@ -98,16 +98,17 @@ def get_comments(id_post):
     db = get_db()
     responds = []
     comments = db.execute(
-            "SELECT text, location, username, id_user_fk, id_post, respond_to FROM Post JOIN User ON id_user = id_user_fk LEFT JOIN Image_post ON id_post_fk = id_post WHERE respond_to = ?", (id_post,)
+            "SELECT text, Image_post.location, username, Image_user.location AS usericon , id_post, Post.id_user_fk, respond_to FROM Post JOIN User ON id_user = Post.id_user_fk LEFT JOIN Image_post ON id_post_fk = id_post JOIN Image_user ON Post.id_user_fk = Image_user.id_user_fk WHERE respond_to = ?", (id_post,)
         ).fetchall()
     for comment in comments:
         respond = {
             'text' : comment[0],
             'location' : g.host + '/'+ comment[1],
             'username' : comment[2],
-            'id_user' : comment[3],
-            'id_post' : comment[4],
-            'respond_to' : comment[5]
+            'usericon' : comment[3],
+            'id_user' : comment[4],
+            'id_post' : comment[5],
+            'respond_to' : comment[6],
         }
         responds.append(respond)
     liked_resp_post = [x[0] for x in db.execute(

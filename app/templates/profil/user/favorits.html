@@ -26,7 +26,10 @@
         <div>
           <div class="post">
             <div class="upperpart">
+              <div class="user-part-info">
+                <img src="{{ g.host +'/'+ favorit['Creatoricon'] }}" alt="">
                 <p>@{{ favorit['CreatorName'] }}</p>
+              </div>
                 <div class="post-info-profil">
                     <p>depuis <p class="y-little-name">/{{favorit['ChannelName'] }}</p></p>
                     {% if favorit['RespondTo'] %}

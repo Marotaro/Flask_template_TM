@@ -54,7 +54,10 @@
       <div id="test">
         <div class="post">
           <div class="upperpart">
-            <p>@{{ post['username'] }}</p>
+            <div class="user-part-info">
+              <img src="{{ g.host +'/'+ post['usericon']}}" alt="">
+              <p>@{{ post['username'] }}</p>
+            </div>
             <p><img src="{{ url_for('static', filename ='image/buttons/threepoint.svg')}}" alt="" onclick="postMenu({{ post['id_post'] }})"></p>
           </div>
 
@@ -75,7 +78,7 @@
             {% else %}
             <i class="fa-regular fa-heart like-button-off" id="like-button-{{ post['id_post'] }}" onclick="like({{ post['id_post'] }})"></i>
             {% endif %}
-            <i class="fa-regular fa-comment comment-button-off" id="comment-{{ post['id_post'] }}" onclick="showRespond({{ post['id_post'] }},{{g.user['id_user']}},{{ channel_info['id_channel'] }})"></i>
+            <i class="fa-regular fa-comment comment-button-off" id="comment-{{ post['id_post'] }}" onclick="showRespond({{ post['id_post'] }},{{g.user['id_user']}},{{ channel_info['id_channel'] }},'{{ g.host }}')"></i>
             <i class="fa-regular fa-share-from-square"></i>
           </div>
         </div>

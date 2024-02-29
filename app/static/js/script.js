@@ -69,7 +69,7 @@ function favorit(postId) {
             });
 }
 
-function showRespond(postId, idUser, idChannel) {
+function showRespond(postId, idUser, idChannel, host) {
     const responds = document.getElementById(`responds-${postId}`);
     const comment = document.getElementById(`comment-${postId}`);
 
@@ -96,11 +96,22 @@ function showRespond(postId, idUser, idChannel) {
                 var upperPart = document.createElement("div");
                 upperPart.className = "upperpart";
 
-                //création username
-                var userName = document.createElement("p");
-                userName.innerText = "@"+respPost.username;
-                upperPart.appendChild(userName);
+                // création user-part-info
+                var userPartInfo = document.createElement("div");
+                userPartInfo.className = "user-part-info";
 
+                    //création usericon
+                    var userIcon = document.createElement('img');
+                    userIcon.src = `${host}/${respPost.usericon}`
+                    userPartInfo.appendChild(userIcon);
+
+                    //création username
+                    var userName = document.createElement("p");
+                    userName.innerText = "@"+respPost.username;
+                    userPartInfo.appendChild(userName);
+
+                upperPart.appendChild(userPartInfo);
+                
                 var threePoint = document.createElement("p");
                 var image = document.createElement("img");
                 image.src = "http://127.0.0.1:5000/static/image/buttons/threepoint.svg";

@@ -26,7 +26,10 @@
         <div>
           <div class="post">
             <div class="upperpart">
+              <div class="user-part-info">
+                <img src="{{ g.host +'/'+ like['Creatoricon'] }}" alt="">
                 <p>@{{ like['CreatorName'] }}</p>
+              </div>
                 <div class="post-info-profil">
                     <p>depuis <p class="y-little-name">/{{like['ChannelName'] }}</p></p>
                     {% if like['RespondTo'] %}

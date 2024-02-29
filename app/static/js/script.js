@@ -30,16 +30,7 @@ function littlePostMenu(idPost) {
     }
 }
 
-function copy_to_clipboard(text,alert) {
-    var textarea = document.createElement('textarea');
-    textarea.value = text;
-    textarea.style.position = "absolute";
-    textarea.style.display = "none";
-    document.body.appendChild(textarea);
-    textarea.select();
-    navigator.clipboard.writeText(textarea.value);
-    alert(alert);
-}
+
 
 function like(postId) {
     const likeButton = document.getElementById(`like-button-${postId}`);
@@ -392,4 +383,61 @@ function changeRole(idChannel, idUser, userName, type) {
             
         });
     }
+}
+
+
+function showInvite(idChannel) {
+    var inviteOverlay = document.getElementById("invite-overlay");
+    if (inviteOverlay.style.transform !== "scale(1)") {
+        inviteOverlay.style.transform = "scale(1)"
+    } else {
+        inviteOverlay.style.transform = "scale(0)";
+        inviteOverlay.style.width = '20vw'
+
+        var inviteOverlay = document.getElementById('invite-overlay');
+        inviteOverlay.innerHTML = '';
+
+        var timeButton = document.createElement('button');
+        timeButton.id = 'time-button';
+        timeButton.value = '10';
+        timeButton.onclick = function() {var button = document.getElementById('time-button'); if (button.value === '10') { button.innerText = '30 Minutes'; button.value = '30' } else if ( button.value === '30' ) { button.innerText = '60 Minutes'; button.value =  '60'} else { button.innerText = '10 Minutes' ; button.value = '10' };};
+        timeButton.innerText = '10 Minutes';
+        
+        var createInvite = document.createElement('button');
+        createInvite.id = 'create-invite'
+        createInvite.onclick = function() {createInviteLink(idChannel)};
+        createInvite.innerText = 'Créer un lien'
+
+        inviteOverlay.appendChild(timeButton);
+        inviteOverlay.appendChild(createInvite)
+
+    }
+}
+
+function createInviteLink(idChannel) {
+    var button = document.getElementById('time-button');
+        fetch(`/y/invite/${idChannel}/${button.value}`)
+        .then((res) => res.json())
+        .then((respmes) => {
+            var inviteOverlay = document.getElementById('invite-overlay');
+            inviteOverlay.innerHTML = '';
+
+            var p = document.createElement('p');
+            p.id = 'created-link'
+            p.innerText = `${respmes.respond}`;
+
+            inviteOverlay.appendChild(p);
+            inviteOverlay.style.width = "fit-content"
+            inviteOverlay.onclick = function() {copy_to_clipboard(`${respmes.respond}`, idChannel)};
+
+        });
+}
+
+
+function copy_to_clipboard(text, idChannel) {
+    navigator.clipboard.writeText(text);
+    var inviteOverlay = document.getElementById('invite-overlay');
+    inviteOverlay.innerText = 'lien copié';
+    inviteOverlay.onclick = ""
+    setTimeout( function() {showInvite(idChannel)}, 2000);
 }

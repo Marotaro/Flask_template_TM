@@ -71,6 +71,7 @@ def show_parametre():
             image = request.files['image']
 
             db = get_db()
+            update_image('user', image, g.user['id_user'], db)
             if not db.execute("SELECT CASE WHEN EXISTS (SELECT * FROM User WHERE username = ?) THEN 1 ELSE 0 END", (new_username,)).fetchone()[0]:
                 db.execute("UPDATE User SET username = ? WHERE id_user = ?", (new_username, g.user['id_user']))
                 db.commit()
@@ -78,7 +79,6 @@ def show_parametre():
                 error = f"Username {new_username} already exists"
                 flash(error)
                 return redirect(url_for("user.show_parametre"))
-            update_image('user', image, g.user['id_user'], db)
             return redirect(url_for("user.show_parametre"))
         #except:
         #    return redirect(url_for("user.show_parametre"))

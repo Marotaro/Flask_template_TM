@@ -16,11 +16,18 @@
   <div class="center-h">
     <div id="head-home-element" >
       <a href="{{ url_for('post.create_post', id_channel = channel_info['id_channel'], respondto = (-1))}}"><i class="fa-solid fa-paper-plane"></i></a>
-      <a href="{{ url_for('y.invite', id_channel = channel_info['id_channel'])}}"><i class="fa-solid fa-user-plus"></i></a>
+      <a onclick="showInvite({{ channel_info['id_channel'] }})"><i class="fa-solid fa-user-plus"></i></a>
     </div>
   </div>
 </div> 
-
+<div class="center-h">
+  <div id="invite-pos">
+    <div id="invite-overlay">
+      <button id="time-button" value="10" onclick="var button = document.getElementById('time-button'); if (button.value === '10') { button.innerText = '30 Minutes'; button.value = '30' } else if ( button.value === '30' ) { button.innerText = '60 Minutes'; button.value =  '60'} else { button.innerText = '10 Minutes' ; button.value = '10' };">10 Minutes</button>
+      <button id="create-invite" onclick="createInviteLink({{channel_info['id_channel']}})">Créer un lien</button>
+    </div>
+  </div>
+</div>
 <div class="center-h">
   <div class="incolumn">
     {% if channel_info['description'] %}

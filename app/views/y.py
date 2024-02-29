@@ -138,20 +138,20 @@ def browse():
         "Y/browse.html", public_channel=public_channel
     )
 
-@y_bp.route("/invite/<int:id_channel>", methods = ("GET","POST"))
+@y_bp.route("/invite/<int:id_channel>/<int:duration>", methods = ("GET","POST"))
 @login_required
-def invite(id_channel):
+def invite(id_channel, duration):
     db = get_db()
     if not can_invite(id_channel, g.user['id_user'], ['owner','admin'], db):
-        return render_template("Y/not_permitted.html")
-    if request.method == "POST":
-        expiration = request.form['expiration']
-        token = create_token(g.user['id_user'],id_channel, int(expiration), 'channel', db)
-        message = "lien copier dans le press papier"
-        flash(f"{message}: {host}/y/join/{token}")
-        return redirect(url_for("y.see", id_channel = id_channel))
+        return jsonify({'respond': "you don't have the permission to do that"})
     else:
-        return render_template('Y/invite.html')
+        try:
+            token = create_token(g.user['id_user'],id_channel, int(duration), 'channel', db)
+            message = "lien copier dans le press papier"
+            flash(f"{message}: {host}/y/join/{token}")
+            return jsonify({'respond': f"{g.host}/y/join/{token}"})
+        except:
+            return jsonify({'respond': "can't create link"})
     
 
 @y_bp.route("/join/<string:token>", methods = ("GET","POST"))

@@ -1,44 +1,6 @@
 body{
     color: #FFF;
 }
-.title_page{
-    width:75%;
-    margin: -60px auto 10px auto ;
-
-}
-
-.title_page #text{
-    text-align: left;
-    color: #FFF;
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: max(7vw,36px);
-    font-style: normal;
-    font-weight: 700;
-    line-height: normal;
-    margin-bottom: -7px;
-}
-
-.title_page #line{
-    width: 100%;
-    color: #424242;
-    background-color: #424242;
-    border: none;
-    height: 3px;
-}
-
-.element{
-    width: 65%;
-    margin: auto;
-}
-
-.element h3{
-    color: #FFF;
-    font-family: sans-serif;
-    font-size: 28px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: normal;
-}
 
 .midle_container{
     display: flex;

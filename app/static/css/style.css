@@ -14,8 +14,85 @@
     --gold: #f79e29; 
     /*size*/
     --boxtitle: max(5vw,40px);
+
+    /*title*/
+    --title-style: normal;
+    --title-weight: 800;
+    --title-font-size: max(7vw,36px);
+    --title-line-height: normal;
+    --title-font-family: Arial, Helvetica, sans-serif;
+    /*subtitle*/
+    --subtitle-style: normal;
+    --subtitle-weight: 800;
+    --subtitle-font-size: max(2vw,15px);
+    --subtitle-line-height: normal;
+    --subtitle-font-family: Arial, Helvetica, sans-serif;
+    /*sub-subtitle*/
+    --sub-subtitle-style: normal;
+    --sub-subtitle-weight: 800;
+    --sub-subtitle-font-size: max(1vw,15px);
+    --sub-subtitle-line-height: normal;
+    --sub-subtitle-font-family: Arial, Helvetica, sans-serif;
+    /*box-title*/
+    --box-title-style: normal;
+    --box-title-weight: 800;
+    --box-title-font-size: max(4vw,28px);
+    --box-title-line-height: normal;
+    --box-title-font-family: Arial, Helvetica, sans-serif;
+    /*box-subtitle*/
+    --box-subtitle-style: normal;
+    --box-subtitle-weight: 800;
+    --box-subtitle-font-size: max(1vw,10px);
+    --box-subtitle-line-height: normal;
+    --box-subtitle-font-family: Arial, Helvetica, sans-serif;
+    /*box-text*/
+    --box-text-style: normal;
+    --box-text-weight: 700;
+    --box-text-font-size: max(0.85vw,10px);
+    --box-text-line-height: normal;
+    --box-text-font-family: Arial, Helvetica, sans-serif;
+
     /*font*/
-    --boxtitlefont-family: Arial, Helvetica, sans-serif;
+    --title:
+        var(--title-style)
+        var(--title-weight)
+        var(--title-font-size)
+        var(--title-line-height)
+        var(--title-font-family);
+
+    --subtitle:
+        var(--subtitle-style)
+        var(--subtitle-weight)
+        var(--subtitle-font-size)
+        var(--subtitle-line-height)
+        var(--subtitle-font-family);
+
+    --sub-subtitle:
+        var(--sub-subtitle-style)
+        var(--sub-subtitle-weight)
+        var(--sub-subtitle-font-size)
+        var(--sub-subtitle-line-height)
+        var(--sub-subtitle-font-family);
+
+    --box-title:
+        var(--box-title-style)
+        var(--box-title-weight)
+        var(--box-title-font-size)
+        var(--box-title-line-height)
+        var(--box-title-font-family);
+
+    --box-subtitle:
+        var(--box-subtitle-style)
+        var(--box-subtitle-weight)
+        var(--box-subtitle-font-size)
+        var(--box-subtitle-line-height)
+        var(--box-subtitle-font-family);
+    --box-text:
+        var(--box-text-style)
+        var(--box-text-weight)
+        var(--box-text-font-size)
+        var(--box-text-line-height)
+        var(--box-text-font-family);
 }
 /*--------------------------------------------------------------------------------------------------*/
 /*apparence elements page base*/
@@ -288,11 +365,7 @@ body{
     height: fit-content;
     flex-shrink: 0;
     color: var(--gray-white);
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: max(8vw,40px);
-    font-style: normal;
-    font-weight: 600;
-    line-height: normal;
+    font: var(--title);
     margin-bottom: min(30px,2vh);
     margin-top: 0px;
 }
@@ -340,11 +413,7 @@ body{
     margin-top: 0px;
     justify-content: left;
     color: var(--white);
-    font-family: var(--boxtitlefont-family);
-    font-size: max(5vw,35px);
-    font-style: normal;
-    font-weight: 800;
-    line-height: normal;
+    font: var(--box-title);
 }
 
 .logbox #interactive{
@@ -382,15 +451,12 @@ body{
     margin-right: 0%;
 	font-size:20%;
 	color:var(--white);	
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 20px;
-    font-style: normal;
-    font-weight: 800;
-    line-height: normal;
+    font:var(--box-subtitle);
 }
 
 .logbox .inputcontainer input{
     color:var(--white);
+    font: var(--box-subtitle);
     width:80%;
     height: max(7.5vh,30px);
     border-radius: 60px;
@@ -405,14 +471,10 @@ body{
     background-color: var(--white);
     border: 0px;
     color:var(--background-color);
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: max(2vw,15px);
-    font-style: normal;
-    font-weight: 800;
-    line-height: normal;
+    font: var(--box-subtitle);
     text-decoration: none;
     cursor: pointer;
-    margin-bottom: 3.5%;
+    margin-bottom: 2.5%;
 }
 
 .logbox #secondbutton{
@@ -425,11 +487,7 @@ body{
     background: var(--lightgray);
     border: 0px;
     color:var(--background-color);
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: max(1.75vw,11px);
-    font-style: normal;
-    font-weight: 800;
-    line-height: normal;
+    font: var(--box-subtitle);
     text-decoration: none;
     margin-bottom: 2%;
     padding: 0 1vw ;
@@ -445,17 +503,44 @@ body{
     background: #5f5f5f;
     border: 0px;
     color:var(--background-color);
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: max(1.15vw,8px);
-    font-style: normal;
-    font-weight: 800;
-    line-height: normal;
+    font: var(--box-subtitle);
     text-decoration: none;
     margin-bottom: 2%;
     padding: 0 1vw ;
 }
 /*------------------------------------------------------------------------------------------------------*/
 /*apparence page home*/
+
+.title_page{
+    width:75%;
+    margin: -4vh  0 ;
+
+}
+
+.title_page #text{
+    text-align: left;
+    color: #FFF;
+    font: var(--title);
+    margin-bottom: -7px;
+}
+
+.title_page #line{
+    width: 100%;
+    color: #424242;
+    background-color: #424242;
+    border: none;
+    height: 3px;
+}
+
+.element{
+    width: 65%;
+    margin: auto;
+}
+
+.element h3{
+    color: #FFF;
+    font: var(--subtitle);
+}
 
 #head-home{
     position: fixed;
@@ -493,6 +578,11 @@ body{
     transition: color 0.3s ease;
 }
 
+.element #empty{
+    font: var(--sub-subtitle);
+    color: var(--white);
+}
+
 .list-y{
     display: flex;
     flex-direction: row;
@@ -520,11 +610,7 @@ body{
 
 .channel-bulb p{
     color:var(--white);
-    font-family: Arial, Helvetica, sans-serif;
-    font-style: normal;
-    font-weight: 600;
-    font-size: max(1.15vw,8px);
-    line-height: normal;
+    font: var(--box-subtitle);
     text-decoration: none;
     margin-left: 1vw;
 }
@@ -662,11 +748,7 @@ body{
     border-radius: 25px;
     cursor: pointer;
     color: var(--button);
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: max(1vw,15px);
-    font-style: normal;
-    font-weight: 600;
-    line-height: normal;
+    font: var(--box-subtitle);
     padding: 1vh 1vw;
     margin-top: 3vh;
     transition: color 0.3s ease;
@@ -738,6 +820,55 @@ body{
     padding: 1vw;
 }
 
+#invite-pos{
+    position: fixed;
+    top: 5vh;
+    z-index: 1;
+}
+
+#invite-pos #invite-overlay{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    transform: scale(0);
+    background-color: var(--frame-color);
+    width: 20vw;
+    height: 7vh;
+    padding: 1vh 1vw;
+    border-radius: 25px;
+    box-shadow: 0px 0px 50px 10px var(--background-color);
+}
+
+#invite-pos #invite-overlay #time-button{
+    border: none;
+    background-color: var(--inputbox-color);
+    color: var(--button);
+    height: 5vh;
+    border-radius: 50px;
+    width: 5vw;
+    transition: color 0.3s ease;
+}
+
+#invite-pos #invite-overlay #time-button:hover{
+    color: var(--white);
+    transition: color 0.3s ease;
+}
+
+#invite-pos #invite-overlay #create-invite{
+    border: none;
+    background-color: var(--inputbox-color);
+    color: var(--button);
+    height: 5vh;
+    border-radius: 50px;
+    width: 5vw;
+    transition: color 0.3s ease;
+}
+
+#invite-pos #invite-overlay #create-invite:hover{
+    color: var(--white);
+    transition: color 0.3s ease;
+}
 
 .channel-info{
     width: 55vw;
@@ -783,9 +914,7 @@ body{
     height: fit-content;
     padding: 1.75% 2%;
     margin-top: 3.25%;
-    font-family:Arial, Helvetica, sans-serif;
-    font-size: 17px;
-    line-height: 3vh;
+    font: var(--box-text);
 }
 
 .upperpart .user-part-info{
@@ -798,8 +927,8 @@ body{
 
 .upperpart .user-part-info img{
     border-radius: 100%;
-    width: 3vw;
-    height: 3vw;
+    width: 3.1vw;
+    height: 3.1vw;
     padding: 0.25vw;
     background-color: var(--button);
 }
@@ -813,6 +942,7 @@ body{
     overflow-wrap: break-word;
     text-wrap: wrap;
     width: 45vw;
+    margin-top: 3vh;
     
 }
 
@@ -839,9 +969,7 @@ body{
     height: fit-content;
     padding: 1.5% 1.25%;
     margin-top: 2.5%;
-    font-family:Arial, Helvetica, sans-serif;
-    font-size: 17px;
-    line-height: 3vh;
+    font: var(--box-text);
 }
 
 .little-post img{
@@ -1271,7 +1399,7 @@ body{
 }
 
 #line{
-    width: 90%;
+    width: 100%;
     color: #424242;
     background-color: #424242;
     border: none;
@@ -1282,8 +1410,13 @@ body{
 
 #profil-head{
     width: 80vw;
-    margin-top: 6vh;
+    margin-top: 2vh;
 }
+
+#profil-head .profil-title h1{
+    font: var(--title);
+    margin: 0 0;
+} 
 
 #profil-short{
     display: flex;
@@ -1294,16 +1427,15 @@ body{
     margin-bottom: 0px;
 }
 
-#profil-short p{
-    font-size: max(8vw,10px);
-    font-family:Arial, Helvetica, sans-serif;
-    font-weight: 700;
-    margin: 0px;
 
+#profil-short p{
+    font: var(--title);
+    color: var(--white);
+    margin: 0 0;
 }
 
 #profil-short img{
-    width: 12vw;
+    width: 17vw;
     aspect-ratio: 1/1;
     border-radius: 100%;
     padding: 0.65vw;
@@ -1331,8 +1463,12 @@ body{
 }
 
 #user-general .cadre p {
-    font-family:Arial, Helvetica, sans-serif;
-    font-size: 20px;
+    font: var(--box-text);
+}
+
+#user-general .cadre b {
+    font: var(--box-text);
+    color: var(--cyan);
 }
 
 #user-general .cadre #user-bio{
@@ -1389,11 +1525,7 @@ body{
 
 #parametre-upper-part #user-info #name label{
     color: var(--white);
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: max(1vw,15px);
-    font-style: normal;
-    font-weight: 600;
-    line-height: normal;
+    font: var(--box-subtitle);
 }
 
 #parametre-upper-part #user-info #name input{
@@ -1405,11 +1537,7 @@ body{
     width: 20vw;
     outline: none;
     color: var(--white);
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: max(1vw,15px);
-    font-style: normal;
-    font-weight: 600;
-    line-height: normal;
+    font: var(--box-text);
 }
 
 #change-password{
@@ -1417,18 +1545,14 @@ body{
     justify-content: center;
     align-items: center;
     background-color: var(--frame-color);
-    width: 15vw;
+    width: max(15vw,100px);
     height: 4vh;
     margin-top: 3vh;
     border-radius: 25px;
     text-align: center;
     text-decoration: none;
     color: var(--button);
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: max(1vw,15px);
-    font-style: normal;
-    font-weight: 600;
-    line-height: normal;
+    font: var(--box-subtitle);
     transition: color 0.3s ease;
 }
 

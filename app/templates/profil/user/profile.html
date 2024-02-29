@@ -36,7 +36,7 @@
   <div class="center-h">
     <div id="user-general">
       <div class="cadre" id="user-info">
-        <p>Date d'inscription: {{ g.user['date'] }}</p>
+        <p>Date d'inscription: <b>{{ g.user['date'] }}</b></p>
       </div>
       <div class="cadre" id="ys">
         <p>Vous avez créé <b> {{ y_info['nb_created_y'] }} </b> et participez à <b> {{ y_info['nb_member_y'] }}</b> Ys
@@ -49,7 +49,7 @@
         <p>Vous avez aimé <b>{{ like_info['nb_liked_post'] }}</b> publications, vos publications ont <b>{{ like_info['nb_like_post']}}</b> likes</p>
       </div>
       <div class="cadre" id="favoris">
-        <p>Vous avez mis en favori <b>{{ favorit_info['nb_favorited_post'] }}</b> publications, <b>{{ favorit_info['nb_favorit_post']}}</b> sont en favoris </p>
+        <p>Vous avez mis en favori <b>{{ favorit_info['nb_favorited_post'] }}</b> publications, <b>{{ favorit_info['nb_favorit_post']}}</b> des vôtres ont été mis en favoris </p>
       </div>
     </div>
   </div>

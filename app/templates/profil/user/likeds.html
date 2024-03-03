@@ -56,13 +56,16 @@
               {% else %}
               <i class="fa-solid fa-bookmark favorit-button-off" id="favorit-button-{{ like['id_post'] }}" onclick="favorit({{ like['id_post'] }})"></i>
               {% endif %}
-              <i class="fa-regular fa-share-from-square"></i>
             </div>
           </div>
         </div>
     </div>
     {% endfor %}
   {% else %}
-    <p>Vous n'avez pas encore aimer de publications</p>
+    <div class="center-h">
+      <div class="profil-message">
+        <p>Vous n'avez pas encore aimez de publications</p>
+      </div>
+    </div>
   {% endif %}
 {% endblock %}

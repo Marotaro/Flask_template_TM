@@ -833,20 +833,23 @@ body{
     justify-content: space-around;
     transform: scale(0);
     background-color: var(--frame-color);
-    width: 20vw;
+    width: max(20vw,120px);
     height: 7vh;
     padding: 1vh 1vw;
     border-radius: 25px;
     box-shadow: 0px 0px 50px 10px var(--background-color);
+    font: var(--box-text);
+    transition: transform 0.3s ease;
 }
 
 #invite-pos #invite-overlay #time-button{
     border: none;
     background-color: var(--inputbox-color);
     color: var(--button);
+    font: var(--box-text);
     height: 5vh;
     border-radius: 50px;
-    width: 5vw;
+    width: max(6vw,50px);
     transition: color 0.3s ease;
 }
 
@@ -859,9 +862,10 @@ body{
     border: none;
     background-color: var(--inputbox-color);
     color: var(--button);
+    font: var(--box-text);
     height: 5vh;
     border-radius: 50px;
-    width: 5vw;
+    width: max(6vw,50px);
     transition: color 0.3s ease;
 }
 
@@ -879,10 +883,12 @@ body{
     margin-bottom: 2vh;
 }
 
+.channel-info p#subtitle{
+    font: var(--box-subtitle);
+}
+
 .channel-info p{
-    font-family:Arial, Helvetica, sans-serif;
-    font-size: 17px;
-    line-height: 3vh;
+    font: var(--box-text);
 }
 
 .channel-info #themes{
@@ -890,10 +896,7 @@ body{
     flex-direction: row;
     gap: 2vw;
     margin-top: -0.5vh;
-    font-family:Arial, Helvetica, sans-serif;
-    font-size: 17px;
-    font-weight: 600;
-    line-height: 3vh;
+    font: var(--box-text);
     color: var(--cyan);
 }
 
@@ -912,8 +915,9 @@ body{
     background-color: #424242;
     border-radius: 25px;
     height: fit-content;
-    padding: 1.75% 2%;
-    margin-top: 3.25%;
+    padding: 2vh 2%;
+    margin-top: 2vh;
+    margin-bottom: 2vh;
     font: var(--box-text);
 }
 
@@ -927,8 +931,8 @@ body{
 
 .upperpart .user-part-info img{
     border-radius: 100%;
-    width: 3.1vw;
-    height: 3.1vw;
+    width: 3.3vw;
+    height: 3.3vw;
     padding: 0.25vw;
     background-color: var(--button);
 }
@@ -942,14 +946,15 @@ body{
     overflow-wrap: break-word;
     text-wrap: wrap;
     width: 45vw;
-    margin-top: 3vh;
+    margin-top: 3.5vh;
+    margin-bottom: 2vh;
     
 }
 
 .post img{
     max-width: 40vw;
     max-height: 50vh;
-    margin-bottom: 1vh;
+    margin-bottom: 2vh;
 }
 
 .responds{
@@ -976,6 +981,27 @@ body{
     max-width: 25vw;
     max-height: 35vh;
     margin-bottom: 1vh;
+}
+
+.little-post p{
+    overflow-wrap: break-word;
+    text-wrap: wrap;
+    margin-top: 3.5vh;
+}
+
+.little-post .upperpart .user-part-info{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75vw;
+}
+
+.little-post .upperpart .user-part-info p{
+    margin: 0;
+}
+.little-post .upperpart .user-part-info img{
+    margin: 0;
 }
 
 .hidden{
@@ -1024,7 +1050,6 @@ body{
     gap:0.5vh;
     justify-content: center;
     align-items: center;
-
 }
 
 .post-menu a{
@@ -1345,9 +1370,7 @@ body{
     color: var(--white);
     outline: none;
     resize: none;
-    font-family:Arial, Helvetica, sans-serif;
-    font-size: 17px;
-    line-height: 3vh;
+    font: var(--box-text);
     margin-top: 3vh;
 }
 
@@ -1476,6 +1499,15 @@ body{
     flex-direction: column;
 }
 
+.profil-message{
+    width: 75vw;
+}
+
+.profil-message p{
+    font: var(--sub-subtitle);
+    color: var(--white);
+}
+
 /*------------------------------------------------------------------------------------------------------*/
 /*apparence page profil posts*/
 .post-info-profil{
@@ -1516,6 +1548,7 @@ body{
     border-radius: 100%;
     padding: 0.5vw;
     background-color: var(--frame-color);
+    cursor: pointer;
 }
 
 #parametre-upper-part #user-info #name{
@@ -1620,6 +1653,11 @@ body{
     line-height: normal;
 }
 
+.mdpbox #inputs-container .input-container p{
+    color:#fff;	
+    font: var(--box-subtitle);
+}
+
 .mdpbox #inputs-container input[type="submit"]{
     background-color: #ffffff;
     border: none;
@@ -1633,4 +1671,68 @@ body{
     font-style: normal;
     font-weight: 800;
     cursor: pointer;
+}
+
+/*------------------------------------------------------------------------------------------------------*/
+/*apparence page browse*/
+
+#search-box label{
+    font: var(--box-subtitle);
+}
+
+#search-box #search-text{
+    background-color: var(--inputbox-color);
+    width: 20vw;
+    height: 5vh;
+    padding: 1vh 1vw;
+    border: none;
+    border-radius: 25px;
+    outline: none;
+    font: var(--box-text);
+    color: var(--white);
+}
+
+
+
+#rand-themes{
+    display: flex;
+    flex-direction: row;
+    gap: 5vw;
+    width: 60vw;
+    overflow-x:scroll;
+    margin-top: 3vh;
+}
+
+#rand-themes::-webkit-scrollbar-thumb {
+    background: var(--background-color);
+    transition: background 0.3s ease;
+}
+
+#rand-themes:hover::-webkit-scrollbar-thumb{
+    background: var(--frame-color);
+    transition: background 0.3s ease;
+}
+
+#rand-themes .theme-minibox{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2vh 3vw;
+    background-color: var(--frame-color);
+    color: var(--button);
+    font: var(--box-text);
+    border-radius: 50px;
+    border: none;
+    margin-bottom: 1vh;
+    transition: color 0.3s ease;
+    cursor: pointer;
+}
+
+#rand-themes .theme-minibox:hover{
+    color: var(--cyan);
+    transition: color 0.3s ease;
+}
+
+#result p{
+    font: var(--box-subtitle);
 }

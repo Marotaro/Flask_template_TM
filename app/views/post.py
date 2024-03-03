@@ -24,11 +24,10 @@ def create_post(id_channel,respondto):
             db.execute("INSERT INTO Post (id_channel_fk, id_user_fk, date, respond_to, text) VALUES (?, ?, ?, ?, ?)", (id_channel, g.user['id_user'], datenow(), int(respondto), text,))
             db.commit()
             add_permition(id_channel, g.user['id_user'], 'member', db)
-            if image:
-                id_post = db.execute(
-                    "SELECT id_post FROM Post ORDER BY id_post DESC LIMIT 1;"
-                ).fetchone()[0]
-                upload_image("post",image, id_post, db )
+            id_post = db.execute(
+                "SELECT id_post FROM Post ORDER BY id_post DESC LIMIT 1;"
+            ).fetchone()[0]
+            upload_image("post",image, id_post, db )
             return redirect(url_for("y.see", id_channel = id_channel))
         else:
             return redirect(url_for('create_post', id_channel = id_channel, respondto = respondto))

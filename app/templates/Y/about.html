@@ -147,7 +147,6 @@
                   {% endfor %}
                 </div>
             </div>
-
             <div class="type-container">
               <p>{% if bans|count > 1 %}Bans{% else %}Ban{% endif %}</p>
               <div class="users-container" id="ban-box">
@@ -195,17 +194,6 @@
                 {% endfor %}
               </div>
           </div>
-
-          <div class="type-container">
-            <p>{% if bans|count > 1 %}Bans{% else %}Ban{% endif %}</p>
-            <div class="users-container" id="ban-box">
-              {% for ban in bans %}
-                <div class="user-container" id="user-container-{{ ban['id_user'] }}">
-                  <p>@{{ ban['username'] }}</p>
-                </div>
-              {% endfor %}
-            </div>
-        </div>
         </div>
       {% endif %}
     </div>

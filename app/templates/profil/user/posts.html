@@ -63,7 +63,6 @@
                 {% else %}
                 <i class="fa-solid fa-bookmark favorit-button-off" id="favorit-button-{{ post['id_post'] }}" onclick="favorit({{ post['id_post'] }})"></i>
                 {% endif %}
-                <i class="fa-regular fa-share-from-square"></i>
               </div>
 
               <div class="responds hidden" id="responds-{{ post['id_post'] }}"></div>
@@ -77,6 +76,10 @@
     </div>
     {% endfor %}
   {% else %}
-    <p>Vous n'avez pas encore fait de publications</p>
+  <div class="center-h">
+    <div class="profil-message">
+      <p>Vous n'avez pas encore fait de publications</p>
+    </div>
+  </div>
   {% endif %}
 {% endblock %}

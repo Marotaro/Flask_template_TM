@@ -1,22 +1,46 @@
 {% extends 'base.html' %}
 
 {% block header %}
-  {% block title %}browse Y{% endblock %}
+  {% block title %}Browse Y{% endblock %}
 {% endblock %}
 
 {% block title_page %}
-    browse Y
+    Browse Y
 {% endblock %}
 
 {% block content %}
-<div class="midle_container">
-  {% for channel in public_channel %}
-  <a href="{{ url_for('y.see', id_channel = channel['id_channel'])}}">
-      <div class="channel_bulb">
-        <img src="{{ g.host + '/' + channel['location'] }}" class="channel_icon">
-        {{ channel['name'] }}
-      </div>
-    </a>
-  {% endfor %}
+<div class="center-h">
+  <div id="search-box">
+    <label for="search">Rechercher: </label>
+    <input type="text" name="search" id="search-text" placeholder="&Nom #theme" onchange="inputSearch('{{ g.host }}')" value="">
   </div>
+</div>
+<div class="center-h">
+  <div id="rand-themes">
+    {% if themes_random %}
+    {% for theme in themes_random %}
+    <button class="theme-minibox" id="theme-{{ theme['id_theme'] }}" onclick="themesSearch('{{ g.host }}',{{ theme['id_theme'] }})">#{{ theme['name'] }}</button>
+    {% endfor %}
+    {% endif %}
+  </div>
+</div>
+<div class="element" id="result"></div>
+<div class="element">
+  <h3>Ys aléatoires </h3>
+  {% if public_channels %}
+    <div class="center-h">
+      <div class="list-y" id="list-y">
+    {% for channel in public_channels %}
+    <a href="{{ url_for('y.see', id_channel = channel['id_channel'])}}">
+        <div class="channel-bulb">
+          <img src="{{ g.host +'/'+ channel['location'] }}" class="channel_icon">
+          <p>{{ channel['name'] }}</p>
+        </div>
+      </a>
+    {% endfor %}
+      </div>
+    </div>
+  {% else %}
+    <p id="empty">Il n'y a aucun Y publique</p>
+  {% endif %}
 {% endblock %}

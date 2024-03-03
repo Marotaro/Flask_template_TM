@@ -23,7 +23,7 @@
       {% for channel in mychannels %}
       <a href="{{ url_for('y.see', id_channel = channel['id_channel'])}}">
           <div class="channel-bulb">
-            <img src="{{ channel['location'] }}" class="channel_icon">
+            <img src="{{ g.host +'/'+ channel['location'] }}" class="channel_icon">
             <p>{{ channel['name'] }}</p>
           </div>
         </a>
@@ -41,7 +41,7 @@
       {% for channel in memberchannels %}
       <a href="{{ url_for('y.see', id_channel = channel['id_channel'])}}">
           <div class="channel-bulb">
-            <img src="{{ channel['location'] }}" class="channel_icon">
+            <img src="{{ g.host +'/'+ channel['location'] }}" class="channel_icon">
             <p>{{ channel['name'] }}</p>
           </div>
         </a>

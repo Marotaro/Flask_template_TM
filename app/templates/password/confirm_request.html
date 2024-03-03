@@ -1,17 +1,22 @@
+
 <head>
     <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='shortcuticon.png') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/password/general.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/password/confirmation.css') }}">
 </head>
 
 <body>
-    <div class="center-verticaly">
-        <div class="center-horizontaly">
-            <div class="box">
+    <div class="center-wh">
+        <div class="mdpbox">
+            <div>
                 <h2>Mot de passe oublié</h2>
-                <p>Un mail a été envoyer à l'adresse</p>
             </div>
+            <form method="post">
+                <div id="inputs-container">
+                    <div class="input-container">
+                        <p>Un mail a été envoyer à l'address</p>
+                    </div>
+                </div>
+            </form>
         </div>
     </div>
 </body>

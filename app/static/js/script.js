@@ -70,6 +70,7 @@ function showRespond(postId, idUser, idChannel, host) {
         .then((respPosts) => { 
             console.log(respPosts.slice(-1)[0].includes(15));
             console.log(respPosts.slice(-1)); // Vérifiez si les données sont correctement récupérées
+            console.log(respPosts)
             for (const respPost of respPosts.slice(0,-2)) {
                 //création center div
                 var CenterDiv = document.createElement("div");
@@ -118,9 +119,11 @@ function showRespond(postId, idUser, idChannel, host) {
                 var littleCenterDiv = document.createElement('div');
                 littleCenterDiv.className = "center-h"
 
-                var img = document.createElement('img');
-                img.src= `${respPost.location}`;
-                littleCenterDiv.appendChild(img);
+                if (! respPost.location.includes('default.png')) {
+                    var img = document.createElement('img');
+                    img.src= `${respPost.location}`;
+                    littleCenterDiv.appendChild(img);
+                };
 
                 //création downPart
                 var downPart = document.createElement("div");
@@ -137,11 +140,6 @@ function showRespond(postId, idUser, idChannel, host) {
                 heart.id = `like-button-${respPost.id_post}`;
                 heart.onclick =function() {like(respPost.id_post)};
                 downPart.appendChild(heart);
-
-                //création share
-                var share = document.createElement("i");
-                share.className = "fa-regular fa-share-from-square";
-                downPart.appendChild(share);
 
 
                 //création overlay elements
@@ -409,7 +407,7 @@ function showInvite(idChannel) {
         createInvite.innerText = 'Créer un lien'
 
         inviteOverlay.appendChild(timeButton);
-        inviteOverlay.appendChild(createInvite)
+        inviteOverlay.appendChild(createInvite);
 
     }
 }
@@ -440,4 +438,75 @@ function copy_to_clipboard(text, idChannel) {
     inviteOverlay.innerText = 'lien copié';
     inviteOverlay.onclick = ""
     setTimeout( function() {showInvite(idChannel)}, 2000);
+}
+
+
+function search(host,text) {
+    var result = document.getElementById('result');
+    result.innerHTML = '';
+    var sousTite = document.createElement('h3');
+    sousTite.innerText = "Résultat"
+    var centerH = document.createElement('div');
+    centerH.className = 'center-h';
+    var listY = document.createElement('div');
+    listY.className = 'list-y';
+    centerH.appendChild(listY);
+    result.appendChild(sousTite);
+    result.appendChild(centerH);
+
+    fetch(`/y/search/${text}`)
+    .then((res) => res.json())
+    .then((respmes) => {
+        console.log(respmes)
+
+        if ( respmes[1] === true) {
+            //création message retour
+            var message = document.createElement('p');
+            message.innerText = 'Aucun résultat';
+            listY.appendChild(message);
+        } else {
+            for (const respme of respmes[0]) {
+                //création a
+                var a = document.createElement('a');
+                a.href = `${host}/y/see/${respme.idChannel}`;
+
+                //création div
+                var channelBulb = document.createElement('div');
+                channelBulb.className = "channel-bulb";
+
+                //création img
+                var img = document.createElement('img');
+                img.src = `${host}/${respme.location}`;
+
+                //création p
+                var p = document.createElement('p');
+                p.innerText = respme.name;
+
+                channelBulb.appendChild(img);
+                channelBulb.appendChild(p);
+
+                a.appendChild(channelBulb);
+
+                listY.appendChild(a);
+            }}
+
+    });
+}
+
+
+
+
+function inputSearch(host) {
+    var searchText = document.getElementById('search-text');
+    if ( searchText.value !== '') { text = encodeURIComponent(searchText.value);} else { text = '|empty|' };
+    console.log(text);
+    search(host,text);
+
+}
+
+function themesSearch(host, idTheme) {
+    var theme = document.getElementById(`theme-${idTheme}`);
+    console.log(theme)
+    text = encodeURIComponent(theme.innerText);
+    search(host,text);
 }

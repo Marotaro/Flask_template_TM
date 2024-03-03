@@ -101,13 +101,17 @@ def get_comments(id_post):
             "SELECT text, Image_post.location, username, Image_user.location AS usericon , id_post, Post.id_user_fk, respond_to FROM Post JOIN User ON id_user = Post.id_user_fk LEFT JOIN Image_post ON id_post_fk = id_post JOIN Image_user ON Post.id_user_fk = Image_user.id_user_fk WHERE respond_to = ?", (id_post,)
         ).fetchall()
     for comment in comments:
+        if comment[1] == None:
+            image = 'vide'
+        else:
+            image = comment[1]
         respond = {
             'text' : comment[0],
-            'location' : g.host + '/'+ comment[1],
+            'location' : g.host + '/'+ image,
             'username' : comment[2],
             'usericon' : comment[3],
-            'id_user' : comment[4],
-            'id_post' : comment[5],
+            'id_post' : comment[4],
+            'id_user' : comment[5],
             'respond_to' : comment[6],
         }
         responds.append(respond)
@@ -130,13 +134,63 @@ def browse():
     db = get_db()
 
     #récupérer les channels pour lesquelle l'utilisateur n'a pas de lien
-    public_channel = db.execute(
-        "SELECT * FROM Channel JOIN Image_channel ON id_channel = id_channel_fk WHERE opento = ?", ('public',)
+    public_channels = db.execute(
+        "SELECT * FROM Channel JOIN Image_channel ON id_channel = id_channel_fk WHERE opento = ? ORDER BY RANDOM() LIMIT 5", ('public',)
     ).fetchall()
 
+    themes_random = db.execute("Select * FROM Themes ORDER BY RANDOM() LIMIT 7").fetchall()
+
     return render_template(
-        "Y/browse.html", public_channel=public_channel
+        "Y/browse.html", public_channels=public_channels, themes_random = themes_random
     )
+
+@y_bp.route("/search/<string:search_request>", methods = ("GET","POST"))
+@login_required
+def search(search_request):
+    db = get_db()
+    try:
+
+        elements = search_request.split("%20")
+        if search_request != '|empty|':
+            message = False
+            themes = [str("%"+x[1:]+"%").lower() for x in elements if "#" == x[0]]
+            names = [str("%"+x[1:]+"%").lower() for x in elements if "&" == x[0] ]
+            both = [str("%"+x+"%").lower() for x in elements if "&" != x[0] and "#" != x[0]]
+
+            themes += both
+            names += both
+
+            channels_by_names = [channel for sublist in [[c for c in db.execute("SELECT id_channel, Channel.name, location FROM Channel JOIN Image_channel ON id_channel = id_channel_fk WHERE opento = 'public' AND LOWER(name) LIKE ?", (b,)).fetchall()] for b in names] for channel in sublist]
+            channels_by_themes = [channel for sublist in [[c for c in db.execute("SELECT id_channel, Channel.name, location FROM Channel JOIN Related_channel ON Related_channel.id_channel_fk = Channel.id_channel JOIN Themes ON Related_channel.id_theme_fk = Themes.id_theme JOIN Image_channel ON Image_channel.id_channel_fk = Channel.id_channel WHERE  opento = 'public' AND LOWER(Themes.name) LIKE ?", (b,)).fetchall()] for b in themes] for channel in sublist if channel not in channels_by_names]
+            channels = list(set(channels_by_names + channels_by_themes))
+            if channels == []:
+                message = True
+        else:
+            channels = []
+            message = True  
+        responds = [0] * len(channels)
+
+        for i, channel in enumerate(channels):
+            respond = {
+                'idChannel' : channel[0],
+                'name' : channel[1],
+                'location' : channel[2],
+            }
+            responds[i] = respond
+        return jsonify(responds, message)
+   
+    except:
+        message = True
+        channels = [x for x in db.execute( "SELECT id_channel, Channel.name, location FROM Channel JOIN Image_channel ON id_channel = id_channel_fk WHERE opento = ?", ('public',) ).fetchall()]
+        responds = [0] * len(channels)
+        for i, channel in enumerate(channels):
+            respond = {
+                'idChannel' : channel[0],
+                'name' : channel[1],
+                'location' : channel[2],
+            }
+            responds[i] = respond
+        return jsonify(responds, message)
 
 @y_bp.route("/invite/<int:id_channel>/<int:duration>", methods = ("GET","POST"))
 @login_required
@@ -222,7 +276,7 @@ def about(id_channel):
                 "SELECT name FROM Related_channel JOIN Themes On id_theme = id_theme_fk WHERE id_channel_fk = ? ",
                 (id_channel,),
             ).fetchall()
-            nb_participants = db.execute("SELECT count(id_user_fk) FROM Permission WHERE id_channel_fk = ?",(id_channel,)).fetchone()[0]
+            nb_participants = db.execute("SELECT count(id_user_fk) FROM Permission WHERE id_channel_fk = ? AND type != 'ban'",(id_channel,)).fetchone()[0]
             nb_posts = db.execute("SELECT count(id_post) FROM Post WHERE id_channel_fk = ?", (id_channel,)).fetchone()[0]
             return render_template("Y/about.html", channel_info = channel_info, owners = owners, admins = admins, members = members, bans = bans ,channel_themes = channel_themes, nb_participants = nb_participants, nb_posts = nb_posts)
 

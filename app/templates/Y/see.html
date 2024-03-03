@@ -32,7 +32,7 @@
   <div class="incolumn">
     {% if channel_info['description'] %}
     <div class="channel-info">
-      <p>Description:</p>
+      <p id="subtitle">Description:</p>
       {% set lignes = channel_info['description'].split('\n') %}
       <p>
         {% for ligne in lignes %}
@@ -43,7 +43,7 @@
     {% endif %}
     {% if channel_themes %}
     <div class="channel-info" >
-      <p>Themes:</p>
+      <p id="subtitle">Themes:</p>
       <div id="themes">
         {% for theme in channel_themes %}
         <p>#{{ theme[0] }}</p>
@@ -86,7 +86,6 @@
             <i class="fa-regular fa-heart like-button-off" id="like-button-{{ post['id_post'] }}" onclick="like({{ post['id_post'] }})"></i>
             {% endif %}
             <i class="fa-regular fa-comment comment-button-off" id="comment-{{ post['id_post'] }}" onclick="showRespond({{ post['id_post'] }},{{g.user['id_user']}},{{ channel_info['id_channel'] }},'{{ g.host }}')"></i>
-            <i class="fa-regular fa-share-from-square"></i>
           </div>
         </div>
         <div class="post-menu" id="post-menu-{{ post['id_post'] }}">

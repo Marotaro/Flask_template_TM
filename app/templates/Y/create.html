@@ -1,14 +1,10 @@
 {% extends 'base.html' %}
 
-
-  <h1>{% block title %}Create Y{% endblock %}</h1>
-  {% block css %}
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/creaty.css') }}">
-  {% endblock %}
-
-{% block title_page%}
-    <p>Créer un Y</p>
+{% block header %}
+  {% block title %}Céer un Y{% endblock %}
 {% endblock %}
+
+{% block title_page %}Créer un Y{% endblock %}
 
 {% block content %}
     <div class="center-h">

@@ -32,18 +32,19 @@ def register():
                     db.execute("INSERT INTO User (username, password, email, date) VALUES (?, ?, ?, ?)",(username, generate_password_hash(password), email, datenow()))
                     db.commit()
                     id_user = db.execute("SELECT id_user FROM User where email = ?", (email,)).fetchone()
-                    upload_image("user", False, id_user[0], db)
+                    
                 except db.IntegrityError:
 
                     # La fonction flash dans Flask est utilisée pour stocker un message dans la session de l'utilisateur
                     # dans le but de l'afficher ultérieurement, généralement sur la page suivante après une redirection
-                    error = f"Email {email} is already registered."
+                    error = f"l'addresse mail est déjà utilisée"
                     flash(error)
                     return redirect(url_for("auth.register"))
                 
+                upload_image("user", False, id_user[0], db)
                 return redirect(url_for("auth.login"))
             else:
-                error = f"Username {username} already exist"
+                error = f"Le nom d'utilisateur est déjà utilisé"
                 flash(error)
                 return redirect(url_for("auth.register"))
         else:
@@ -75,9 +76,9 @@ def login():
         # on crée une variable error 
         error = None
         if user is None:
-            error = 'Incorrect username.'
+            error = "Utilisateur inconnu"
         elif not check_password_hash(user['password'], password):
-            error = 'Incorrect password.'
+            error = 'Mot de passe incorrecte'
 
         # S'il n'y pas d'erreur, on ajoute l'id de l'utilisateur dans une variable de session
         # De cette manière, à chaque requête de l'utilisateur, on pourra récupérer l'id dans le cookie session

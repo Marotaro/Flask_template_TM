@@ -205,6 +205,15 @@ body{
     background: linear-gradient(0deg, rgba(22,57,39,1) 0%, rgba(32,86,59,1) 100%);
     transition: 0.3s ease;
 }
+
+.alert-user{
+    height: fit-content;
+}
+
+.alert-user p{
+    font: var(--box-text);
+    color: var(--rouge);
+}
 /*--------------------------------------------------------------------------------------------------*/
 /*apparence boutons*/
 
@@ -1637,6 +1646,7 @@ body{
     height: max(7.5vh,30px);
     border-radius: 60px;
     background-color: var(--inputbox-color);
+    font: var(--box-subtitle);
     outline: 0px;
     border: 0px;
     padding: 0 5%;

@@ -27,7 +27,7 @@ def is_allowed(id_channel, id_user, db):
 def can_invite(id_channel, id_user, permission_needed,db):
     if is_allowed(id_channel, id_user, db):
         authorisation = db.execute('SELECT * FROM Permission WHERE id_channel_fk = ? AND id_user_fk = ?', (id_channel, id_user)).fetchone()
-        if authorisation['type'] not in permission_needed:
+        if authorisation == None or authorisation['type'] not in permission_needed:
             return False
         else:
             return True

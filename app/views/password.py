@@ -76,12 +76,12 @@ def reset_password(token):
                 db.commit()
                 return redirect( url_for('auth.login'))
             else:
-                error = "not same"
+                error = "Les mots de passe ne sont pas identiques"
                 flash(error)
                 return redirect( url_for('password.reset_password', token = token))
         else:
             return render_template('password/reset_password.html')
     else:
-        error = "request doesn't exist or is expired"
+        error = "La requête n'existe pas ou n'est plus valide"
         flash(error)
         return redirect( url_for('password.forgot_password'))

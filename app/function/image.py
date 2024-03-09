@@ -45,4 +45,8 @@ def update_image(destination, image, fk_id, db):
 def delete_image(destination, fk_id,db):
     table, fk_row_name, short_folder = ("Image_channel","id_channel_fk", SHORT_FOLDER_Y) if destination == "y" else (("Image_user","id_user_fk", SHORT_FOLDER_USER) if destination == "user" else ("Image_post","id_post_fk", SHORT_FOLDER_POST))
     link = db.execute(f"SELECT location FROM {table} WHERE {fk_row_name} = ?", (fk_id,)).fetchone()[0]
-    os.remove(os.path.normpath(WORKING_DIR +"\\"+ link))
+    db.execute(f"DELETE FROM {table} WHERE {fk_row_name} = ?", (fk_id,))
+    if "default.png" not in link:
+        os.remove(os.path.normpath(WORKING_DIR +"\\"+ link))
+    else:
+        pass

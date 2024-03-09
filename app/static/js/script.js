@@ -445,7 +445,7 @@ function search(host,text) {
     var result = document.getElementById('result');
     result.innerHTML = '';
     var sousTite = document.createElement('h3');
-    sousTite.innerText = "Résultat"
+    sousTite.innerText = "Résultats"
     var centerH = document.createElement('div');
     centerH.className = 'center-h';
     var listY = document.createElement('div');

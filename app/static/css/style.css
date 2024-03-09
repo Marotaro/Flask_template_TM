@@ -273,13 +273,13 @@ body{
 }
 
 .ys-button-off{
-    color: var(--button);
-    transition: color 0.3s ease;
+    filter: brightness(100%);
+    transition: filter 0.3s ease;
 }
 
 .ys-button-on{
-    color: var(--white);
-    transition: color 0.3s ease;
+    filter: brightness(200%);
+    transition: filter 0.3s ease;
 }
 
 .like-profil-button-off{
@@ -740,11 +740,7 @@ body{
 #description-text{
     background-color: var(--frame-color);
     color: var(--white);
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: max(1vw,15px);
-    font-style: normal;
-    font-weight: 600;
-    line-height: normal;
+    font: var(--box-text);
     border: none;
     outline: none;
     resize: none;

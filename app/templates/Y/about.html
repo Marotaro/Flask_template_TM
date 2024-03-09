@@ -46,7 +46,7 @@
           </div>
         </div>
         <div id="description">
-          <label for="bio">Description:</label>
+          <label for="bio" id="subtitle">Description:</label>
           <textarea name="bio" id="description-text" placeholder="Ecrivez ici">{{ channel_info['description'] }}</textarea>
           <script>
             const myText = document.getElementById("description-text");
@@ -71,9 +71,9 @@
     <div class="incolumn">
       {% if channel_info['description'] %}
       <div class="channel-info">
-        <p>Description:</p>
+        <p id="subtitle">Description:</p>
         {% set lignes = channel_info['description'].split('\n') %}
-        <p>
+        <p >
           {% for ligne in lignes %}
           {{ligne}}<br>
           {% endfor %}

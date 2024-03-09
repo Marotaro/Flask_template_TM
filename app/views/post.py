@@ -110,7 +110,7 @@ def modify_post_from_channel(id_channel,id_post):
         return render_template('home/404.html')
     
 
-@post_bp.route('/delete_post/<id_post>', methods = ["GET","Post"])
+@post_bp.route('/delete_post/<id_post>', methods = ["GET","POST"])
 @login_required
 def delete_post(id_post):
     db = get_db()
@@ -120,7 +120,7 @@ def delete_post(id_post):
         db.execute("DELETE FROM Post WHERE respond_to = ?",(id_post,))
         db.commit()
         delete_image("post", id_post, db)
-        return jsonify({"result": "ok"}, 400)
+        return jsonify({"favorited": "ok"}, 400)
     else:
         flash("vous n'est pas autorisé à faire ça")
         return render_template('home/404.html')
@@ -143,8 +143,8 @@ def modify_post(id_post):
             else:
                 return redirect(url_for('modify_post', id_post = id_post))
         else:
-            text = db.execute("SELECT text, location FROM Post LEFT JOIN Image_post ON id_post = id_post_fk WHERE id_post = ?", (id_post,)).fetchone()
-            return render_template('post/create.html', modify = text)
+            text = db.execute("SELECT text, location, id_channel_fk FROM Post LEFT JOIN Image_post ON id_post = id_post_fk WHERE id_post = ?", (id_post,)).fetchone()
+            return render_template('post/create.html', modify = text, id_channel = text[2])
     else:
         flash("vous n'est pas autorisé à faire ça")
         return render_template('home/404.html')

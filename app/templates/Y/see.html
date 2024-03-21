@@ -43,7 +43,7 @@
     {% endif %}
     {% if channel_themes %}
     <div class="channel-info" >
-      <p id="subtitle">Themes:</p>
+      <p id="subtitle">Thèmes:</p>
       <div id="themes">
         {% for theme in channel_themes %}
         <p>#{{ theme[0] }}</p>
@@ -65,7 +65,7 @@
               <img src="{{ g.host +'/'+ post['usericon']}}" alt="">
               <p>@{{ post['username'] }}</p>
             </div>
-            <p><img src="{{ url_for('static', filename ='image/buttons/threepoint.svg')}}" alt="" onclick="postMenu({{ post['id_post'] }})"></p>
+            <p><i class="fa-solid fa-ellipsis-vertical" id="dot" onclick="postMenu({{ post['id_post'] }})"></i></p>
           </div>
 
           {% set lignes = post['text'].split("\n") %}

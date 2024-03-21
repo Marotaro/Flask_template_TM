@@ -5,8 +5,8 @@ from app.function import *
 
 
 def correct_theme(theme_name):
-    if theme_name == "":
-        return None
+    if theme_name == "" or theme_name == None:
+        return False
     else:
         inter = theme_name.replace(" ", "")
         inter = inter.lower()
@@ -24,10 +24,12 @@ def new_theme(themes, db):
         if test is None:
             db.execute("INSERT INTO Themes (name) VALUES (?)", (theme,))
 
-
-def link_theme_y(id_y, themes, db):
+def unlink_theme_y(id_y, db):
     db.execute("DELETE FROM Related_channel WHERE id_channel_fk = ?", (id_y,))
     db.commit()
+
+def link_theme_y(id_y, themes, db):
+    unlink_theme_y(id_y, db)
     for theme in themes:
         id_theme = db.execute(
             "SELECT id_theme FROM Themes WHERE name = ?", (theme,)
@@ -38,5 +40,6 @@ def link_theme_y(id_y, themes, db):
                 (id_y,id_theme,),
             )
             db.commit()
+
 
 

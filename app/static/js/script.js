@@ -105,8 +105,9 @@ function showRespond(postId, idUser, idChannel, host) {
                 upperPart.appendChild(userPartInfo);
                 
                 var threePoint = document.createElement("p");
-                var image = document.createElement("img");
-                image.src = "http://127.0.0.1:5000/static/image/buttons/threepoint.svg";
+                var image = document.createElement("i");
+                image.className = "fa-solid fa-ellipsis-vertical";
+                image.id = "dot"
                 image.onclick = function() {littlePostMenu(`${respPost.id_post}`)};
                 threePoint.appendChild(image);
                 upperPart.appendChild(threePoint);

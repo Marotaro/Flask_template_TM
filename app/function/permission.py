@@ -17,7 +17,7 @@ def is_allowed(id_channel, id_user, db):
         if authorisation == "ban":
             return False
         else:
-            if opento == "private" and (authorisation not in ["owner", "admin", "member"]):
+            if opento[0] == "private" and (authorisation not in ["owner", "admin", "member"]):
                 return False
             else:
                 return True
@@ -25,11 +25,16 @@ def is_allowed(id_channel, id_user, db):
         return False
     
 def can_invite(id_channel, id_user, permission_needed,db):
-    if is_allowed(id_channel, id_user, db):
-        authorisation = db.execute('SELECT * FROM Permission WHERE id_channel_fk = ? AND id_user_fk = ?', (id_channel, id_user)).fetchone()
-        if authorisation == None or authorisation['type'] not in permission_needed:
-            return False
+    opento = db.execute('SELECT opento FROM Channel WHERE id_channel = ?', (id_channel,)).fetchone()
+    print(opento)
+    if opento[0] == "private":
+        if is_allowed(id_channel, id_user, db):
+            authorisation = db.execute('SELECT * FROM Permission WHERE id_channel_fk = ? AND id_user_fk = ?', (id_channel, id_user)).fetchone()
+            if authorisation == None or authorisation['type'] not in permission_needed:
+                return False
+            else:
+                return True
         else:
-            return True
+            return False
     else:
-        return False
+        return True

@@ -223,6 +223,17 @@ def join(token):
     else:
         return render_template("Y/invite.html")
     
+@y_bp.route("/leave/<int:id_channel>", methods = ("GET","POST"))
+@login_required
+def leave(id_channel):
+    db = get_db()
+    try:
+        db.execute("DELETE FROM Permission WHERE id_user_fk = ? AND id_channel_fk = ?", (g.user['id_user'], id_channel,))
+        db.commit()
+        return redirect(url_for("home.home"))
+    except:
+        return redirect(url_for("y.about", id_channel = id_channel))
+    
 
 
 @y_bp.route("/about/<int:id_channel>", methods = ("GET","POST"))
@@ -239,7 +250,7 @@ def about(id_channel):
             # Récupérer les informations de la requet HTTP
             name = request.form["name"]
             description = request.form["bio"]
-
+            print(request.form['themes'])
             theme = correct_theme(request.form["themes"])
             if theme == "error":
                 error = "Incorrect Theme name. Try <#theme_name> or leave it empty"
@@ -255,6 +266,7 @@ def about(id_channel):
                 db.commit()
 
                 # créer les nouveaux themes si besoin et les lient avec la channel si theme est non nul
+                unlink_theme_y(id_channel, db)
                 if theme:
                     new_theme(theme, db)
                     link_theme_y(id_channel, theme, db)

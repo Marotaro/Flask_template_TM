@@ -30,7 +30,6 @@ def update_image(destination, image, fk_id, db):
     if old_image != None:
         if "default.png" not in old_image['location'] and image:
             os.remove(os.path.join(WORKING_DIR + old_image['location']))
-    print("lol")
     try:
         if image and image.filename != '':
             extension = os.path.splitext(image.filename)[1]
@@ -39,7 +38,7 @@ def update_image(destination, image, fk_id, db):
             link = short_folder + str(image.filename)
             db.execute(f"UPDATE {table} SET location = ? WHERE {fk_row_name} = ?", (link ,fk_id),)
     except:
-        pass
+        db.execute(f"UPDATE {table} SET location = ? WHERE {fk_row_name} = ?", (os.path.join(short_folder, "default.png") ,fk_id),)
     db.commit()
 
 def delete_image(destination, fk_id,db):
@@ -48,5 +47,4 @@ def delete_image(destination, fk_id,db):
     db.execute(f"DELETE FROM {table} WHERE {fk_row_name} = ?", (fk_id,))
     if "default.png" not in link:
         os.remove(os.path.normpath(WORKING_DIR +"\\"+ link))
-    else:
-        pass
+    db.commit()

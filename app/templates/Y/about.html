@@ -40,9 +40,16 @@
           <input type="file" name="image" id="imageInput" accept="image/png, image/jpeg" style="display: none;" onchange="const img = document.getElementById('modify-image'); const img2 = document.createElement('img'); img2.src = window.URL.createObjectURL(this.files[0]); img2.className = 'select-image-y' ; img2.id ='modify-image'; img.replaceWith(img2);"> 
           <div id="y-enter-short-info">
             <label for="name">Name</label>
-            <input type="text" name="name" id="name" value="{{ channel_info['name'] }}" required>
+            <input type="text" name="name" id="name" value="{{ channel_info['name'] }}" placeholder="l'incroyable Y" required>
             <label for="themes">Themes</label>
-            <input type="text" name="themes" id="themes" value="{% for theme in channel_themes %} #{{ theme['name'] }} {% endfor %}">
+            <input type="text" name="themes" id="themes" value="{% for theme in channel_themes %} #{{ theme['name'] }} {% endfor %}" placeholder="#theme #exemple">
+            {% with message = get_flashed_messages() %}
+            {% if message %}
+            <div class="alert-user">
+              <p>{{ message[0] }}</p>
+            </div>
+            {% endif %}
+            {% endwith %}
           </div>
         </div>
         <div id="description">
@@ -63,9 +70,6 @@
       </div>
     </form>
   </div> 
-  <div id="delete-y">
-    <a href="{{ url_for('y.delete', id_channel = channel_info['id_channel']) }}"><i class="fa-solid fa-trash"></i></a>
-  </div>
 {% else %}
 <div class="center-h">
     <div class="incolumn">
@@ -92,6 +96,15 @@
       {% endif %}
     </div>
   </div>
+{% endif %}
+{% if g.user['id_user'] in owners|map(attribute="id_user") %}
+<div id="delete-y">
+  <a href="{{ url_for('y.delete', id_channel = channel_info['id_channel']) }}"><i class="fa-solid fa-trash"></i></a>
+</div>
+{% else %}
+<div id="delete-y">
+  <a href="{{ url_for('y.leave', id_channel = channel_info['id_channel']) }}"><i class="fa-solid fa-person-walking-arrow-right"></i></a>
+</div>
 {% endif %}
 
 <div class="center-h">

@@ -27,7 +27,9 @@ source <VIRTUAL-ENVIRONMENT-NAME>/bin/activate
 pip install -r requirements.txt
 ```
 
-4. Run the project
+4. Fill the empty-config file and rename it "config.txt"
+
+5. Run the project
 ```bash
 python -m flask run --debug
 ```

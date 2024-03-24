@@ -39,9 +39,9 @@
           <label for="imageInput"><img src="{{ g.host +'/'+ channel_info['location'] }}"  class="select-image-y" id="modify-image"></label>
           <input type="file" name="image" id="imageInput" accept="image/png, image/jpeg" style="display: none;" onchange="const img = document.getElementById('modify-image'); const img2 = document.createElement('img'); img2.src = window.URL.createObjectURL(this.files[0]); img2.className = 'select-image-y' ; img2.id ='modify-image'; img.replaceWith(img2);"> 
           <div id="y-enter-short-info">
-            <label for="name">Name</label>
+            <label for="name">Nom</label>
             <input type="text" name="name" id="name" value="{{ channel_info['name'] }}" placeholder="l'incroyable Y" required>
-            <label for="themes">Themes</label>
+            <label for="themes">Thèmes</label>
             <input type="text" name="themes" id="themes" value="{% for theme in channel_themes %} #{{ theme['name'] }} {% endfor %}" placeholder="#theme #exemple">
             {% with message = get_flashed_messages() %}
             {% if message %}
@@ -112,7 +112,7 @@
   <div class="about-info">
     <div id="fun-fact">
       <p>Créé le {{ dates[0] }} du {{ dates[1] +" "+ dates[2] }}</p>
-      <p>Y {% if channel_info['opento'] == "public" %}Publique{% else %}Privé{% endif %}</p>
+      <p>Y {% if channel_info['opento'] == "public" %}public{% else %}privé{% endif %}</p>
       <div id="numbers">
         <p>{{ nb_participants }} participants</p>
         <p>{{ nb_posts }} publications</p>

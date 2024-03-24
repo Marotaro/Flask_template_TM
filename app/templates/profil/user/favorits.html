@@ -1,7 +1,7 @@
 {% extends 'profil/user/template-profil.html' %}
 
 {% block title_page %}
-    Myfavorits - Y
+    MyFavorits - Y
 {% endblock %}
 
 {% block button %}
@@ -16,7 +16,7 @@
 {% endblock %}
 
 {% block title %}
-    <h1>Myfavorits</h1>
+    <h1>MyFavorits</h1>
 {% endblock %}
 
 {% block content %}
@@ -31,7 +31,7 @@
                 <p>@{{ favorit['CreatorName'] }}</p>
               </div>
                 <div class="post-info-profil">
-                    <p>depuis <p class="y-little-name">/{{favorit['ChannelName'] }}</p></p>
+                    <p>depuis <p class="y-little-name">&{{avorit['ChannelName'] }}</p></p>
                     {% if favorit['RespondTo'] %}
                     <p>à <p class="user-little-name">@{{favorit['RespondTo']}}</p></p>
                     {% endif %}

@@ -31,7 +31,7 @@
                 <p>@{{ like['CreatorName'] }}</p>
               </div>
                 <div class="post-info-profil">
-                    <p>depuis <p class="y-little-name">/{{like['ChannelName'] }}</p></p>
+                    <p>depuis <p class="y-little-name">&{{like['ChannelName'] }}</p></p>
                     {% if like['RespondTo'] %}
                     <p>à <p class="user-little-name">@{{like['RespondTo']}}</p></p>
                     {% endif %}

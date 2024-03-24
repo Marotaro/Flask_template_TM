@@ -1,7 +1,7 @@
 # Basic Flask Application for 3rd Year Gymnasium Students as part of their Maturity Project
 
 ## Author
-Loan Magnenat, Collège du Sud.
+LM, Collège du Sud.
 
 ## Description
 The current directory is as a web application based on a foundational Flask template. It is connected to an SQLite database, and is part of a maturity project for 3rd-year students at Collège du Sud. With pedagogical objectives in mind, and to provide a fundamental grasp of web application architecture, the project intentionally omits any Object-Relational Mapping (ORM) or data validation modules.
@@ -12,7 +12,7 @@ The current directory is as a web application based on a foundational Flask temp
 python -m venv <VIRTUAL-ENVIRONMENT-NAME>
 ```
 
-3. Activate the virtual environment
+2. Activate the virtual environment
   * Windows users:
 ```bash
 <VIRTUAL-ENVIRONMENT-NAME\Scripts\activate
@@ -22,12 +22,14 @@ python -m venv <VIRTUAL-ENVIRONMENT-NAME>
 source <VIRTUAL-ENVIRONMENT-NAME>/bin/activate
 ```
 
-5. Install the dependencies that are in requirements.txt
+3. Install the dependencies that are in requirements.txt
 ```bash
 pip install -r requirements.txt
 ```
 
-7. Run the project
+4. Fill the empty-config file and rename it "config.txt"
+
+5. Run the project
 ```bash
 python -m flask run --debug
 ```

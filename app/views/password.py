@@ -1,5 +1,5 @@
 from flask import (Blueprint, flash, g, redirect, render_template, request, session, url_for)
-from app.db.db import get_db
+from app.db.db import get_db, close_db
 from werkzeug.security import check_password_hash, generate_password_hash
 from app.utils import *
 from app.function.send import *
@@ -24,6 +24,7 @@ def changepassword():
                 db = get_db()
                 db.execute("UPDATE User SET password = ? WHERE id_user = ?",(generate_password_hash(new_password),g.user['id_user']))
                 db.commit()
+                close_db()
                 return redirect(url_for('user.show_profile'))
             else:
                 error = "old password incorrect"
@@ -46,6 +47,7 @@ def forgot_password():
         try:
             id_user = db.execute("SELECT id_user FROM User WHERE email = ?",(email,)).fetchone()[0]
             token = create_token(id_user, None, 10, "password", db)
+            close_db()
             if send_email(email,reset_message(token),"Réinitialisation du mot de passe") == "error":
                 error = "Oups, il y a eu un problème lors de l'envoie du mail "
                 flash(error)
@@ -74,6 +76,7 @@ def reset_password(token):
                 #on suprime la demande
                 db.execute("DELETE FROM Token WHERE id_user_fk = ?", (token_information['id_user_fk'],))
                 db.commit()
+                close_db()
                 return redirect( url_for('auth.login'))
             else:
                 error = "Les mots de passe ne sont pas identiques"

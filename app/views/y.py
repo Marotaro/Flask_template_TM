@@ -1,5 +1,5 @@
 from flask import (Blueprint, flash, g, redirect, render_template, request, session, url_for, jsonify)
-from app.db.db import get_db
+from app.db.db import get_db, close_db
 from app.utils import *
 from app.function.now import datenow
 from app.function.themes import *
@@ -30,6 +30,7 @@ def create():
         if theme == "error":
             error = "Incorrect Theme name. Try <#theme_name> or leave it empty"
             flash(error)
+            close_db()
             return redirect(url_for("y.create"))
         # si name n'est pas nul rajouter une nouvelle ligne à Channel sinon retourner le message d'erreur
         if name:
@@ -53,11 +54,12 @@ def create():
             
 
             upload_image("y",request.files['image'],id_channel,db)
-                    
+            close_db()
             return redirect(url_for("home.home"))
         else:
             error = "No Y's name given"
             flash(error)
+            close_db()
             return redirect(url_for("y.create"))
     else:
         return render_template("Y/create.html")
@@ -73,6 +75,7 @@ def see(id_channel):
             "SELECT * FROM Channel JOIN Image_channel ON id_channel = id_channel_fk WHERE id_channel = ?", (id_channel,)
         ).fetchone()
     if channel_info['opento'] == "private"  and (not is_allowed(id_channel, g.user["id_user"], db)):
+        close_db()
         return render_template("Y/not_permitted.html")
     else:
         channel_themes = db.execute(
@@ -88,6 +91,7 @@ def see(id_channel):
         favorited_posts = [x[0] for x in db.execute(
             "SELECT id_post_fk FROM Favorit WHERE id_user_fk = ?", (g.user['id_user'],)
         ).fetchall()]
+        close_db()
         return render_template(
             "Y/see.html", channel_info=channel_info, channel_themes=channel_themes, channel_normal_post = channel_normal_post, liked_post = liked_post, favorited_posts = favorited_posts
         )
@@ -123,6 +127,7 @@ def get_comments(id_post):
         ).fetchall()]
     responds.append(liked_resp_post)
     responds.append(favorited_resp_post)
+    close_db()
     return jsonify(responds)
 
     
@@ -139,7 +144,7 @@ def browse():
     ).fetchall()
 
     themes_random = db.execute("Select * FROM Themes ORDER BY RANDOM() LIMIT 7").fetchall()
-
+    close_db()
     return render_template(
         "Y/browse.html", public_channels=public_channels, themes_random = themes_random
     )
@@ -177,6 +182,7 @@ def search(search_request):
                 'location' : channel[2],
             }
             responds[i] = respond
+        close_db()
         return jsonify(responds, message)
    
     except:
@@ -190,6 +196,7 @@ def search(search_request):
                 'location' : channel[2],
             }
             responds[i] = respond
+        close_db()
         return jsonify(responds, message)
 
 @y_bp.route("/invite/<int:id_channel>/<int:duration>", methods = ("GET","POST"))
@@ -197,14 +204,15 @@ def search(search_request):
 def invite(id_channel, duration):
     db = get_db()
     if not can_invite(id_channel, g.user['id_user'], ['owner','admin'], db):
+        close_db()
         return jsonify({'respond': "you don't have the permission to do that"})
     else:
         try:
             token = create_token(g.user['id_user'],id_channel, int(duration), 'channel', db)
-            message = "lien copier dans le press papier"
-            flash(f"{message}: {host}/y/join/{token}")
+            close_db()
             return jsonify({'respond': f"{g.host}/y/join/{token}"})
         except:
+            close_db()
             return jsonify({'respond': "can't create link"})
     
 
@@ -217,10 +225,13 @@ def join(token):
             token_information = get_token(token,db)
             add_permition(token_information["id_channel_fk"], g.user['id_user'], "member", db)
             #flash([x for x in token_information])
+            close_db()
             return redirect(url_for("y.see", id_channel = token_information["id_channel_fk"]))
         except:
+            close_db()
             return redirect(url_for("home.home"))
     else:
+        close_db()
         return render_template("Y/invite.html")
     
 @y_bp.route("/leave/<int:id_channel>", methods = ("GET","POST"))
@@ -230,8 +241,10 @@ def leave(id_channel):
     try:
         db.execute("DELETE FROM Permission WHERE id_user_fk = ? AND id_channel_fk = ?", (g.user['id_user'], id_channel,))
         db.commit()
+        close_db()
         return redirect(url_for("home.home"))
     except:
+        close_db()
         return redirect(url_for("y.about", id_channel = id_channel))
     
 
@@ -244,6 +257,7 @@ def about(id_channel):
         "SELECT * FROM Channel JOIN Image_channel ON id_channel = id_channel_fk WHERE id_channel = ?", (id_channel,)
     ).fetchone()
     if channel_info['opento'] == "private"  and (not is_allowed(id_channel, g.user["id_user"], db)):
+        close_db()
         return render_template("Y/not_permitted.html")
     else:
         if request.method == "POST":
@@ -255,6 +269,7 @@ def about(id_channel):
             if theme == "error":
                 error = "Incorrect Theme name. Try <#theme_name> or leave it empty"
                 flash(error)
+                close_db()
                 return redirect(url_for("y.about", id_channel = id_channel))
             # si name n'est pas nul rajouter une nouvelle ligne à Channel sinon retourner le message d'erreur
             if name:
@@ -273,10 +288,12 @@ def about(id_channel):
                         # si image n'est pas dans la request, mettre la valeur par défaut
     
                 update_image("y",request.files['image'],id_channel,db)
+                close_db()
                 return redirect(url_for("y.about", id_channel = id_channel))
             else:
                 error = "No Y's name given"
                 flash(error)
+                close_db()
                 return redirect(url_for("y.about", id_channel = id_channel))
             
         else:
@@ -290,6 +307,7 @@ def about(id_channel):
             ).fetchall()
             nb_participants = db.execute("SELECT count(id_user_fk) FROM Permission WHERE id_channel_fk = ? AND type != 'ban'",(id_channel,)).fetchone()[0]
             nb_posts = db.execute("SELECT count(id_post) FROM Post WHERE id_channel_fk = ?", (id_channel,)).fetchone()[0]
+            close_db()
             return render_template("Y/about.html", channel_info = channel_info, owners = owners, admins = admins, members = members, bans = bans ,channel_themes = channel_themes, nb_participants = nb_participants, nb_posts = nb_posts)
 
 @y_bp.route("/delete/<int:id_channel>", methods = ("GET","POST"))
@@ -304,9 +322,11 @@ def delete(id_channel):
             pass
         db.execute("DELETE FROM Channel WHERE id_channel = ?", (id_channel,))
         db.commit()
+        close_db()
         return redirect(url_for("home.home"))
     else:
         flash("Vous n'êtes pas authorisé à faire cela")
+        close_db()
         return render_template("home/404.html")
     
 
@@ -319,7 +339,9 @@ def change_role(id_channel, id_user, type):
     if permission == "owner":
         db.execute("UPDATE Permission SET type = ? WHERE id_channel_fk = ? AND id_user_fk = ?", (type, id_channel, id_user))
         db.commit()
+        close_db()
         return jsonify({"role": type, "user": id_user})
     else:
         flash("Vous n'êtes pas authorisé à faire cela")
+        close_db()
         return render_template("home/404.html")

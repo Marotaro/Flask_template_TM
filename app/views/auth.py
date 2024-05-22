@@ -1,6 +1,6 @@
 from flask import (Blueprint, flash, g, redirect, render_template, request, session, url_for)
 from werkzeug.security import check_password_hash, generate_password_hash
-from app.db.db import get_db
+from app.db.db import get_db, close_db
 from app.function.now import datenow
 from app.function.image import upload_image
 from app.config import WORKING_DIR
@@ -39,20 +39,24 @@ def register():
                     # dans le but de l'afficher ultérieurement, généralement sur la page suivante après une redirection
                     error = f"l'addresse mail est déjà utilisée"
                     flash(error)
+                    close_db()
                     return redirect(url_for("auth.register"))
                 
                 upload_image("user", False, id_user[0], db)
+                close_db()
                 return redirect(url_for("auth.login"))
             else:
                 error = f"Le nom d'utilisateur est déjà utilisé"
-                flash(error)
+                close_db()
                 return redirect(url_for("auth.register"))
         else:
             error = "Username or password invalid"
             flash(error)
+            close_db()
             return redirect(url_for("auth.login"))
     else:
         # Si aucune donnée de formulaire n'est envoyée, on affiche le formulaire d'inscription
+        close_db()
         return render_template('auth/register.html')
 
 # Route /auth/login
@@ -71,7 +75,7 @@ def login():
         # On récupère l'utilisateur avec le username spécifié (une contrainte dans la db indique que le nom d'utilisateur est unique)
         # La virgule après username est utilisée pour créer un tuple contenant une valeur unique
         user = db.execute('SELECT * FROM User WHERE username = ? or email = ?', (idantifiant,idantifiant)).fetchone()
-
+        close_db()
         # Si aucun utilisateur n'est trouve ou si le mot de passe est incorrect
         # on crée une variable error 
         error = None
@@ -124,6 +128,7 @@ def load_logged_in_user():
          # On récupère la base de données et on récupère l'utilisateur correspondant à l'id stocké dans le cookie session
         db = get_db()
         g.user = db.execute('SELECT * FROM User LEFT JOIN Image_user on User.id_user = Image_user.id_user_fk WHERE id_user = ?', (id_user,)).fetchone()
+        close_db()
 
 
 

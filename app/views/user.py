@@ -1,5 +1,5 @@
 from flask import (Blueprint, flash, g, redirect, render_template, request, session, url_for)
-from app.db.db import get_db
+from app.db.db import get_db, close_db
 from app.function.get_channel import *
 from app.function.image import update_image
 from app.utils import *
@@ -16,6 +16,7 @@ def show_profile():
     post_info = db.execute("SELECT ( SELECT COUNT(*) FROM Post WHERE id_user_fk = ? ) AS nb_posted_post", (g.user['id_user'],)).fetchone()
     like_info = db.execute("SELECT ( SELECT COUNT(*) FROM Likes WHERE id_user_fk = ? ) AS nb_liked_post, ( SELECT COUNT(*) FROM Likes JOIN Post ON id_post = id_post_fk WHERE Post.id_user_fk = ? ) AS nb_like_post", (g.user['id_user'],g.user['id_user'],)).fetchone()
     favorit_info = db.execute("SELECT ( SELECT COUNT(*) FROM Favorit WHERE id_user_fk = ? ) AS nb_favorited_post, ( SELECT COUNT(*) FROM Favorit JOIN Post ON id_post = id_post_fk WHERE Post.id_user_fk = ? ) AS nb_favorit_post", (g.user['id_user'],g.user['id_user'],)).fetchone()
+    close_db()
     return render_template('profil/user/profile.html', y_info = y_info, post_info = post_info, like_info = like_info, favorit_info = favorit_info )
 
 @user_bp.route('/show_posts', methods=('GET', 'POST'))
@@ -29,6 +30,7 @@ def show_posts():
     favorited_posts = [x[0] for x in db.execute(
         "SELECT id_post_fk FROM Favorit WHERE id_user_fk = ?", (g.user['id_user'],)
     ).fetchall()]
+    close_db()
     return render_template('profil/user/posts.html', posts = posts, liked_posts = liked_posts, favorited_posts = favorited_posts)
 
 @user_bp.route('/show_ys', methods=('GET', 'POST'))
@@ -39,6 +41,7 @@ def show_ys():
     ##celle ou l'utilisateur est l'owner
     myys = get_y_by_user(g.user['id_user'], "owner", db)
     memberys = get_y_by_user(g.user['id_user'], "member", db)
+    close_db()
     # Affichage de la page d'un utilisateur connecté
     return render_template("profil/user/ys.html", myys=myys,memberys=memberys)
 
@@ -50,6 +53,7 @@ def show_likes():
     favorited_posts = [x[0] for x in db.execute(
         "SELECT id_post_fk FROM Favorit WHERE id_user_fk = ?", (g.user['id_user'],)
     ).fetchall()]
+    close_db()
     return render_template("profil/user/likeds.html", likes=likes, favorited_posts = favorited_posts)
 
 @user_bp.route('/show_favorits', methods=('GET', 'POST'))
@@ -60,6 +64,7 @@ def show_favorits():
     liked_posts = [x[0] for x in db.execute(
         "SELECT id_post_fk FROM Likes WHERE id_user_fk = ?", (g.user['id_user'],)
     ).fetchall()]
+    close_db()
     return render_template("profil/user/favorits.html", favorits=favorits, liked_posts = liked_posts)
 
 @user_bp.route('/show_parametre', methods=('GET', 'POST'))
@@ -79,6 +84,7 @@ def show_parametre():
                 error = f"Username {new_username} already exists"
                 flash(error)
                 return redirect(url_for("user.show_parametre"))
+            close_db()
             return redirect(url_for("user.show_parametre"))
         #except:
         #    return redirect(url_for("user.show_parametre"))

@@ -1,5 +1,5 @@
 from flask import (Blueprint, flash, g, redirect, render_template, request, session, url_for, jsonify)
-from app.db.db import get_db
+from app.db.db import get_db, close_db
 from app.utils import *
 from app.function.now import *
 from app.function.exist import *
@@ -28,6 +28,7 @@ def create_post(id_channel,respondto):
                 "SELECT id_post FROM Post ORDER BY id_post DESC LIMIT 1;"
             ).fetchone()[0]
             upload_image("post",image, id_post, db )
+            close_db()
             return redirect(url_for("y.see", id_channel = id_channel))
         else:
             return redirect(url_for('create_post', id_channel = id_channel, respondto = respondto))
@@ -48,8 +49,10 @@ def like_post(id_post):
             db.execute("INSERT INTO Likes (id_user_fk, id_post_fk) VALUES (?,?)",(g.user["id_user"], id_post,))
             liked = True
         db.commit()
+        close_db()
         return jsonify({"liked": liked}, 400)
     else:
+        close_db()
         return jsonify({"error": "La publication n'existe pas"}, 400)
     
 @post_bp.route('/favorit_post/<id_post>', methods = ["GET"])
@@ -66,8 +69,10 @@ def favorit_post(id_post):
             db.execute("INSERT INTO Favorit (id_user_fk, id_post_fk) VALUES (?,?)",(g.user["id_user"], id_post,))
             favorited = True
         db.commit()
+        close_db()
         return jsonify({"favorited": favorited}, 400)
     else:
+        close_db()
         return jsonify({"error": "La publication n'existe pas"}, 400)
     
 @post_bp.route('/delete_post_from_channel/<id_channel>/<id_post>', methods = ["GET","Post"])
@@ -80,8 +85,10 @@ def delete_post_from_channel(id_channel,id_post):
         db.execute("DELETE FROM Post WHERE respond_to = ?",(id_post,))
         db.commit()
         delete_image("post", id_post, db)
+        close_db()
         return redirect(url_for('y.see', id_channel = id_channel))
     else:
+        close_db()
         flash("vous n'est pas autorisé à faire ça")
         return render_template('home/404.html')
     
@@ -99,13 +106,17 @@ def modify_post_from_channel(id_channel,id_post):
                 db.execute("UPDATE Post SET text = ?WHERE id_post = ?", (text, id_post,))
                 db.commit()
                 update_image("post", request.files['image'], id_post, db)
+                close_db()
                 return redirect(url_for("y.see", id_channel = id_channel))
             else:
+                close_db()
                 return redirect(url_for('modify_post_from_channel', id_channel = id_channel, id_post = id_post))
         else:
             text = db.execute("SELECT text, location FROM Post LEFT JOIN Image_post ON id_post = id_post_fk WHERE id_post = ?", (id_post,)).fetchone()
+            close_db()
             return render_template('post/create.html', modify = text, id_channel = id_channel)
     else:
+        close_db()
         flash("vous n'est pas autorisé à faire ça")
         return render_template('home/404.html')
     
@@ -120,8 +131,10 @@ def delete_post(id_post):
         db.execute("DELETE FROM Post WHERE respond_to = ?",(id_post,))
         db.commit()
         delete_image("post", id_post, db)
+        close_db()
         return jsonify({"favorited": "ok"}, 400)
     else:
+        close_db()
         flash("vous n'est pas autorisé à faire ça")
         return render_template('home/404.html')
     
@@ -139,12 +152,16 @@ def modify_post(id_post):
                 db.execute("UPDATE Post SET text = ? WHERE id_post = ?", (text, id_post,))
                 db.commit()
                 update_image("post", request.files['image'], id_post, db)
+                close_db()
                 return redirect(url_for("user.show_posts"))
             else:
+                close_db()
                 return redirect(url_for('modify_post', id_post = id_post))
         else:
             text = db.execute("SELECT text, location, id_channel_fk FROM Post LEFT JOIN Image_post ON id_post = id_post_fk WHERE id_post = ?", (id_post,)).fetchone()
+            close_db()
             return render_template('post/create.html', modify = text, id_channel = text[2])
     else:
+        close_db()
         flash("vous n'est pas autorisé à faire ça")
         return render_template('home/404.html')

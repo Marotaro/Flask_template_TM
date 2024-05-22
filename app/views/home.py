@@ -1,5 +1,5 @@
 from flask import (Blueprint, flash, g, redirect, render_template, request, session, url_for)
-from app.db.db import get_db
+from app.db.db import get_db, close_db
 from app.function.get_channel import *
 from app.utils import *
 
@@ -22,7 +22,7 @@ def home():
     ##celle ou l'utilisateur est l'owner
     mychannels = get_y_by_user(g.user['id_user'], "owner", db)
     memberchannels = get_y_by_user(g.user['id_user'], "member", db) + get_y_by_user(g.user['id_user'], "admin", db)
-    
+    close_db()
     # Affichage de la page d'un utilisateur connecté
     return render_template("home/index.html", mychannels=mychannels,memberchannels=memberchannels)
 

@@ -6,11 +6,11 @@ SECRET_KEY = "sdg554ASDF45asdfsASF5"
 DATABASE = "Name.db"
 
 #dossiers
-WORKING_DIR = os.path.normpath(os.getcwd() + r"\APP\\")
+WORKING_DIR = os.path.normpath(os.getcwd() + r"/app/")
 #chemin des dossiers (les dossier doivent exister)
-SHORT_FOLDER_USER = "static/image/user_icon/"
-SHORT_FOLDER_Y = "static/image/y_icon/"
-SHORT_FOLDER_POST = "static/image/user_icon/"
+SHORT_FOLDER_USER = "/static/image/user_icon/"
+SHORT_FOLDER_Y = "/static/image/y_icon/"
+SHORT_FOLDER_POST = "/static/image/user_icon/"
 
 #adresse de l'hebergeur
 host = r"http://127.0.00:5000"

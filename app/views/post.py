@@ -5,6 +5,8 @@ from app.function.now import *
 from app.function.exist import *
 from app.function.permission import *
 from app.function.image import *
+from app.function.text import *
+
 
 
 post_bp = Blueprint('post', __name__, url_prefix='/post')
@@ -21,7 +23,7 @@ def create_post(id_channel,respondto):
         #récupérer la base de données
         db = get_db()
         if text:
-            db.execute("INSERT INTO Post (id_channel_fk, id_user_fk, date, respond_to, text) VALUES (?, ?, ?, ?, ?)", (id_channel, g.user['id_user'], datenow(), int(respondto), text,))
+            db.execute("INSERT INTO Post (id_channel_fk, id_user_fk, date, respond_to, text) VALUES (?, ?, ?, ?, ?)", (id_channel, g.user['id_user'], datenow(), int(respondto), from_custom_texte(text),))
             db.commit()
             add_permition(id_channel, g.user['id_user'], 'member', db)
             id_post = db.execute(
@@ -103,7 +105,7 @@ def modify_post_from_channel(id_channel,id_post):
 
 
             if text:
-                db.execute("UPDATE Post SET text = ?WHERE id_post = ?", (text, id_post,))
+                db.execute("UPDATE Post SET text = ? WHERE id_post = ?", (from_custom_texte(text), id_post,))
                 db.commit()
                 update_image("post", request.files['image'], id_post, db)
                 close_db()
@@ -112,9 +114,10 @@ def modify_post_from_channel(id_channel,id_post):
                 close_db()
                 return redirect(url_for('modify_post_from_channel', id_channel = id_channel, id_post = id_post))
         else:
-            text = db.execute("SELECT text, location FROM Post LEFT JOIN Image_post ON id_post = id_post_fk WHERE id_post = ?", (id_post,)).fetchone()
+            content = db.execute("SELECT text, location FROM Post LEFT JOIN Image_post ON id_post = id_post_fk WHERE id_post = ?", (id_post,)).fetchone()
+            print(content[0])
             close_db()
-            return render_template('post/create.html', modify = text, id_channel = id_channel)
+            return render_template('post/create.html', text = to_custom_texte(content[0]), image = content[1], id_channel = id_channel)
     else:
         close_db()
         flash("vous n'est pas autorisé à faire ça")

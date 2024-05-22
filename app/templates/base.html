@@ -1,5 +1,5 @@
 <!doctype html>
-
+<html lang="en">
 <head>
     <title>{% block title %}{% endblock %} - Y</title>
     <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='shortcuticon.png') }}">
@@ -8,6 +8,14 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/page.css')}}">
     <script src="{{ url_for('static', filename='js/script.js')}}"></script>
     <script src="https://kit.fontawesome.com/5197e334d7.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.tiny.cloud/1/zdclv8eux2uohrpq78qu6e1yz8hpdxxgj1rruyvpoccyhe2q/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
+    <script>
+      tinymce.init({
+        selector: '#custom-textarea'
+        theme: ''
+      });
+    </script>
+
 </head>
 
 <body>
@@ -31,3 +39,4 @@
             </div>
         <div>{% block content %}{% endblock %}</div>
 </body>
+</html>

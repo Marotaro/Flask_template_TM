@@ -18,13 +18,16 @@ def from_custom_texte(texte):
         return f'<span style="color: #{couleur}; font-size: calc({taille}*max(0.85vw,10px));">{contenu}</span>'
     
     sanitizer = Sanitizer({
-        'tags': {'madeup'},
+        'tags': {'madeup', 'a'},
         'attributes': {
-            'madeup': set()
+            'madeup': set(),
+            'a': { 'href', 'title'}
         },
         'empty': set(),
         'separate': set(),
-        'whitespace': set()        
+        'whitespace': set(),
+        'keep_typographic_whitespace': True,
+        'autolink' : True       
     })
 
     # Remplacer les balises spécifiées par les balises HTML appropriées
@@ -46,13 +49,16 @@ def to_custom_texte(texte_html):
         return "{"+f'#{couleur}%{taille}:{contenu}'+"}"
     
     sanitizer = Sanitizer({
-        'tags': {'madeup'},
+        'tags': {'madeup', 'a'},
         'attributes': {
-            'madeup': set()
+            'madeup': set(),
+            'a': { 'href', 'title'}
         },
         'empty': set(),
         'separate': set(),
-        'whitespace': set()        
+        'whitespace': set(),
+        'keep_typographic_whitespace': True,
+        'autolink' : True       
     })
     
     # Remplacer les balises <font> par la forme spécifiée

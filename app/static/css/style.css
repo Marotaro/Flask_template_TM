@@ -965,6 +965,16 @@ body{
     
 }
 
+.post a{
+    color: var(--cyan);
+    transition: color 0.3s ease;
+}
+
+.post a:hover{
+    color: var(--white);
+    transition: color 0.3s ease;
+}
+
 .post img{
     max-width: 40vw;
     max-height: 50vh;

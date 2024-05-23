@@ -44,7 +44,7 @@
               {% set lignes = post['text'].split("\n") %}
               <p class="text">
                 {% for ligne in lignes %}
-                {{ ligne }}<br>
+                {{ ligne | safe }}<br>
                 {% endfor %}
               </p>
               {% if post['location'] %}

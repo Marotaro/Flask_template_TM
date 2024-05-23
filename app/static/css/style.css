@@ -939,6 +939,7 @@ body{
     align-items: center;
     justify-content: center;
     gap: 0.75vw;
+    margin-bottom: 1vh;
 }
 
 .upperpart .user-part-info img{
@@ -947,6 +948,7 @@ body{
     height: 3.3vw;
     padding: 0.25vw;
     background-color: var(--button);
+    margin-bottom: 0;
 }
 
 .post span{

@@ -152,7 +152,7 @@ def modify_post(id_post):
 
 
             if text:
-                db.execute("UPDATE Post SET text = ? WHERE id_post = ?", (text, id_post,))
+                db.execute("UPDATE Post SET text = ? WHERE id_post = ?", (from_custom_texte(text), id_post,))
                 db.commit()
                 update_image("post", request.files['image'], id_post, db)
                 close_db()
@@ -161,9 +161,9 @@ def modify_post(id_post):
                 close_db()
                 return redirect(url_for('modify_post', id_post = id_post))
         else:
-            text = db.execute("SELECT text, location, id_channel_fk FROM Post LEFT JOIN Image_post ON id_post = id_post_fk WHERE id_post = ?", (id_post,)).fetchone()
+            content = db.execute("SELECT text, location, id_channel_fk FROM Post LEFT JOIN Image_post ON id_post = id_post_fk WHERE id_post = ?", (id_post,)).fetchone()
             close_db()
-            return render_template('post/create.html', modify = text, id_channel = text[2])
+            return render_template('post/create.html', text = to_custom_texte(content[0]), image = content[1], id_channel = content[2])
     else:
         close_db()
         flash("vous n'est pas autorisé à faire ça")

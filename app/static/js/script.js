@@ -114,7 +114,7 @@ function showRespond(postId, idUser, idChannel, host) {
 
                 //création text
                 var text = document.createElement("p");
-                text.innerText = respPost.text
+                text.innerHTML = respPost.text
 
                 //création partie image
                 var littleCenterDiv = document.createElement('div');

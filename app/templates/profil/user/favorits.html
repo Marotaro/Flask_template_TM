@@ -41,7 +41,7 @@
             {% set lignes = favorit['text'].split("\n") %}
             <p class="text">
               {% for ligne in lignes %}
-              {{ ligne }}<br>
+              {{ ligne | safe }}<br>
               {% endfor %}
             </p>
             {% if favorit['location'] %}

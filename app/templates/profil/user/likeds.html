@@ -41,7 +41,7 @@
             {% set lignes = like['text'].split("\n") %}
             <p class="text">
               {% for ligne in lignes %}
-              {{ ligne }}<br>
+              {{ ligne | safe }}<br>
               {% endfor %}
             </p>
             {% if like['location'] %}

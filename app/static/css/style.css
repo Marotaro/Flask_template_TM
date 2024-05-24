@@ -962,18 +962,25 @@ body{
     width: 45vw;
     margin-top: 3.5vh;
     margin-bottom: 2vh;
-    
 }
 
-.post a{
+.post .text a{
     color: var(--cyan);
-    transition: color 0.3s ease;
+    text-decoration: underline;
+    transition: color 0.3s ease !important;
 }
 
-.post a:hover{
-    color: var(--white);
-    transition: color 0.3s ease;
+.post .text a span, .post .text span a{
+    color: inherit;
+    text-decoration: underline;
+    transition: color 0.3s ease !important;
 }
+
+.post .text a :hover, .post .text a:hover, .post .text a:hover span{
+    color: var(--white) !important;
+    transition: color 0.3s ease !important;
+}
+
 
 .post img{
     max-width: 40vw;
@@ -1011,6 +1018,24 @@ body{
     overflow-wrap: break-word;
     text-wrap: wrap;
     margin-top: 3.5vh;
+    margin-left: 0.5vw;
+}
+
+.little-post a{
+    color: var(--cyan);
+    text-decoration: underline;
+    transition: color 0.3s ease !important;
+}
+
+.little-post a span, .post .text span a{
+    color: inherit;
+    text-decoration: underline;
+    transition: color 0.3s ease !important;
+}
+
+.little-post a :hover, .post .text a:hover, .post .text a:hover span{
+    color: var(--white) !important;
+    transition: color 0.3s ease !important;
 }
 
 .little-post .upperpart .user-part-info{
@@ -1021,8 +1046,18 @@ body{
     gap: 0.75vw;
 }
 
-.little-post .upperpart .user-part-info p{
+.little-post .upperpart{
+    margin-top: 1.5vh;
+    margin-left: 0.5vw;
+    margin-right: 0.5vw;
+}
+
+.little-post .upperpart .user-part-info p, .little-post .upperpart p{
     margin: 0;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
 }
 .little-post .upperpart .user-part-info img{
     margin: 0;
@@ -1116,7 +1151,7 @@ body{
     display: flex;
     flex-direction: row;
     gap: 2vw;
-    left: 3.5vw;
+    left: 4.5vw;
 }
 
 .little-post-menu{
